@@ -1,0 +1,188 @@
+/* Reset di base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Impostazioni generali */
+body {
+  font-family: 'Courier New', Courier, monospace;
+  background: #0b0c10; /* Sfondo molto scuro */
+  color: #66fcf1; /* Testo in ciano chiaro per un effetto Matrix */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Stile per il menu principale */
+#menu {
+  background: #1f2833; /* Tonalità scura con sfumature blu */
+  border: 2px solid #45a29e;
+  padding: 20px;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 20px;
+  box-shadow: 0 0 15px rgba(69, 162, 158, 0.5);
+}
+
+#menu h1 {
+  color: #c5c6c7;
+}
+
+.setting {
+  margin: 15px 0;
+}
+
+#codeLengthDisplay {
+  font-weight: bold;
+}
+
+/* Bottoni dei livelli di feedback */
+#feedbackButtons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.feedback-btn {
+  padding: 10px;
+  border: 1px solid #45a29e;
+  border-radius: 4px;
+  background: #0b0c10;
+  color: #66fcf1;
+  cursor: pointer;
+  width: 30%;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.feedback-btn:hover,
+.feedback-btn.selected {
+  background: #45a29e;
+  border-color: #66fcf1;
+}
+
+/* Pulsante di avvio e altri bottoni */
+button {
+  padding: 10px 20px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 4px;
+  background: #45a29e;
+  color: #0b0c10;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-family: inherit; /* Uniforma il font */
+}
+
+button:hover {
+  background: #66fcf1;
+}
+
+/* Controlli di gioco */
+.game-controls {
+  width: 100%;
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+.quit-btn {
+  background: #d16d6d; /* Rosso pastello */
+  color: #0b0c10;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-family: inherit;
+}
+
+.quit-btn:hover {
+  background: #e68a8a;
+}
+
+/* Schermata di gioco */
+.hidden {
+  display: none;
+}
+
+#game {
+  width: 90%;
+  max-width: 600px;
+  background: #222; /* Console rimane simile */
+  color: #0f0;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  position: relative;
+}
+
+#console {
+  height: 300px;
+  overflow-y: auto;
+  border: 1px solid #444;
+  padding: 10px;
+  background: #000;
+  font-size: 0.95em;
+  margin-bottom: 15px;
+}
+
+/* Stile per i messaggi della chat */
+.message {
+  margin: 5px 0;
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+
+.message.codemaster {
+  color: #0f0;
+}
+
+.message.player {
+  color: #ff0;
+  text-align: right;
+}
+
+/* Animazione fade in */
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* Form del tentativo in stile PIN */
+#guessForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#pinInputContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.pin-input {
+  width: 50px;
+  height: 50px;
+  font-size: 1.5em;
+  text-align: center;
+  margin: 0 5px;
+  border: 2px solid #45a29e;
+  border-radius: 4px;
+  background: #0b0c10;
+  color: #66fcf1;
+}
+
+/* Spazio extra per il bottone "Invia" */
+#guessForm button {
+  margin-top: 20px;
+}
+
+/* Schermata game over */
+#gameOver {
+  text-align: center;
+  margin-top: 20px;
+}
