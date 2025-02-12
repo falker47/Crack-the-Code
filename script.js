@@ -5,20 +5,68 @@ let secretCode = "";
 let attempts = 0;
 let startTime = null;
 let difficultyMultiplier = 1; // easy:1, medium:2, difficult:3
+let allowedAttempts = 0;
 
 // Mapping slider (0->4, 1->5, 2->7)
-const sliderMapping = {
-  0: 4,
-  1: 5,
-  2: 7
+const sliderMapping = { 0: 4, 1: 5, 2: 7 };
+
+// Mapping dei livelli: per ciascun binomio (difficoltà + lunghezza) c'è il nome e la lore
+const levelData = {
+  "easy": {
+    4: {
+      levelName: "Sblocca il Telefono del Bro",
+      lore: "Il telefono del tuo amico è incustodito e nasconde segreti che solo tu puoi sbloccare. Un piccolo gesto che potrebbe cambiare le sorti di una serata."
+    },
+    5: {
+      levelName: "Hackera l'account Instagram di quella persona poco simpatica",
+      lore: "Dietro i post patinati si nascondono verità scomode. Metti alla prova il tuo ingegno per scoprire cosa si cela dietro i filtri."
+    },
+    7: {
+      levelName: "Hackera la vending machine del tuo ufficio",
+      lore: "La vending machine dell'ufficio non è solo un distributore di snack: potrebbe custodire segreti nascosti tra le sue monete."
+    }
+  },
+  "medium": {
+    4: {
+      levelName: "Accedi al server privato di Starlink",
+      lore: "Starlink custodisce informazioni riservate in un server segreto. Solo un vero hacker potrà penetrare le sue difese."
+    },
+    5: {
+      levelName: "Bypassa il firewall del Pentagono",
+      lore: "Il Pentagono protegge i suoi segreti con firewall impenetrabili, ma il tuo ingegno potrebbe essere la chiave per abbatterli."
+    },
+    7: {
+      levelName: "Scopri i segreti dell'Area 51",
+      lore: "L'Area 51 è avvolta nel mistero e custodisce segreti extraterrestri. Preparati a svelare l'ignoto e a mettere in discussione tutto ciò che credevi di sapere."
+    }
+  },
+  "difficult": {
+    4: {
+      levelName: "Accedi all'Archivio del Nuovo Ordine Mondiale",
+      lore: "Nel cuore del Nuovo Ordine Mondiale, archivi segreti attendono di essere scoperti. Il potere è nelle tue mani."
+    },
+    5: {
+      levelName: "Hackera le banche mondiali",
+      lore: "Dietro le quinte delle banche si celano verità nascoste. Dimostra il tuo ingegno e accedi ai segreti delle finanze globali."
+    },
+    7: {
+      levelName: "Prendi possesso della AI del Codemaster",
+      lore: "La AI del Codemaster è una mente potente e misteriosa. Diventa il suo padrone e riscrivi le regole del potere digitale."
+    }
+  }
 };
 
 // Elementi DOM
 const codeLengthSlider = document.getElementById("codeLengthSlider");
 const codeLengthDisplay = document.getElementById("codeLengthDisplay");
 const feedbackButtons = document.querySelectorAll(".feedback-btn");
-const startGameBtn = document.getElementById("startGameBtn");
+const confirmLevelBtn = document.getElementById("confirmLevelBtn");
+const menuConsole = document.getElementById("menuConsole");
 const menuDiv = document.getElementById("menu");
+
+const loreScreen = document.getElementById("loreScreen");
+const loreConsole = document.getElementById("loreConsole");
+const startLevelBtn = document.getElementById("startLevelBtn");
 
 const gameDiv = document.getElementById("game");
 const consoleDiv = document.getElementById("console");
@@ -28,23 +76,19 @@ const finalMessageP = document.getElementById("finalMessage");
 const restartBtn = document.getElementById("restartBtn");
 const quitGameBtn = document.getElementById("quitGameBtn");
 
-// --- Funzioni di utilità ---
-
-// Aggiorna la visualizzazione della lunghezza in base allo slider
+// Aggiorna la visualizzazione della lunghezza
 codeLengthSlider.addEventListener("input", function() {
   codeLength = sliderMapping[this.value];
   codeLengthDisplay.textContent = codeLength + " cifre";
+  updateMenuConsole();
 });
 
-// Selezione del feedback: evidenzia il bottone selezionato
+// Gestione della selezione della difficoltà
 feedbackButtons.forEach(btn => {
   btn.addEventListener("click", function() {
-    // Rimuovi la classe "selected" da tutti
     feedbackButtons.forEach(b => b.classList.remove("selected"));
     this.classList.add("selected");
     difficulty = this.getAttribute("data-difficulty");
-    
-    // Imposta il moltiplicatore per il punteggio
     if (difficulty === "easy") {
       difficultyMultiplier = 1;
     } else if (difficulty === "medium") {
@@ -52,138 +96,92 @@ feedbackButtons.forEach(btn => {
     } else if (difficulty === "difficult") {
       difficultyMultiplier = 3;
     }
+    updateMenuConsole();
   });
 });
 
-// Aggiunge messaggi alla console
-function addMessage(sender, text) {
-  const msgDiv = document.createElement("div");
-  msgDiv.classList.add("message", sender);
-  msgDiv.textContent = text;
-  consoleDiv.appendChild(msgDiv);
-  // Scrolla in fondo alla console
-  consoleDiv.scrollTop = consoleDiv.scrollHeight;
-}
-
-// Genera un codice segreto con cifre uniche
-function generateSecretCode(length) {
-  let digits = ['0','1','2','3','4','5','6','7','8','9'];
-  // Shuffle
-  for (let i = digits.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [digits[i], digits[j]] = [digits[j], digits[i]];
-  }
-  return digits.slice(0, length).join("");
-}
-
-// Valuta il tentativo: conta hit e blow considerando duplicati nel tentativo
-function evaluateGuess(guess) {
-  let hit = 0;
-  let blow = 0;
-  let secretUsed = new Array(codeLength).fill(false);
-  let guessUsed = new Array(codeLength).fill(false);
-
-  // Prima passata: conta le hit (cifre corrette nella posizione giusta)
-  for (let i = 0; i < codeLength; i++) {
-    if (guess[i] === secretCode[i]) {
-      hit++;
-      secretUsed[i] = true;
-      guessUsed[i] = true;
-    }
-  }
-  
-  // Seconda passata: per ogni cifra non ancora abbinata, verifica se esiste in un'altra posizione
-  for (let i = 0; i < codeLength; i++) {
-    if (!guessUsed[i]) {
-      for (let j = 0; j < codeLength; j++) {
-        if (!secretUsed[j] && guess[i] === secretCode[j]) {
-          blow++;
-          secretUsed[j] = true;
-          break;
-        }
-      }
-    }
-  }
-  return { hit, blow };
-}
-
-// Feedback migliorati per ciascun livello di difficoltà
-function getDifficultFeedback(hit, blow, length) {
-  let total = hit + blow;
-  if (total === 0) {
-    return "Zero colpi... Il Codemaster ride di te.";
-  } else if (total < length / 2) {
-    return "Non male, ma il mistero persiste. Riprova!";
-  } else if (total === length - 1) {
-    return "Sei quasi arrivato, ma il Codemaster sa ancora come sfidarti.";
+// Funzione per aggiornare la console del menu con il titolo del livello e la riga fissa riassuntiva
+function updateMenuConsole() {
+  if (difficulty && codeLength) {
+    const data = levelData[difficulty][codeLength];
+    let difficultyText = "";
+    if(difficulty === "easy") difficultyText = "Facile";
+    else if(difficulty === "medium") difficultyText = "Medio";
+    else if(difficulty === "difficult") difficultyText = "Difficile";
+    
+    // Imposta la classe in base al codeLength per il colore
+    let lengthClass = "";
+    if (codeLength == 4) lengthClass = "length-green";
+    else if (codeLength == 5) lengthClass = "length-yellow";
+    else if (codeLength == 7) lengthClass = "length-red";
+    
+    // Utilizziamo due div: uno per il titolo e uno fisso per il riepilogo
+    let html = `<div class="levelTitleContainer">${data.levelName}</div>`;
+    html += `<div class="summaryLine">Codice: <span class="codeLengthIndicator ${lengthClass}">${codeLength} cifre</span> &nbsp;|&nbsp; Difficoltà: <span class="difficultyIndicator ${difficulty}">${difficultyText}</span></div>`;
+    menuConsole.innerHTML = html;
   } else {
-    return "Il tuo tentativo è intrigante, ma non basta per svelare il segreto.";
+    // Testo iniziale con doppio invio per la riga vuota
+    menuConsole.textContent = "Scegli le impostazioni per iniziare la sfida.\n\nInserisci la lunghezza del codice che vuoi crackare e quanto la AI del Codemaster può aiutarti";
   }
 }
 
-function getFeedbackMessage(evaluation) {
-  const { hit, blow } = evaluation;
-  if (difficulty === "easy") {
-    const miss = codeLength - (hit + blow);
-    return `Risultato: ${hit} diretti, ${blow} fuori posto, ${miss} mancati.`;
-  } else if (difficulty === "medium") {
-    return `Il tuo tentativo ha ${hit + blow} cifre corrette in totale. Continua!`;
-  } else if (difficulty === "difficult") {
-    return getDifficultFeedback(hit, blow, codeLength);
-  }
-  return "";
-}
-
-// Calcola il punteggio (formula semplificata)
-function calculateScore(elapsedSeconds) {
-  const base = codeLength * 1000 * difficultyMultiplier;
-  const score = Math.round(base / (attempts * elapsedSeconds));
-  return score;
-}
-
-// --- Gestione del gioco ---
-
-// Avvio della sfida
-startGameBtn.addEventListener("click", function() {
+// Al click sul pulsante "Conferma Livello"
+confirmLevelBtn.addEventListener("click", function() {
   if (!difficulty) {
-    alert("Per favore, seleziona un livello di feedback!");
+    alert("Per favore, seleziona una difficoltà!");
     return;
   }
-  
-  // Verifica il toggle DEV
+  const data = levelData[difficulty][codeLength];
+  if (!data) {
+    alert("Impostazioni incomplete!");
+    return;
+  }
+  // Imposta i tentativi consentiti in base alla difficoltà
+  if (difficulty === "easy") {
+    allowedAttempts = 20;
+  } else if (difficulty === "medium") {
+    allowedAttempts = 15;
+  } else if (difficulty === "difficult") {
+    allowedAttempts = 10;
+  }
+  loreConsole.innerHTML = `<strong>${data.levelName}</strong><br><br>${data.lore}<br><br><em>Tentativi disponibili: ${allowedAttempts}</em>`;
+  menuDiv.classList.add("hidden");
+  loreScreen.classList.remove("hidden");
+});
+
+// Al click sul pulsante "Parti la Sfida!" passa al gioco
+startLevelBtn.addEventListener("click", function() {
+  loreScreen.classList.add("hidden");
+  gameDiv.classList.remove("hidden");
+  startGame();
+});
+
+// Avvia la sfida: genera il codice segreto, crea gli input PIN, ecc.
+function startGame() {
   const devToggle = document.getElementById("devToggle");
-  
-  // Imposta le variabili di gioco
   secretCode = generateSecretCode(codeLength);
   attempts = 0;
   startTime = Date.now();
-  
-  // Reset della console e avvio della sfida
   consoleDiv.innerHTML = "";
   addMessage("codemaster", "Benvenuto, sfida accettata. Inizia a crackare il codice...");
-  
-  // Se il toggle DEV è attivo, mostra il codice segreto
   if (devToggle.checked) {
     addMessage("codemaster", "DEV MODE: Il codice segreto è " + secretCode);
   }
-  
-  // Genera il PIN input in base alla lunghezza scelta
   const pinInputContainer = document.getElementById("pinInputContainer");
   pinInputContainer.innerHTML = "";
   for (let i = 0; i < codeLength; i++) {
     let input = document.createElement("input");
-    input.type = "text";
+    input.type = "tel";
+    input.inputMode = "numeric";
     input.maxLength = 1;
     input.classList.add("pin-input");
     input.autocomplete = "off";
     input.pattern = "[0-9]";
     pinInputContainer.appendChild(input);
   }
-  
-  // Aggiungi eventi per gestione del focus nei PIN input
   const pinInputs = document.querySelectorAll(".pin-input");
   pinInputs.forEach((input, index) => {
-    input.addEventListener("input", function(e) {
+    input.addEventListener("input", function() {
       if (!/^\d$/.test(this.value)) {
         this.value = "";
         return;
@@ -198,37 +196,97 @@ startGameBtn.addEventListener("click", function() {
       }
     });
   });
-  
-  menuDiv.classList.add("hidden");
-  gameDiv.classList.remove("hidden");
-  gameOverDiv.classList.add("hidden");
-  
-  // Imposta il focus sul primo input PIN
   if (pinInputs.length > 0) {
     pinInputs[0].focus();
   }
-});
+}
 
-// Gestione del tasto "Abbandona Partita"
-quitGameBtn.addEventListener("click", function() {
-  if (confirm("Sei sicuro di voler abbandonare la partita?")) {
-    menuDiv.classList.remove("hidden");
-    gameDiv.classList.add("hidden");
-    gameOverDiv.classList.add("hidden");
+// Funzione per aggiungere messaggi alla console
+function addMessage(sender, text) {
+  const msgDiv = document.createElement("div");
+  msgDiv.classList.add("message", sender);
+  msgDiv.textContent = text;
+  consoleDiv.appendChild(msgDiv);
+  consoleDiv.scrollTop = consoleDiv.scrollHeight;
+}
+
+// Genera un codice segreto con cifre uniche
+function generateSecretCode(length) {
+  let digits = ['0','1','2','3','4','5','6','7','8','9'];
+  for (let i = digits.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [digits[i], digits[j]] = [digits[j], digits[i]];
   }
-});
+  return digits.slice(0, length).join("");
+}
+
+// Valuta il tentativo: calcola hit e blow (gestendo eventuali duplicati nel tentativo)
+function evaluateGuess(guess) {
+  let hit = 0, blow = 0;
+  let secretUsed = new Array(codeLength).fill(false);
+  let guessUsed = new Array(codeLength).fill(false);
+  for (let i = 0; i < codeLength; i++) {
+    if (guess[i] === secretCode[i]) {
+      hit++;
+      secretUsed[i] = true;
+      guessUsed[i] = true;
+    }
+  }
+  for (let i = 0; i < codeLength; i++) {
+    if (!guessUsed[i]) {
+      for (let j = 0; j < codeLength; j++) {
+        if (!secretUsed[j] && guess[i] === secretCode[j]) {
+          blow++;
+          secretUsed[j] = true;
+          break;
+        }
+      }
+    }
+  }
+  return { hit, blow };
+}
+
+// Feedback grafico per modalità facile; testuale per le altre
+function getFeedbackMessage(evaluation) {
+  const { hit, blow } = evaluation;
+  if (difficulty === "easy") {
+    const misses = codeLength - (hit + blow);
+    return `Feedback: ${"🟢".repeat(hit)} ${"🟡".repeat(blow)} ${"⚪".repeat(misses)}`;
+  } else if (difficulty === "medium") {
+    const total = hit + blow;
+    if (total === 1) {
+      return "Il tuo tentativo ha 1 cifra corretta in totale. Continua!";
+    } else {
+      return `Il tuo tentativo ha ${total} cifre corrette in totale. Continua!`;
+    }
+  } else if (difficulty === "difficult") {
+    let total = hit + blow;
+    if (total === 0) {
+      return "Zero colpi... Il Codemaster ride di te.";
+    } else if (total < codeLength / 2) {
+      return "Non male, ma il mistero persiste. Riprova!";
+    } else if (total === codeLength - 1) {
+      return "Sei quasi arrivato, ma il Codemaster sa ancora come sfidarti.";
+    } else {
+      return "Il tuo tentativo è intrigante, ma non basta per svelare il segreto.";
+    }
+  }
+  return "";
+}
+
+// Calcola il punteggio (formula semplificata)
+function calculateScore(elapsedSeconds) {
+  const base = codeLength * 1000 * difficultyMultiplier;
+  return Math.round(base / (attempts * elapsedSeconds));
+}
 
 // Gestione dell'invio del tentativo
 guessForm.addEventListener("submit", function(e) {
   e.preventDefault();
-  
   const pinInputs = document.querySelectorAll(".pin-input");
   let guess = "";
-  pinInputs.forEach(input => {
-    guess += input.value;
-  });
+  pinInputs.forEach(input => { guess += input.value; });
   
-  // Validazione: il codice deve contenere esattamente il numero di cifre previsto
   const regex = new RegExp(`^\\d{${codeLength}}$`);
   if (!regex.test(guess)) {
     addMessage("codemaster", `Il codice deve essere composto da ${codeLength} cifre. Riprova.`);
@@ -248,19 +306,43 @@ guessForm.addEventListener("submit", function(e) {
     const score = calculateScore(elapsedSeconds);
     addMessage("codemaster", "Codice sbloccato! Bravo, hai completato la sfida.");
     addMessage("codemaster", `Tentativi: ${attempts} | Tempo: ${elapsedSeconds.toFixed(1)} sec | Punteggio: ${score}`);
-    
     finalMessageP.textContent = `Sfida completata in ${attempts} tentativi e ${elapsedSeconds.toFixed(1)} secondi. Punteggio: ${score}`;
     gameOverDiv.classList.remove("hidden");
     gameDiv.classList.add("hidden");
+  } else {
+    let remaining = allowedAttempts - attempts;
+    if (remaining > 0) {
+      addMessage("codemaster", `Tentativi rimanenti: ${remaining}`);
+    } else {
+      addMessage("codemaster", `Tentativi esauriti! Il codice segreto era ${secretCode}.`);
+      finalMessageP.textContent = `Tentativi esauriti! Il codice era ${secretCode}.`;
+      gameOverDiv.classList.remove("hidden");
+      gameDiv.classList.add("hidden");
+    }
   }
   
-  // Pulisce i PIN input e rimette il focus sul primo
   pinInputs.forEach(input => input.value = "");
   pinInputs[0].focus();
 });
 
-// Gestione del pulsante di restart (Ricomincia)
+// Tasto "Abbandona Partita"
+quitGameBtn.addEventListener("click", function() {
+  if (confirm("Sei sicuro di voler abbandonare la partita?")) {
+    menuDiv.classList.remove("hidden");
+    gameDiv.classList.add("hidden");
+    gameOverDiv.classList.add("hidden");
+  }
+});
+
+// Pulsante di restart (Ricomincia)
 restartBtn.addEventListener("click", function() {
   menuDiv.classList.remove("hidden");
   gameOverDiv.classList.add("hidden");
+});
+
+// Gestione della Clue Board: alterna stato "marked" al click
+document.querySelectorAll(".clue-digit").forEach(digit => {
+  digit.addEventListener("click", function() {
+    this.classList.toggle("marked");
+  });
 });

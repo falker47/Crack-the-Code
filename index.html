@@ -7,10 +7,16 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Titolo fuori dal menu, sullo sfondo nero -->
+  <header id="title"><strong>Crack the Code: La Sfida del Codemaster</strong></header>
+  
   <!-- Menu Principale -->
   <div id="menu">
-    <h1>Crack the Code: La Sfida del Codemaster</h1>
-    <p>Scegli le impostazioni per iniziare la sfida.</p>
+    <!-- Console del Menu posizionata in alto, sopra lo slider -->
+    <div id="menuConsole" class="console-window">
+      Scegli le impostazioni per iniziare la sfida.<br>
+      Inserisci la lunghezza del codice che vuoi crackare e quanto la AI del Codemaster può aiutarti
+    </div>
     
     <!-- Selezione Lunghezza del Codice -->
     <div class="setting">
@@ -30,22 +36,27 @@
       <p>Seleziona il livello di feedback:</p>
       <div id="feedbackButtons">
         <button class="feedback-btn" id="btnEasy" data-difficulty="easy">
-          Facile<br>
-          <small>(Il Codemaster ti svela ogni segreto!)</small>
+          Facile<br><small>(La AI ti guida passo dopo passo)</small>
         </button>
         <button class="feedback-btn" id="btnMedium" data-difficulty="medium">
-          Medio<br>
-          <small>(Solo qualche indizio…)</small>
+          Medio<br><small>(Ti offre qualche indizio, ma niente rivelazioni)</small>
         </button>
         <button class="feedback-btn" id="btnDifficult" data-difficulty="difficult">
-          Difficile<br>
-          <small>(Tutto di sana pianta…)</small>
+          Difficile<br><small>(Nessun aiuto, solo la tua astuzia)</small>
         </button>
       </div>
     </div>
     
-    <!-- Pulsante di Avvio -->
-    <button id="startGameBtn">Inizia la Sfida!</button>
+    <!-- Pulsante per confermare il livello -->
+    <button id="confirmLevelBtn">Conferma Livello</button>
+  </div>
+  
+  <!-- Schermata di Lore -->
+  <div id="loreScreen" class="hidden">
+    <div class="console-window" id="loreConsole">
+      <!-- Il livello e la lore verranno inseriti qui dinamicamente -->
+    </div>
+    <button id="startLevelBtn">Parti la Sfida!</button>
   </div>
   
   <!-- Schermata di Gioco -->
@@ -57,6 +68,20 @@
     
     <div id="console">
       <!-- Qui verranno aggiunti i messaggi del Codemaster e del giocatore -->
+    </div>
+    
+    <!-- Clue Board per segnare gli indizi raccolti -->
+    <div id="clueBoard">
+      <div class="clue-digit" data-digit="0">0</div>
+      <div class="clue-digit" data-digit="1">1</div>
+      <div class="clue-digit" data-digit="2">2</div>
+      <div class="clue-digit" data-digit="3">3</div>
+      <div class="clue-digit" data-digit="4">4</div>
+      <div class="clue-digit" data-digit="5">5</div>
+      <div class="clue-digit" data-digit="6">6</div>
+      <div class="clue-digit" data-digit="7">7</div>
+      <div class="clue-digit" data-digit="8">8</div>
+      <div class="clue-digit" data-digit="9">9</div>
     </div>
     
     <!-- Form per l'invio del tentativo in stile PIN -->

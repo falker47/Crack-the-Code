@@ -5,20 +5,29 @@
   box-sizing: border-box;
 }
 
+/* Titolo fuori dal menu, sullo sfondo nero in grassetto */
+#title {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 2em;
+  color: #45a29e;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
 /* Impostazioni generali */
 body {
   font-family: 'Courier New', Courier, monospace;
-  background: #0b0c10; /* Sfondo molto scuro */
-  color: #66fcf1; /* Testo in ciano chiaro per un effetto Matrix */
+  background: #0b0c10;
+  color: #66fcf1;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
 }
 
-/* Stile per il menu principale */
+/* Menu principale */
 #menu {
-  background: #1f2833; /* Tonalità scura con sfumature blu */
+  background: #1f2833;
   border: 2px solid #45a29e;
   padding: 20px;
   width: 90%;
@@ -29,16 +38,55 @@ body {
   box-shadow: 0 0 15px rgba(69, 162, 158, 0.5);
 }
 
-#menu h1 {
-  color: #c5c6c7;
-}
-
 .setting {
   margin: 15px 0;
 }
 
 #codeLengthDisplay {
   font-weight: bold;
+  transition: font-size 0.5s ease;
+}
+
+/* Slider: background gradiente in palette sobria (da ciano chiaro a ciano scuro) */
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  background: linear-gradient(to right, #66fcf1, #45a29e);
+  border-radius: 5px;
+  outline: none;
+  margin: 10px 0;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #66fcf1;
+  cursor: pointer;
+  border: 2px solid #0b0c10;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #66fcf1;
+  cursor: pointer;
+  border: 2px solid #0b0c10;
+}
+
+/* Console-window per menu e lore con altezza fissa e testo in azzurro */
+.console-window {
+  background: #000;
+  color: #66fcf1;
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #444;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  height: 120px;
+  overflow-y: auto;
+  position: relative;
 }
 
 /* Bottoni dei livelli di feedback */
@@ -47,7 +95,6 @@ body {
   justify-content: space-around;
   margin-top: 10px;
 }
-
 .feedback-btn {
   padding: 10px;
   border: 1px solid #45a29e;
@@ -56,16 +103,17 @@ body {
   color: #66fcf1;
   cursor: pointer;
   width: 30%;
-  transition: background 0.3s, border-color 0.3s;
+  transition: background 0.3s, border-color 0.3s, opacity 0.3s;
 }
-
-.feedback-btn:hover,
+.feedback-btn:hover {
+  background: rgba(69, 162, 158, 0.6);
+}
 .feedback-btn.selected {
   background: #45a29e;
   border-color: #66fcf1;
 }
 
-/* Pulsante di avvio e altri bottoni */
+/* Pulsanti generici */
 button {
   padding: 10px 20px;
   margin-top: 15px;
@@ -75,9 +123,8 @@ button {
   color: #0b0c10;
   cursor: pointer;
   transition: background 0.3s;
-  font-family: inherit; /* Uniforma il font */
+  font-family: inherit;
 }
-
 button:hover {
   background: #66fcf1;
 }
@@ -88,9 +135,8 @@ button:hover {
   text-align: right;
   margin-bottom: 10px;
 }
-
 .quit-btn {
-  background: #d16d6d; /* Rosso pastello */
+  background: #d16d6d;
   color: #0b0c10;
   padding: 8px 12px;
   border-radius: 4px;
@@ -99,7 +145,6 @@ button:hover {
   transition: background 0.3s;
   font-family: inherit;
 }
-
 .quit-btn:hover {
   background: #e68a8a;
 }
@@ -108,18 +153,16 @@ button:hover {
 .hidden {
   display: none;
 }
-
 #game {
   width: 90%;
   max-width: 600px;
-  background: #222; /* Console rimane simile */
+  background: #222;
   color: #0f0;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
   position: relative;
 }
-
 #console {
   height: 300px;
   overflow-y: auto;
@@ -130,23 +173,19 @@ button:hover {
   margin-bottom: 15px;
 }
 
-/* Stile per i messaggi della chat */
+/* Messaggi nella console */
 .message {
   margin: 5px 0;
   opacity: 0;
   animation: fadeIn 0.5s forwards;
 }
-
 .message.codemaster {
-  color: #0f0;
+  color: #66fcf1;
 }
-
 .message.player {
   color: #ff0;
   text-align: right;
 }
-
-/* Animazione fade in */
 @keyframes fadeIn {
   to { opacity: 1; }
 }
@@ -157,13 +196,11 @@ button:hover {
   flex-direction: column;
   align-items: center;
 }
-
 #pinInputContainer {
   display: flex;
   justify-content: center;
   margin-bottom: 15px;
 }
-
 .pin-input {
   width: 50px;
   height: 50px;
@@ -181,8 +218,82 @@ button:hover {
   margin-top: 20px;
 }
 
-/* Schermata game over */
+/* Clue Board */
+#clueBoard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 15px 0;
+}
+.clue-digit {
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  background: #1f2833;
+  border: 1px solid #45a29e;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.3s, opacity 0.3s;
+}
+.clue-digit.marked {
+  background: #66fcf1;
+  color: #0b0c10;
+}
+.clue-digit:hover {
+  opacity: 0.8;
+}
+
+/* Schermata Game Over */
 #gameOver {
   text-align: center;
   margin-top: 20px;
+}
+
+/* Indicatori grafici per il menu */
+/* Indicatore della lunghezza in grassetto con colore variabile */
+.codeLengthIndicator {
+  font-size: 1em;
+  font-weight: bold;
+}
+.length-green {
+  color: #2ecc71;
+}
+.length-yellow {
+  color: #f1c40f;
+}
+.length-red {
+  color: #e74c3c;
+}
+
+/* Indicatore per la difficoltà */
+.difficultyIndicator {
+  font-weight: bold;
+}
+.difficultyIndicator.easy {
+  color: #2ecc71;
+}
+.difficultyIndicator.medium {
+  color: #f1c40f;
+}
+.difficultyIndicator.difficult {
+  color: #e74c3c;
+}
+
+/* Layout fisso per la riga riassuntiva nella console del menu */
+.levelTitleContainer {
+  text-align: center;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+.summaryLine {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 1em;
 }
