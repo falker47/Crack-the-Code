@@ -7,27 +7,28 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Titolo fuori dal menu, sullo sfondo nero -->
-  <header id="title"><strong>Crack the Code: La Sfida del Codemaster</strong></header>
+  <!-- Titolo del gioco, con a capo dopo ":" -->
+  <header id="title"><strong>Crack the Code:<br>La Sfida del Codemaster</strong></header>
   
   <!-- Menu Principale -->
   <div id="menu">
-    <!-- Console del Menu posizionata in alto, sopra lo slider -->
+    <!-- Console del Menu (testo iniziale aggiornato) -->
     <div id="menuConsole" class="console-window">
-      Scegli le impostazioni per iniziare la sfida.<br>
-      Inserisci la lunghezza del codice che vuoi crackare e quanto la AI del Codemaster può aiutarti
+      Scegli le impostazioni per iniziare la sfida.
+      
+      Inserisci la lunghezza del codice che vuoi crackare e quanto la AI del Codemaster può aiutarti nell'impresa
     </div>
     
     <!-- Selezione Lunghezza del Codice -->
     <div class="setting">
       <label for="codeLengthSlider">Lunghezza del codice:</label>
       <input type="range" id="codeLengthSlider" min="0" max="2" step="1" value="0">
-      <span id="codeLengthDisplay">4 cifre</span>
+      <span id="codeLengthDisplay">4 digits</span>
     </div>
     
     <!-- Toggle DEV -->
     <div class="setting">
-      <label for="devToggle">DEV: Mostra codice segreto</label>
+      <label for="devToggle">DEV: Mostra digit segreto</label>
       <input type="checkbox" id="devToggle">
     </div>
     
@@ -35,16 +36,15 @@
     <div class="setting">
       <p>Seleziona il livello di feedback:</p>
       <div id="feedbackButtons">
-        <button class="feedback-btn" id="btnEasy" data-difficulty="easy">
-          Facile<br><small>(La AI ti guida passo dopo passo)</small>
-        </button>
-        <button class="feedback-btn" id="btnMedium" data-difficulty="medium">
-          Medio<br><small>(Ti offre qualche indizio, ma niente rivelazioni)</small>
-        </button>
-        <button class="feedback-btn" id="btnDifficult" data-difficulty="difficult">
-          Difficile<br><small>(Nessun aiuto, solo la tua astuzia)</small>
-        </button>
+        <button class="feedback-btn" id="btnEasy" data-difficulty="easy" data-desc="La AI ti guida passo dopo passo">Facile</button>
+        <button class="feedback-btn" id="btnMedium" data-difficulty="medium" data-desc="Ti offre qualche indizio, ma niente rivelazioni">Medio</button>
+        <button class="feedback-btn" id="btnDifficult" data-difficulty="difficult" data-desc="Nessun aiuto, solo la tua astuzia">Difficile</button>
       </div>
+    </div>
+    
+    <!-- Console per la descrizione della difficoltà -->
+    <div id="descConsole" class="console-window">
+      &nbsp;
     </div>
     
     <!-- Pulsante per confermare il livello -->
@@ -54,34 +54,35 @@
   <!-- Schermata di Lore -->
   <div id="loreScreen" class="hidden">
     <div class="console-window" id="loreConsole">
-      <!-- Il livello e la lore verranno inseriti qui dinamicamente -->
+      <!-- Il livello e la lore verranno inseriti qui -->
     </div>
     <button id="startLevelBtn">Parti la Sfida!</button>
   </div>
   
   <!-- Schermata di Gioco -->
   <div id="game" class="hidden">
-    <!-- Controlli di gioco (tasto "Abbandona Partita") -->
-    <div class="game-controls">
+    <!-- Header di stato: Health Bar e Abbandona Partita -->
+    <div id="gameStatus">
+      <div id="healthBar"></div>
       <button id="quitGameBtn" class="quit-btn">Abbandona Partita</button>
     </div>
     
     <div id="console">
-      <!-- Qui verranno aggiunti i messaggi del Codemaster e del giocatore -->
+      <!-- Messaggi del Codemaster e del giocatore -->
     </div>
     
-    <!-- Clue Board per segnare gli indizi raccolti -->
+    <!-- Clue Board per segnare i progressi -->
     <div id="clueBoard">
-      <div class="clue-digit" data-digit="0">0</div>
-      <div class="clue-digit" data-digit="1">1</div>
-      <div class="clue-digit" data-digit="2">2</div>
-      <div class="clue-digit" data-digit="3">3</div>
-      <div class="clue-digit" data-digit="4">4</div>
-      <div class="clue-digit" data-digit="5">5</div>
-      <div class="clue-digit" data-digit="6">6</div>
-      <div class="clue-digit" data-digit="7">7</div>
-      <div class="clue-digit" data-digit="8">8</div>
-      <div class="clue-digit" data-digit="9">9</div>
+      <div class="clue-digit" data-state="none" data-digit="0">0</div>
+      <div class="clue-digit" data-state="none" data-digit="1">1</div>
+      <div class="clue-digit" data-state="none" data-digit="2">2</div>
+      <div class="clue-digit" data-state="none" data-digit="3">3</div>
+      <div class="clue-digit" data-state="none" data-digit="4">4</div>
+      <div class="clue-digit" data-state="none" data-digit="5">5</div>
+      <div class="clue-digit" data-state="none" data-digit="6">6</div>
+      <div class="clue-digit" data-state="none" data-digit="7">7</div>
+      <div class="clue-digit" data-state="none" data-digit="8">8</div>
+      <div class="clue-digit" data-state="none" data-digit="9">9</div>
     </div>
     
     <!-- Form per l'invio del tentativo in stile PIN -->

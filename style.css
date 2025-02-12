@@ -5,13 +5,14 @@
   box-sizing: border-box;
 }
 
-/* Titolo fuori dal menu, sullo sfondo nero in grassetto */
+/* Titolo del gioco: ridotto e con a capo dopo ":" */
 #title {
   font-family: 'Courier New', Courier, monospace;
-  font-size: 2em;
+  font-size: 1.8em;
   color: #45a29e;
   margin-bottom: 20px;
   font-weight: bold;
+  text-align: center;
 }
 
 /* Impostazioni generali */
@@ -47,7 +48,7 @@ body {
   transition: font-size 0.5s ease;
 }
 
-/* Slider: background gradiente in palette sobria (da ciano chiaro a ciano scuro) */
+/* Slider: background gradiente sobrio (da ciano chiaro a ciano scuro) */
 input[type="range"] {
   -webkit-appearance: none;
   width: 100%;
@@ -87,6 +88,19 @@ input[type="range"]::-moz-range-thumb {
   height: 120px;
   overflow-y: auto;
   position: relative;
+}
+
+/* Nuova console per la descrizione della difficoltà */
+#descConsole {
+  background: #000;
+  color: #66fcf1;
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #444;
+  border-radius: 4px;
+  margin: 10px 0;
+  height: 60px;
+  overflow: hidden;
 }
 
 /* Bottoni dei livelli di feedback */
@@ -129,25 +143,42 @@ button:hover {
   background: #66fcf1;
 }
 
-/* Controlli di gioco */
-.game-controls {
-  width: 100%;
-  text-align: right;
+/* Health Bar e Game Status */
+#gameStatus {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 10px;
+  width: 100%;
 }
-.quit-btn {
-  background: #d16d6d;
-  color: #0b0c10;
-  padding: 8px 12px;
+#healthBar {
+  font-family: monospace;
+  padding: 5px 10px;
   border-radius: 4px;
-  border: none;
-  cursor: pointer;
-  transition: background 0.3s;
-  font-family: inherit;
 }
-.quit-btn:hover {
-  background: #e68a8a;
+
+/* Health bar blocchi: 7 tacche */
+.healthBlock {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin: 2px;
+  border-radius: 3px;
 }
+.full-blue { background-color: #66fcf1; border: 2px solid #66fcf1; }
+.empty-blue { background-color: #0b0c10; border: 2px solid #66fcf1; }
+.full-yellow { background-color: #f1c40f; border: 2px solid #f1c40f; }
+.empty-yellow { background-color: #0b0c10; border: 2px solid #f1c40f; }
+.full-orange { background-color: #e67e22; border: 2px solid #e67e22; }
+.empty-orange { background-color: #0b0c10; border: 2px solid #e67e22; }
+.full-red { background-color: #e74c3c; border: 2px solid #e74c3c; }
+.empty-red { background-color: #0b0c10; border: 2px solid #e74c3c; }
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+.blinking { animation: blink 1s infinite; }
 
 /* Schermata di gioco */
 .hidden {
@@ -183,8 +214,7 @@ button:hover {
   color: #66fcf1;
 }
 .message.player {
-  color: #ff0;
-  text-align: right;
+  text-align: left;
 }
 @keyframes fadeIn {
   to { opacity: 1; }
@@ -213,11 +243,6 @@ button:hover {
   color: #66fcf1;
 }
 
-/* Spazio extra per il bottone "Invia" */
-#guessForm button {
-  margin-top: 20px;
-}
-
 /* Clue Board */
 #clueBoard {
   display: flex;
@@ -239,9 +264,17 @@ button:hover {
   user-select: none;
   transition: background 0.3s, opacity 0.3s;
 }
-.clue-digit.marked {
-  background: #66fcf1;
+.clue-digit[data-state="green"] {
+  background: #2ecc71;
   color: #0b0c10;
+}
+.clue-digit[data-state="yellow"] {
+  background: #f1c40f;
+  color: #0b0c10;
+}
+.clue-digit[data-state="white"] {
+  background: #ffffff;
+  color: #000;
 }
 .clue-digit:hover {
   opacity: 0.8;
@@ -253,8 +286,7 @@ button:hover {
   margin-top: 20px;
 }
 
-/* Indicatori grafici per il menu */
-/* Indicatore della lunghezza in grassetto con colore variabile */
+/* Indicatori per il riepilogo nel menu */
 .codeLengthIndicator {
   font-size: 1em;
   font-weight: bold;
@@ -268,8 +300,6 @@ button:hover {
 .length-red {
   color: #e74c3c;
 }
-
-/* Indicatore per la difficoltà */
 .difficultyIndicator {
   font-weight: bold;
 }
@@ -296,4 +326,7 @@ button:hover {
   width: 100%;
   text-align: center;
   font-size: 1em;
+}
+#loreConsole {
+  height: 250px;
 }
