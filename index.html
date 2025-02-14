@@ -7,12 +7,12 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Titolo del gioco, con a capo dopo ":" -->
+  <!-- Titolo del gioco: ridotto e con a capo dopo ":" -->
   <header id="title"><strong>Crack the Code:<br>La Sfida del Codemaster</strong></header>
   
   <!-- Menu Principale -->
   <div id="menu">
-    <!-- Console del Menu (testo iniziale aggiornato) -->
+    <!-- Console del Menu -->
     <div id="menuConsole" class="console-window">
       Scegli le impostazioni per iniziare la sfida.
       
@@ -43,9 +43,7 @@
     </div>
     
     <!-- Console per la descrizione della difficoltà -->
-    <div id="descConsole" class="console-window">
-      &nbsp;
-    </div>
+    <div id="descConsole" class="console-window"> </div>
     
     <!-- Pulsante per confermare il livello -->
     <button id="confirmLevelBtn">Conferma Livello</button>
@@ -53,18 +51,17 @@
   
   <!-- Schermata di Lore -->
   <div id="loreScreen" class="hidden">
-    <div class="console-window" id="loreConsole">
-      <!-- Il livello e la lore verranno inseriti qui -->
-    </div>
+    <div class="console-window" id="loreConsole"></div>
     <button id="startLevelBtn">Parti la Sfida!</button>
+    <button id="backToMenuBtn" class="back-btn">↩ Torna al Menu</button>
   </div>
   
   <!-- Schermata di Gioco -->
   <div id="game" class="hidden">
-    <!-- Header di stato: Health Bar e Abbandona Partita -->
+    <!-- Header di stato: Health Bar e tasto per abbandonare (X) -->
     <div id="gameStatus">
       <div id="healthBar"></div>
-      <button id="quitGameBtn" class="quit-btn">Abbandona Partita</button>
+      <button id="quitGameBtn" class="quit-btn">✖</button>
     </div>
     
     <div id="console">
@@ -94,8 +91,8 @@
   
   <!-- Schermata Game Over -->
   <div id="gameOver" class="hidden">
-    <p id="finalMessage"></p>
-    <button id="restartBtn">Ricomincia</button>
+    <div id="gameOverConsole" class="console-window"></div>
+    
   </div>
   
   <script src="script.js"></script>
