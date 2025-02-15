@@ -420,7 +420,9 @@ guessForm.addEventListener("submit", function(e) {
 
 function showGameOver(finalText, outcomeColor, won, scoreOrSecret) {
   // Mostra la console di game over (con le stesse dimensioni della console di gameplay)
+  gameOverDiv.innerHTML = "";
   gameOverConsole.innerHTML = "";
+  gameOverDiv.appendChild(gameOverConsole);
   let endMsg = document.createElement("div");
   endMsg.style.textAlign = "center";
   endMsg.style.fontSize = "1.5em";
