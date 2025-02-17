@@ -283,39 +283,30 @@ function generateSecretCode(length) {
 
 // Valuta il tentativo: calcola hit e blow
 function evaluateGuess(guess) {
-  let hit = 0, blow = 0;
-  let secretUsed = new Array(codeLength).fill(false);
-  let guessUsed = new Array(codeLength).fill(false);
+  let hit = 0, blow = 0,misses = 0;
+  let evaluationList = new Array(codeLength).fill(0); //2: digit posizionato corretamente, 1: digit presente ma posizione errata, 0: digit assente
   for (let i = 0; i < codeLength; i++) {
     if (guess[i] === secretCode[i]) { 
-      hit++; 
-      secretUsed[i] = true; 
-      guessUsed[i] = true; 
+      hit++;  
+      evaluationList[i] = 2; 
+    } else if (secretCode.includes(guess[i])){
+      blow++;
+      evaluationList[i] = 1;
     }
   }
-  for (let i = 0; i < codeLength; i++) {
-    if (!guessUsed[i]) {
-      for (let j = 0; j < codeLength; j++) {
-        if (!secretUsed[j] && guess[i] === secretCode[j]) { 
-          blow++; 
-          secretUsed[j] = true; 
-          break; 
-        }
-      }
-    }
-  }
-  return { hit, blow };
+  misses = codeLength - (hit + blow);
+  return {evaluationList, hit, blow, misses };
 }
 
 // Feedback dei tentativi
 function getFeedbackMessage(evaluation, guess) {
+  const {evaluationList, hit, blow, misses } = evaluation;
+  console.log(evaluation)
   if (difficulty === "easy") {
-    const { hit, blow } = evaluation;
-    const misses = codeLength - (hit + blow);
     let iconLine = "";
     for (let i = 0; i < codeLength; i++) {
-      if (guess[i] === secretCode[i]) iconLine += "🟢";
-      else if (secretCode.includes(guess[i])) iconLine += "🟡";
+      if (evaluationList[i] === 2) iconLine += "🟢";
+      else if (evaluationList[i] === 1) iconLine += "🟡";
       else iconLine += "⚪";
     }
     const phrases = [
@@ -327,8 +318,6 @@ function getFeedbackMessage(evaluation, guess) {
     let phrase = phrases[Math.floor(Math.random() * phrases.length)];
     return `Scansione... Vulnerabilità individuate:\n${iconLine}\n${phrase}`;
   } else if (difficulty === "medium") {
-    const { hit, blow } = evaluation;
-    const misses = codeLength - (hit + blow);
     const totalLine = `${hit}🟢 | ${blow}🟡 | ${misses}⚪`;
     const phrases = [
       "Il sistema è in allerta, ma sei ancora in gioco!",
@@ -339,7 +328,6 @@ function getFeedbackMessage(evaluation, guess) {
     let phrase = phrases[Math.floor(Math.random() * phrases.length)];
     return `Scansione... Vulnerabilità individuate:\n${totalLine}\n${phrase}`;
   } else if (difficulty === "difficult") {
-    const { hit, blow } = evaluation;
     let candidateIndex = -1;
     let isHit = false;
     for (let i = 0; i < codeLength; i++) {
