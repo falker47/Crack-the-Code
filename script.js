@@ -7,6 +7,7 @@ let attempts = 0;
 let startTime = null;
 let difficultyMultiplier = 1;
 let allowedAttempts = 7; // 7 tentativi fissi
+let guessedDigits = new Array(10).fill(false); //Per permettere al sistema dei feedback di ignorare le cifre già riportate come corrette nella difficoltà difficile.
 
 // Mapping slider: 0 -> 4 digits, 1 -> 5 digits, 2 -> 7 digits
 const sliderMapping = { 0: 4, 1: 5, 2: 7 };
@@ -221,6 +222,7 @@ function startGame() {
   const devToggle = document.getElementById("devToggle");
   secretCode = generateSecretCode(codeLength);
   attempts = 0;
+  guessedDigits.fill(false)
   startTime = Date.now();
   updateHealthBar();
   resetClueBoard();
@@ -301,7 +303,6 @@ function evaluateGuess(guess) {
 // Feedback dei tentativi
 function getFeedbackMessage(evaluation, guess) {
   const {evaluationList, hit, blow, misses } = evaluation;
-  console.log(evaluation)
   if (difficulty === "easy") {
     let iconLine = "";
     for (let i = 0; i < codeLength; i++) {
@@ -331,14 +332,19 @@ function getFeedbackMessage(evaluation, guess) {
     let candidateIndex = -1;
     let isHit = false;
     for (let i = 0; i < codeLength; i++) {
-      if (guess[i] === secretCode[i]) { candidateIndex = i; isHit = true; break; }
+      if (evaluationList[i] === 2 && !guessedDigits[parseInt(guess[i])]) { candidateIndex = i; isHit = true; guessedDigits[parseInt(guess[i])] = true; break; }
+      if (evaluationList[i] != 2 && guessedDigits[parseInt(guess[i])]) {guessedDigits[parseInt(guess[i])] = false;} //TODO sistemare un bug dove lo stato non viene aggiornato se il digit non è presente nel tentativo
     }
     if (candidateIndex === -1) {
       for (let i = 0; i < codeLength; i++) {
-        if (secretCode.includes(guess[i])) { candidateIndex = i; isHit = false; break; }
+        if (secretCode.includes(guess[i]) && !guessedDigits[parseInt(guess[i])]) { candidateIndex = i; isHit = false; break; }
       }
     }
-    if (candidateIndex === -1) return "Scansione... Vulnerabilità individuate:\nNessun digit rilevato.";
+    if (candidateIndex === -1) {
+      if (guessedDigits.includes(true)) {return "Scansione... Vulnerabilità individuate:\nNessun nuovo digit rilevato.";}
+      return "Scansione... Vulnerabilità individuate:\nNessun digit rilevato.";
+    }
+  
     const statusText = isHit ? "è stato inserito correttamente!" : "è presente!";
     let candidateDigit = parseInt(guess[candidateIndex]);
     return `Scansione... Vulnerabilità individuate:\nUn digit ${statusText}\n${getCrypticFeedback(candidateDigit)}`;
