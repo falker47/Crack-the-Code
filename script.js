@@ -331,9 +331,12 @@ function getFeedbackMessage(evaluation, guess) {
   } else if (difficulty === "difficult") {
     let candidateIndex = -1;
     let isHit = false;
+    for (let i = 0; i < 10; i++){
+      if (guessedDigits[i] && !guess.includes(String(i))){guessedDigits[i] = false;}
+    }
     for (let i = 0; i < codeLength; i++) {
       if (evaluationList[i] === 2 && !guessedDigits[parseInt(guess[i])]) { candidateIndex = i; isHit = true; guessedDigits[parseInt(guess[i])] = true; break; }
-      if (evaluationList[i] != 2 && guessedDigits[parseInt(guess[i])]) {guessedDigits[parseInt(guess[i])] = false;} //TODO sistemare un bug dove lo stato non viene aggiornato se il digit non è presente nel tentativo
+      if (evaluationList[i] != 2 && guessedDigits[parseInt(guess[i])]) {guessedDigits[parseInt(guess[i])] = false;}
     }
     if (candidateIndex === -1) {
       for (let i = 0; i < codeLength; i++) {
@@ -446,7 +449,7 @@ function showEpilogo(won, scoreOrSecret) {
   
   // Recupera i dati del livello corrente per il testo epilogo
   const data = levelData[difficulty][codeLength];
-  let epilogoText = "Esito sfida\n\n";
+  let epilogoText = "Esito sfida:\n\n";
   if (won) {
     epilogoText += data.epilogoVittoria;
     epilogoText += `\n\nPunteggio: ${scoreOrSecret}`;
