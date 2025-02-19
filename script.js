@@ -7,6 +7,7 @@ let attempts = 0;
 let startTime = null;
 let difficultyMultiplier = 1;
 let allowedAttempts = 7; // 7 tentativi fissi
+let guessedDigits = new Array(10).fill(false); //Per permettere al sistema dei feedback di ignorare le cifre già riportate come corrette nella difficoltà difficile.
 
 // Mapping slider: 0 -> 4 digits, 1 -> 5 digits, 2 -> 7 digits
 const sliderMapping = { 0: 4, 1: 5, 2: 7 };
@@ -221,6 +222,7 @@ function startGame() {
   const devToggle = document.getElementById("devToggle");
   secretCode = generateSecretCode(codeLength);
   attempts = 0;
+  guessedDigits.fill(false)
   startTime = Date.now();
   updateHealthBar();
   resetClueBoard();
@@ -283,39 +285,29 @@ function generateSecretCode(length) {
 
 // Valuta il tentativo: calcola hit e blow
 function evaluateGuess(guess) {
-  let hit = 0, blow = 0;
-  let secretUsed = new Array(codeLength).fill(false);
-  let guessUsed = new Array(codeLength).fill(false);
+  let hit = 0, blow = 0,misses = 0;
+  let evaluationList = new Array(codeLength).fill(0); //2: digit posizionato corretamente, 1: digit presente ma posizione errata, 0: digit assente
   for (let i = 0; i < codeLength; i++) {
     if (guess[i] === secretCode[i]) { 
-      hit++; 
-      secretUsed[i] = true; 
-      guessUsed[i] = true; 
+      hit++;  
+      evaluationList[i] = 2; 
+    } else if (secretCode.includes(guess[i])){
+      blow++;
+      evaluationList[i] = 1;
     }
   }
-  for (let i = 0; i < codeLength; i++) {
-    if (!guessUsed[i]) {
-      for (let j = 0; j < codeLength; j++) {
-        if (!secretUsed[j] && guess[i] === secretCode[j]) { 
-          blow++; 
-          secretUsed[j] = true; 
-          break; 
-        }
-      }
-    }
-  }
-  return { hit, blow };
+  misses = codeLength - (hit + blow);
+  return {evaluationList, hit, blow, misses };
 }
 
 // Feedback dei tentativi
 function getFeedbackMessage(evaluation, guess) {
+  const {evaluationList, hit, blow, misses } = evaluation;
   if (difficulty === "easy") {
-    const { hit, blow } = evaluation;
-    const misses = codeLength - (hit + blow);
     let iconLine = "";
     for (let i = 0; i < codeLength; i++) {
-      if (guess[i] === secretCode[i]) iconLine += "🟢";
-      else if (secretCode.includes(guess[i])) iconLine += "🟡";
+      if (evaluationList[i] === 2) iconLine += "🟢";
+      else if (evaluationList[i] === 1) iconLine += "🟡";
       else iconLine += "⚪";
     }
     const phrases = [
@@ -327,8 +319,6 @@ function getFeedbackMessage(evaluation, guess) {
     let phrase = phrases[Math.floor(Math.random() * phrases.length)];
     return `Scansione... Vulnerabilità individuate:\n${iconLine}\n${phrase}`;
   } else if (difficulty === "medium") {
-    const { hit, blow } = evaluation;
-    const misses = codeLength - (hit + blow);
     const totalLine = `${hit}🟢 | ${blow}🟡 | ${misses}⚪`;
     const phrases = [
       "Il sistema è in allerta, ma sei ancora in gioco!",
@@ -339,18 +329,25 @@ function getFeedbackMessage(evaluation, guess) {
     let phrase = phrases[Math.floor(Math.random() * phrases.length)];
     return `Scansione... Vulnerabilità individuate:\n${totalLine}\n${phrase}`;
   } else if (difficulty === "difficult") {
-    const { hit, blow } = evaluation;
     let candidateIndex = -1;
     let isHit = false;
+    for (let i = 0; i < 10; i++){
+      if (guessedDigits[i] && !guess.includes(String(i))){guessedDigits[i] = false;}
+    }
     for (let i = 0; i < codeLength; i++) {
-      if (guess[i] === secretCode[i]) { candidateIndex = i; isHit = true; break; }
+      if (evaluationList[i] === 2 && !guessedDigits[parseInt(guess[i])]) { candidateIndex = i; isHit = true; guessedDigits[parseInt(guess[i])] = true; break; }
+      if (evaluationList[i] != 2 && guessedDigits[parseInt(guess[i])]) {guessedDigits[parseInt(guess[i])] = false;}
     }
     if (candidateIndex === -1) {
       for (let i = 0; i < codeLength; i++) {
-        if (secretCode.includes(guess[i])) { candidateIndex = i; isHit = false; break; }
+        if (secretCode.includes(guess[i]) && !guessedDigits[parseInt(guess[i])]) { candidateIndex = i; isHit = false; break; }
       }
     }
-    if (candidateIndex === -1) return "Scansione... Vulnerabilità individuate:\nNessun digit rilevato.";
+    if (candidateIndex === -1) {
+      if (guessedDigits.includes(true)) {return "Scansione... Vulnerabilità individuate:\nNessun nuovo digit rilevato.";}
+      return "Scansione... Vulnerabilità individuate:\nNessun digit rilevato.";
+    }
+  
     const statusText = isHit ? "è stato inserito correttamente!" : "è presente!";
     let candidateDigit = parseInt(guess[candidateIndex]);
     return `Scansione... Vulnerabilità individuate:\nUn digit ${statusText}\n${getCrypticFeedback(candidateDigit)}`;
@@ -452,7 +449,7 @@ function showEpilogo(won, scoreOrSecret) {
   
   // Recupera i dati del livello corrente per il testo epilogo
   const data = levelData[difficulty][codeLength];
-  let epilogoText = "Esito sfida\n\n";
+  let epilogoText = "Esito sfida:\n\n";
   if (won) {
     epilogoText += data.epilogoVittoria;
     epilogoText += `\n\nPunteggio: ${scoreOrSecret}`;
