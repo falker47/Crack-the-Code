@@ -309,7 +309,10 @@ function getFeedbackMessage(evaluation, guess) {
     for (let i = 0; i < codeLength; i++) {
       if (evaluationList[i] === 2) iconLine += "🟢";
       else if (evaluationList[i] === 1) iconLine += "🟡";
-      else iconLine += "⚪";
+      else {
+        iconLine += "⚪";
+        excludeFromCards(guess[i]);
+      }
     }
     const phrases = [
       "Stai andando alla grande!",
@@ -613,6 +616,16 @@ function collapseClueCard(card) {
   card.style.transform = "scale(1)";
   // Ricostruisci la card in modalità "chiusa"
   buildClueCardGrid(card);
+}
+
+//Esclude un digit da tutte le clue card
+function excludeFromCards(digit) {
+  document.querySelectorAll(".clue-card").forEach(card => {
+    state = JSON.parse(card.dataset.digitsState);
+    if (state[digit] !== 1) {state[digit] = 1}
+    card.dataset.digitsState = JSON.stringify(state);
+    buildClueCardGrid(card);
+  });
 }
 
 // Listener globale per chiudere le clue card espanse se si clicca fuori
