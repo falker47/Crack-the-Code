@@ -329,7 +329,7 @@ button:hover { background: #66fcf1; }
 /* Opzioni (numeri) nella clue card */
 .clue-option {
   flex: 1;
-  margin: 2px;
+  padding: 2px;
   text-align: center;
   line-height: 30px;
   font-size: 1em;
