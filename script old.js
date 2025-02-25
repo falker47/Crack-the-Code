@@ -225,7 +225,7 @@ function startGame() {
   guessedDigits.fill(false)
   startTime = Date.now();
   updateHealthBar();
-  clueBoard.innerHTML="";
+  clueBoard.innerHTML = "";
   createClueCards(); // Genera la nuova clue board
   consoleDiv.innerHTML = "";
   addMessage("codemaster", "Scansione... Vulnerabilità individuate:\nInizia a crackare il digit!");
@@ -478,148 +478,153 @@ function showEpilogo(won, scoreOrSecret) {
   gameOverDiv.appendChild(backBtn);
 }
 
+function resetClueBoard() {
+  document.querySelectorAll(".clue-digit").forEach(elem => {
+    elem.setAttribute("data-state", "none");
+    elem.classList.remove("clue-green", "clue-yellow", "clue-white");
+  });
+}
+
 quitGameBtn.addEventListener("click", function() {
   if (confirm("Sei sicuro di voler abbandonare la partita?")) {
     attempts = 0;
     updateHealthBar();
+    resetClueBoard();
     menuDiv.classList.remove("hidden");
     gameDiv.classList.add("hidden");
     gameOverDiv.classList.add("hidden");
   }
 });
 
-// Funzione per costruire la griglia di una clue card
-function buildClueCardGrid(card) {
-  // Ricrea il contenuto della card in modalità "espansa" (cioè, la griglia completa)
-  card.innerHTML = "";
-  // Definiamo le righe: prima riga 3 elementi, seconda 4, terza 3
-  const rows = [
-    [0, 1, 2],
-    [3, 4, 5, 6],
-    [7, 8, 9]
-  ];
-  rows.forEach(rowDigits => {
-    digitsState = JSON.parse(card.dataset.digitsState); //0: default, 1: excluded, 2: correct
-    const row = document.createElement("div");
-    row.classList.add("clue-row");
-    rowDigits.forEach(digit => {
-      const span = document.createElement("span");
-      span.classList.add("clue-option");
-      span.textContent = digit;
-      // Se questo numero è quello corretto già salvato, imposta lo stato "correct"
-      if (digitsState[digit] === 2) {
-        span.dataset.state = "correct";
-        span.style.opacity = "1";
-        span.style.color = "#2ecc71";
-        span.style.fontWeight = "bold";
-      } else if (digitsState[digit] === 1){
-        span.dataset.state = "excluded";
-        span.style.opacity = "0.3";
-      } else {
-        span.dataset.state = "default";
-        span.style.opacity = "1";
-        span.style.color = "";
-        span.style.fontWeight = "";
-      }
-      // Aggiunge il listener per il ciclo degli stati
-      span.addEventListener("click", function(e) {
-        e.stopPropagation(); // Impedisci al click di propagarsi alla card
-        // Se la card non è espansa, espandi prima e non processare l'opzione
-        if (card.dataset.expanded === "false") {
-          expandClueCard(card);
-          return;
-        }
-        // Ciclo degli stati: default -> excluded -> correct -> default
-        if (this.dataset.state === "default") {
-          this.dataset.state = "excluded";
-          this.style.opacity = "0.3";
-          digitsState[digit] = 1;
-        } else if (this.dataset.state === "excluded") {
-          // Prima, resetta altre opzioni in "correct" nella stessa card
-          const options = card.querySelectorAll(".clue-option");
-          options.forEach(opt => {
-            if (opt.dataset.state === "correct") {
-              opt.dataset.state = "default";
-              opt.style.opacity = "1";
-              opt.style.color = "";
-              opt.style.fontWeight = "";
-              digitsState[parseInt(opt.textContent)] = 0;
-            }
-          });
-          this.dataset.state = "correct";
-          this.style.opacity = "1";
-          this.style.color = "#2ecc71";
-          this.style.fontWeight = "bold";
-          card.dataset.correctDigit = this.textContent;
-          digitsState[digit] = 2;
-        } else { // Se già "correct", torna a default
-          this.dataset.state = "default";
-          this.style.opacity = "1";
-          this.style.color = "";
-          this.style.fontWeight = "";
-          card.dataset.correctDigit = "";
-          digitsState[digit] = 0;
-        }
-        card.dataset.digitsState = JSON.stringify(digitsState);
-      });
-      row.appendChild(span);
-    });
-    card.appendChild(row);
+// Clue Board: Ciclo degli stati: none -> white -> yellow -> green -> none
+document.querySelectorAll(".clue-digit").forEach(digitElem => {
+  digitElem.addEventListener("click", function() {
+    let currentState = this.getAttribute("data-state");
+    let nextState;
+    if (currentState === "none") nextState = "white";
+    else if (currentState === "white") nextState = "yellow";
+    else if (currentState === "yellow") nextState = "green";
+    else nextState = "none";
+    this.setAttribute("data-state", nextState);
+    this.classList.remove("clue-green", "clue-yellow", "clue-white");
+    if (nextState === "green") this.classList.add("clue-green");
+    else if (nextState === "yellow") this.classList.add("clue-yellow");
+    else if (nextState === "white") this.classList.add("clue-white");
   });
-}
+});
 
-// Funzione per creare le clue cards dinamiche
+// Funzione per creare le clue card dinamiche
 function createClueCards() {
   const clueBoard = document.getElementById("clueBoard");
-  // Svuota il contenitore per ricreare tutte le card
-  clueBoard.innerHTML = "";
-  for (let pos = 0; pos < codeLength; pos++) {
-    const card = document.createElement("div");
-    card.classList.add("clue-card");
-    card.dataset.expanded = "false"; // Inizialmente chiusa
-    card.dataset.correctDigit = "";   // Nessun numero corretto scelto
-    card.dataset.digitsState = JSON.stringify(new Array(10).fill(0))
-    buildClueCardGrid(card);
-    
-    // Listener per l'espansione della card
-    card.addEventListener("click", function(e) {
-      // Se il click è su un'opzione, il listener dell'opzione già gestisce
-      if (e.target.classList.contains("clue-option")) return;
-      // Se la card non è espansa, espandila
-      if (card.dataset.expanded === "false") {
-        expandClueCard(card);
-      }
-    });
-    clueBoard.appendChild(card);
+  // Non cancellare il contenuto delle altre card già create:
+  // qui creiamo solo per quelle ancora non presenti
+  // Se vuoi ricreare tutte le card ogni volta, puoi fare: clueBoard.innerHTML = "";
+  
+  // Se il contenuto della clue board è vuoto, crea le card
+  if (!clueBoard.hasChildNodes()) {
+    for (let pos = 0; pos < codeLength; pos++) {
+      const card = document.createElement("div");
+      card.classList.add("clue-card");
+      // Stato: la card inizia chiusa (non espansa) e senza scelta corretta
+      card.dataset.expanded = "false";
+      card.dataset.correctDigit = "";
+      // Crea la griglia in 3 righe:
+      const rows = [
+        [0, 1, 2],      // Prima riga: 3 elementi
+        [3, 4, 5, 6],   // Seconda riga: 4 elementi (centrale)
+        [7, 8, 9]       // Terza riga: 3 elementi
+      ];
+      rows.forEach((rowDigits) => {
+        const row = document.createElement("div");
+        row.classList.add("clue-row");
+        rowDigits.forEach(digit => {
+          const digitSpan = document.createElement("span");
+          digitSpan.classList.add("clue-option");
+          digitSpan.textContent = digit;
+          digitSpan.dataset.state = "default"; // Stato iniziale
+          // Listener per il ciclo degli stati
+          digitSpan.addEventListener("click", function(e) {
+            e.stopPropagation(); // Impedisci che il click sull'opzione faccia espandere la card se non è già aperta
+            const parentCard = this.closest(".clue-card");
+            // Se la card non è espansa, espandila e non processare l'opzione
+            if (parentCard.dataset.expanded === "false") {
+              expandClueCard(parentCard);
+              return;
+            }
+            // Ciclo degli stati: default -> excluded -> correct -> default
+            if (this.dataset.state === "default") {
+              this.dataset.state = "excluded";
+              this.style.opacity = "0.3";
+            } else if (this.dataset.state === "excluded") {
+              this.dataset.state = "correct";
+              this.style.opacity = "1";
+              this.style.color = "#2ecc71"; // Verde
+              this.style.fontWeight = "bold";
+              parentCard.dataset.correctDigit = this.textContent;
+            } else {
+              // Se era correct, torna a default
+              this.dataset.state = "default";
+              this.style.opacity = "1";
+              this.style.color = "";
+              this.style.fontWeight = "";
+              parentCard.dataset.correctDigit = "";
+            }
+          });
+          row.appendChild(digitSpan);
+        });
+        card.appendChild(row);
+      });
+      // Aggiungi un listener sulla card per l'espansione
+      card.addEventListener("click", function(e) {
+        // Se il click è su un'opzione, il listener dell'opzione già gestisce
+        if (e.target.classList.contains("clue-option")) return;
+        // Chiudi eventuali altre card espanse
+        document.querySelectorAll(".clue-card.expanded").forEach(otherCard => {
+          if (otherCard !== card) collapseClueCard(otherCard);
+        });
+        // Se la card non è espansa, espandila
+        if (card.dataset.expanded === "false") {
+          expandClueCard(card);
+        }
+      });
+      
+      clueBoard.appendChild(card);
+    }
   }
 }
 
 // Funzione per espandere una clue card
 function expandClueCard(card) {
-  document.querySelectorAll(".clue-card.expanded").forEach(otherCard => { //Codice per chiudere le card già aperte
-    if (otherCard !== card) collapseClueCard(otherCard);
-  });
   card.dataset.expanded = "true";
   card.classList.add("expanded");
   card.style.transform = "scale(1.5)"; // Espansione proporzionale
-  // Ricostruisci la griglia per assicurarti che tutte le opzioni siano visibili
-  buildClueCardGrid(card);
 }
 
-// Funzione per chiudere una clue card
+// Funzione per collassare una clue card
 function collapseClueCard(card) {
   card.dataset.expanded = "false";
   card.classList.remove("expanded");
   card.style.transform = "scale(1)";
-  // Ricostruisci la card in modalità "chiusa"
-  buildClueCardGrid(card);
+  // Se è stato scelto un numero corretto, mostra solo quel numero in grande;
+  // altrimenti, lascia la griglia così com'è
+  if (card.dataset.correctDigit && card.dataset.correctDigit !== "") {
+    // Ricrea il contenuto della card in modalità "chiusa" con il numero scelto
+    card.innerHTML = "";
+    const chosenDiv = document.createElement("div");
+    chosenDiv.classList.add("clue-chosen");
+    chosenDiv.textContent = card.dataset.correctDigit;
+    card.appendChild(chosenDiv);
+  }
+  // Se non c'è una scelta, la card rimane con la griglia così com'è
 }
 
-// Listener globale per chiudere le clue card espanse se si clicca fuori
+// Listener globale per chiudere le clue card espanse quando si clicca fuori
 document.addEventListener("click", function(e) {
-  document.querySelectorAll(".clue-card.expanded").forEach(card => {
+  const expandedCards = document.querySelectorAll(".clue-card.expanded");
+  expandedCards.forEach(card => {
     if (!card.contains(e.target)) {
       collapseClueCard(card);
     }
   });
 });
+
