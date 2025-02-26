@@ -626,7 +626,10 @@ function collapseClueCard(card) {
 function excludeFromCards(digit) {
   document.querySelectorAll(".clue-card").forEach(card => {
     state = JSON.parse(card.dataset.digitsState);
-    if (state[digit] !== 1) {state[digit] = 1}
+    if (state[digit] !== 1) {
+      if (state[digit] === 2) {card.dataset.correctDigit = ""}
+      state[digit] = 1;
+    }
     card.dataset.digitsState = JSON.stringify(state);
     buildClueCardGrid(card);
   });
