@@ -501,6 +501,10 @@ function buildClueCardGrid(card) {
     [3, 4, 5, 6],
     [7, 8, 9]
   ];
+  if (card.dataset.correctDigit !== "" && card.dataset.expanded === "false"){
+    createChosenCard(card);
+    return;
+  }
   rows.forEach(rowDigits => {
     digitsState = JSON.parse(card.dataset.digitsState); //0: default, 1: excluded, 2: correct
     const row = document.createElement("div");
@@ -626,6 +630,21 @@ function excludeFromCards(digit) {
     card.dataset.digitsState = JSON.stringify(state);
     buildClueCardGrid(card);
   });
+}
+
+//Trasforma la card in modo da mostrare solo la cifra corretta
+function createChosenCard(card) {
+  const chosen = document.createElement("span");
+  chosen.classList.add("clue-option", "chosen");
+  chosen.textContent = card.dataset.correctDigit;
+  chosen.addEventListener("click", function(e) {
+    e.stopPropagation(); 
+    if (card.dataset.expanded === "false") {
+      expandClueCard(card);
+      return;
+    }
+  });
+  card.appendChild(chosen);
 }
 
 // Listener globale per chiudere le clue card espanse se si clicca fuori
