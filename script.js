@@ -659,15 +659,45 @@ function expandClueCard(card) {
   
   // Ricostruisci la griglia per assicurarti che tutte le opzioni siano visibili
   buildClueCardGrid(card);
+  
+  // Aggiungi un event listener per chiudere la card quando si fa tap/click all'esterno
+  setTimeout(() => {
+    document.addEventListener('click', closeCardOnOutsideClick);
+  }, 10);
 }
 
-// Funzione per chiudere una clue card
+// Funzione per chiudere la card quando si fa tap/click all'esterno
+function closeCardOnOutsideClick(e) {
+  const expandedCards = document.querySelectorAll(".clue-card.expanded");
+  if (expandedCards.length === 0) {
+    document.removeEventListener('click', closeCardOnOutsideClick);
+    return;
+  }
+  
+  let clickedInsideCard = false;
+  expandedCards.forEach(card => {
+    if (card.contains(e.target)) {
+      clickedInsideCard = true;
+    }
+  });
+  
+  if (!clickedInsideCard) {
+    expandedCards.forEach(card => {
+      collapseClueCard(card);
+    });
+    document.removeEventListener('click', closeCardOnOutsideClick);
+  }
+}
+
 function collapseClueCard(card) {
   card.dataset.expanded = "false";
   card.classList.remove("expanded");
   card.style.transform = "translate(0, 0)";
   // Ricostruisci la card in modalità "chiusa"
   buildClueCardGrid(card);
+  
+  // Rimuovi l'event listener quando la card viene chiusa
+  document.removeEventListener('click', closeCardOnOutsideClick);
 }
 
 //Esclude un digit da tutte le clue card
