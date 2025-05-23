@@ -76,21 +76,42 @@ const levelData = {
 };
 
 const crypticMessages = [
+  { digits: [1,2,3,5,8], message: "Il digit è presente nella serie di Fibonacci" },
+
   { digits: [2,3,5,7], message: "È un numero primo" },
   { digits: [1,2,5,0], message: "Il digit si trova nel valore delle monete in euro" },
-  { digits: [1,2,3,5,8], message: "Il digit è presente nella serie di Fibonacci" },
+  { digits: [5,7,8,9], message: "È un digit che si ottiene sommando due numeri primi" },
+  
   { digits: [3,6,9], message: "È un multiplo di 3" },
   { digits: [4,7,6], message: "È un digit dell'anno di caduta dell'Impero Romano d'Occidente" },
-  { digits: [8,0], message: "È un digit dell'anno dell'incoronazione di Carlo Magno" },
-  { digits: [5,7,8,9], message: "È un digit che si ottiene sommando due numeri primi" },
   { digits: [1,4,9], message: "È un quadrato perfetto" },
   { digits: [2,4,8], message: "È una potenza di 2" },
+
   { digits: [2,6], message: "È un digit che appare nel numero atomico del ferro" },
+  { digits: [1,2], message: "È un digit che appare nel numero delle fatiche di Eracle" },
   { digits: [4,7], message: "È un digit che appare nel numero atomico dell'argento" },
   { digits: [7,9], message: "È un digit che appare nel numero atomico dell'oro" },
   { digits: [2,9], message: "È un digit che appare nel numero di giorni di febbraio in un anno bisestile" },
   { digits: [0,1], message: "È un digit booleano" },
-  { digits: [7,9], message: "È un digit che non compare mai nel numero atomico di un gas nobile" }
+  { digits: [7,9], message: "È un digit che non compare mai nel numero atomico di un gas nobile" },
+  { digits: [1,8], message: "È la più piccola cifra dispari... oppure la più grande pari" },
+  { digits: [8,0], message: "È un digit dell'anno dell'incoronazione di Carlo Magno" },
+  { digits: [1,5], message: "Il digit appare sia nel giorno che nell'anno di nascita di Galileo" },
+  { digits: [3,5], message: "Il digit è un numero dispari diverso da 1 che puoi ottenere lanciando un dado a 6 facce" },
+
+  { digits: [0], message: "È un digit che non dovresti mai usare come divisore" },
+  { digits: [1], message: "Il digit dà il nome a un famoso gioco di carte" },
+  { digits: [2], message: "È l'unico numero primo ad essere anche pari" },
+  { digits: [3], message: "Viene considerato il numero perfetto" },
+  { digits: [4], message: "Il digit è il valore in punti del re a Briscola" },
+  { digits: [5], message: "Il digit sono il numero delle dita in una mano" },
+  { digits: [5], message: "Alcuni antichi l'avrebbero chiamato V" },
+  { digits: [6], message: "Il digit è... diabolico" },
+  { digits: [7], message: "È il numero delle meraviglie del mondo antico" },
+  { digits: [8], message: "È un cubo perfetto" },
+  { digits: [9], message: "Alcuni antichi l'avrebbero chiamato IX" },
+  
+  
 ];
 
 function getHealthColor() {
