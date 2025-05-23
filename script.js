@@ -16,9 +16,9 @@ const levelData = {
   "easy": {
     4: {
       levelName: "Sblocca il Telefono del Bro",
-      lore: "Il telefono del tuo amico è incustodito e nasconde segreti che solo tu puoi sbloccare. Un piccolo gesto che potrebbe cambiare le sorti di una serata.",
-      epilogoVittoria: "Il telefono è ora aperto: i segreti del Bro sono tuoi. La notte si riempie di nuove possibilità.",
-      epilogoSconfitta: "Il Bro ha protetto il suo telefono, lasciandoti nell'oscurità. I segreti rimangono nascosti."
+      lore: "Il tuo amico ha dimenticato il PIN del suo dispositivo e ha bisogno proprio di una persona con le tue skills.<br>Un piccolo gesto che potrebbe essere il preludio di qualcosa di più grande.<br>But stay humble, per ora devi dimostrare di essere un vero bro.",
+      epilogoVittoria: "Il telefono è stato sbloccato: il tuo amico ti è eternamente riconoscente e ti offrirà uno Spritz la prossima volta che fare ape.<br>Urrà!",
+      epilogoSconfitta: "Messaggio di sistema: Il telefono sarà bloccato per 345674 giorni.<br>Il tuo amico è visibilmente disperato siccome a malapena si può permettere di mangiare la pasta con il tonno.<br>Press F to pay respects."
     },
     5: {
       levelName: "Hackera l'account Instagram di quella persona poco simpatica",
