@@ -435,6 +435,15 @@ button:hover { background: #66fcf1; }
   text-align: center;
   font-size: 1em;
 }
+/* Separatori per desktop e mobile */
+.separator-desktop {
+  display: inline;
+}
+
+.separator-mobile {
+  display: none;
+}
+
 @media screen and (max-width: 768px) {
   body {
     padding: 10px;
@@ -490,6 +499,15 @@ button:hover { background: #66fcf1; }
   
   /* Mostra l'a capo su mobile */
   .mobile-break {
+    display: block;
+  }
+  
+  /* Nascondi il separatore desktop e mostra l'a capo su mobile */
+  .separator-desktop {
+    display: none;
+  }
+  
+  .separator-mobile {
     display: block;
   }
 }
