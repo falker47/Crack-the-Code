@@ -83,6 +83,12 @@ const crypticMessages = [
   { digits: [4,7,6], message: "È un digit dell'anno di caduta dell'Impero Romano d'Occidente" },
   { digits: [8,0], message: "È un digit dell'anno dell'incoronazione di Carlo Magno" },
   { digits: [5,7,8,9], message: "È un digit che si ottiene sommando due numeri primi" },
+  { digits: [1,4,9], message: "È un quadrato perfetto" },
+  { digits: [2,4,8], message: "È una potenza di 2" },
+  { digits: [2,6], message: "È un digit che appare nel numero atomico del ferro" },
+  { digits: [4,7], message: "È un digit che appare nel numero atomico dell'argento" },
+  { digits: [7,9], message: "È un digit che appare nel numero atomico dell'oro" },
+  { digits: [2,9], message: "È un digit che appare nel numero di giorni di febbraio in un anno bisestile" },
   { digits: [0,1], message: "È un digit booleano" },
   { digits: [7,9], message: "È un digit che non compare mai nel numero atomico di un gas nobile" }
 ];
