@@ -338,7 +338,8 @@ button:hover { background: #66fcf1; }
 }
 
 /* Quando la card è chiusa e ha un numero corretto, mostra solo quel numero */
-.clue-chosen {
+.clue-option.chosen {
+  position: absolute;
   width: 100%;
   height: 100%;
   font-size: 3em;
