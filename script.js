@@ -79,16 +79,11 @@ const crypticMessages = [
   { digits: [2,3,5,7], message: "È un numero primo" },
   { digits: [1,2,5,0], message: "Il digit si trova nel valore delle monete in euro" },
   { digits: [1,2,3,5,8], message: "Il digit è presente nella serie di Fibonacci" },
-  { digits: [1,3,5,7,9], message: "È un numero dispari" },
   { digits: [3,6,9], message: "È un multiplo di 3" },
   { digits: [4,7,6], message: "È un digit dell'anno di caduta dell'Impero Romano d'Occidente" },
-  { digits: [2,4,6,8,0], message: "È un numero pari" },
-  { digits: [5,6,7,8,9], message: "Il digit è maggiore di 4" },
-  { digits: [0,1,2,3,4], message: "Il digit è minore di 5" },
-  { digits: [2,6,7,8,9], message: "Il digit non apparirà mai nel punteggio di un game di tennis" },
+  { digits: [8,0], message: "È un digit dell'anno dell'incoronazione di Carlo Magno" },
   { digits: [5,7,8,9], message: "È un digit che si ottiene sommando due numeri primi" },
-  { digits: [1,4,9,2], message: "È un digit dell'anno in cui è stata scoperta l'America" },
-  { digits: [1,7,8,9], message: "È un digit dell'anno in cui c'è stata la rivoluzione francese" },
+  { digits: [0,1], message: "È un digit booleano" },
   { digits: [7,9], message: "È un digit che non compare mai nel numero atomico di un gas nobile" }
 ];
 
