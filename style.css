@@ -218,7 +218,7 @@ button:hover { background: #66fcf1; }
 #pinInputContainer {
   display: flex;
   justify-content: center;
-  margin-top: 10px; /* Spazio aggiuntivo sopra gli input */
+  margin-top: 5px; /* Ridotto da 10px a 5px per diminuire ulteriormente la distanza */
 }
 .pin-input {
   width: 50px;
@@ -363,7 +363,7 @@ button:hover { background: #66fcf1; }
 #clueBoard {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px; /* Spazio tra clueBoard e pinInputContainer */
+  margin-bottom: 15px; /* Ridotto da 20px a 15px per diminuire la distanza verticale */
   position: relative;
   height: 60px; /* Altezza fissa per il clueBoard */
 }
@@ -510,6 +510,23 @@ button:hover { background: #66fcf1; }
   .separator-mobile {
     display: block;
   }
+  
+  /* Correzione per l'allineamento delle clue card su mobile */
+  #clueBoard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto 15px auto;
+    position: relative;
+  }
+  
+  /* Assicura che le clue card siano centrate orizzontalmente */
+  .clue-card {
+    position: relative;
+    margin: 0 3px;
+    transform: translateX(0) !important;
+  }
 }
 
 /* Nasconde l'a capo su desktop */
@@ -521,6 +538,19 @@ button:hover { background: #66fcf1; }
   /* Su desktop, nascondi l'a capo */
   .summaryLine br {
     display: none;
+  }
+  
+  /* Assicura che le clue card siano allineate correttamente su schermi grandi */
+  #clueBoard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .clue-card {
+    position: relative;
+    display: inline-block;
+    margin: 0 5px;
   }
 }
 }
