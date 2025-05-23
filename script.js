@@ -225,13 +225,8 @@ function startGame() {
   guessedDigits.fill(false)
   startTime = Date.now();
   updateHealthBar();
-  clueBoard.innerHTML="";
-  createClueCards(); // Genera la nuova clue board
-  consoleDiv.innerHTML = "";
-  addMessage("codemaster", "Scansione... Vulnerabilità individuate:\nInizia a crackare il digit!");
-  if (devToggle.checked) {
-    addMessage("codemaster", "DEV MODE: Il digit segreto è " + secretCode);
-  }
+  
+  // Crea prima gli input PIN
   const pinInputContainer = document.getElementById("pinInputContainer");
   pinInputContainer.innerHTML = "";
   for (let i = 0; i < codeLength; i++) {
@@ -244,6 +239,17 @@ function startGame() {
     input.pattern = "[0-9]";
     pinInputContainer.appendChild(input);
   }
+  
+  // Poi crea le clue card allineate con gli input
+  clueBoard.innerHTML = "";
+  createClueCards();
+  
+  consoleDiv.innerHTML = "";
+  addMessage("codemaster", "Scansione... Vulnerabilità individuate:\nInizia a crackare il digit!");
+  if (devToggle.checked) {
+    addMessage("codemaster", "DEV MODE: Il digit segreto è " + secretCode);
+  }
+  
   const pinInputs = document.querySelectorAll(".pin-input");
   pinInputs.forEach((input, index) => {
     input.addEventListener("input", function() {
@@ -580,12 +586,30 @@ function createClueCards() {
   const clueBoard = document.getElementById("clueBoard");
   // Svuota il contenitore per ricreare tutte le card
   clueBoard.innerHTML = "";
+  
+  // Ottieni le posizioni degli input per allineare le clue card
+  const pinInputs = document.querySelectorAll(".pin-input");
+  const inputPositions = [];
+  
+  pinInputs.forEach(input => {
+    const rect = input.getBoundingClientRect();
+    const boardRect = clueBoard.getBoundingClientRect();
+    inputPositions.push({
+      left: rect.left - boardRect.left + (rect.width / 2) - 25, // 25 è metà della larghezza della card
+      top: 0
+    });
+  });
+  
   for (let pos = 0; pos < codeLength; pos++) {
     const card = document.createElement("div");
     card.classList.add("clue-card");
     card.dataset.expanded = "false"; // Inizialmente chiusa
     card.dataset.correctDigit = "";   // Nessun numero corretto scelto
-    card.dataset.digitsState = JSON.stringify(new Array(10).fill(0))
+    card.dataset.digitsState = JSON.stringify(new Array(10).fill(0));
+    card.style.position = "absolute";
+    card.style.left = inputPositions[pos].left + "px";
+    card.style.top = inputPositions[pos].top + "px";
+    
     buildClueCardGrid(card);
     
     // Listener per l'espansione della card
@@ -595,20 +619,43 @@ function createClueCards() {
       // Se la card non è espansa, espandila
       if (card.dataset.expanded === "false") {
         expandClueCard(card);
+      } else {
+        collapseClueCard(card);
       }
     });
+    
     clueBoard.appendChild(card);
   }
 }
 
 // Funzione per espandere una clue card
 function expandClueCard(card) {
-  document.querySelectorAll(".clue-card.expanded").forEach(otherCard => { //Codice per chiudere le card già aperte
+  document.querySelectorAll(".clue-card.expanded").forEach(otherCard => {
     if (otherCard !== card) collapseClueCard(otherCard);
   });
   card.dataset.expanded = "true";
   card.classList.add("expanded");
-  card.style.transform = "scale(1.5)"; // Espansione proporzionale
+  
+  // Calcola la posizione per l'espansione
+  const rect = card.getBoundingClientRect();
+  const boardRect = document.getElementById("clueBoard").getBoundingClientRect();
+  
+  // Adatta le dimensioni in base alla larghezza dello schermo
+  let expandedWidth = 120;
+  let expandedHeight = 120;
+  
+  // Riduci le dimensioni su schermi piccoli
+  if (window.innerWidth <= 480) {
+    expandedWidth = 100;
+    expandedHeight = 100;
+    card.style.width = expandedWidth + "px";
+    card.style.height = expandedHeight + "px";
+  }
+  
+  // Centra la card espansa rispetto alla sua posizione originale
+  const offsetX = (expandedWidth - parseInt(getComputedStyle(card).width)) / 2;
+  card.style.transform = `translate(-${offsetX}px, -${expandedHeight}px)`;
+  
   // Ricostruisci la griglia per assicurarti che tutte le opzioni siano visibili
   buildClueCardGrid(card);
 }
@@ -617,7 +664,7 @@ function expandClueCard(card) {
 function collapseClueCard(card) {
   card.dataset.expanded = "false";
   card.classList.remove("expanded");
-  card.style.transform = "scale(1)";
+  card.style.transform = "translate(0, 0)";
   // Ricostruisci la card in modalità "chiusa"
   buildClueCardGrid(card);
 }

@@ -218,7 +218,7 @@ button:hover { background: #66fcf1; }
 #pinInputContainer {
   display: flex;
   justify-content: center;
-  margin-bottom: 15px;
+  margin-top: 10px; /* Spazio aggiuntivo sopra gli input */
 }
 .pin-input {
   width: 50px;
@@ -303,20 +303,25 @@ button:hover { background: #66fcf1; }
 /* Clue Card Base */
 .clue-card {
   position: relative;
-  width: 120px;
-  height: 120px;
-  border: 1px solid #45a29e;
+  width: 50px;
+  height: 50px;
+  border: 2px solid #45a29e;
   border-radius: 4px;
-  margin: 10px;
+  margin: 0 5px;
   overflow: hidden;
-  transition: transform 0.3s;
+  transition: transform 0.3s, width 0.3s, height 0.3s;
   cursor: pointer;
   background: rgba(0, 0, 0, 0.7);
+  z-index: 1;
 }
 
 /* Quando la card è espansa, il suo z-index è maggiore */
 .clue-card.expanded {
   z-index: 10;
+  width: 120px;
+  height: 120px;
+  position: absolute;
+  transform-origin: center;
 }
 
 /* Righe della griglia */
@@ -342,9 +347,372 @@ button:hover { background: #66fcf1; }
   position: absolute;
   width: 100%;
   height: 100%;
-  font-size: 3em;
+  font-size: 2.5em;
   text-align: center;
-  line-height: 120px;
+  line-height: 50px; /* Corretto per centrare verticalmente nella card chiusa */
   color: #2ecc71;
   font-weight: bold;
+}
+
+/* Quando la card è espansa, adatta la line-height */
+.clue-card.expanded .clue-option.chosen {
+  line-height: 120px;
+}
+
+/* Clue Board */
+#clueBoard {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px; /* Spazio tra clueBoard e pinInputContainer */
+  position: relative;
+  height: 60px; /* Altezza fissa per il clueBoard */
+}
+
+/* Container per allineare le clue card con gli input */
+#clueCardContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+.clue-digit {
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  background: #1f2833;
+  border: 1px solid #45a29e;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.3s, opacity 0.3s;
+}
+.clue-digit[data-state="green"] {
+  background: #2ecc71;
+  color: #0b0c10;
+}
+.clue-digit[data-state="yellow"] {
+  background: #f1c40f;
+  color: #0b0c10;
+}
+.clue-digit[data-state="white"] {
+  background: #ffffff;
+  color: #000;
+}
+.clue-digit:hover { opacity: 0.8; }
+
+/* Schermata Game Over */
+#gameOver {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Indicatori per il riepilogo del menu */
+.codeLengthIndicator {
+  font-size: 1em;
+  font-weight: bold;
+}
+.length-green { color: #2ecc71; }
+.length-yellow { color: #f1c40f; }
+.length-red { color: #e74c3c; }
+.difficultyIndicator { font-weight: bold; }
+.difficultyIndicator.easy { color: #2ecc71; }
+.difficultyIndicator.medium { color: #f1c40f; }
+.difficultyIndicator.difficult { color: #e74c3c; }
+
+/* Layout fisso per la riga riassuntiva nella console del menu */
+.levelTitleContainer {
+  text-align: center;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+.summaryLine {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 1em;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.clue-option.chosen {
+  position: absolute;
+
+/* Media Queries per Responsività */
+@media screen and (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+  
+  #game, #menu, #loreScreen, #gameOver {
+    width: 95%;
+    padding: 15px;
+  }
+  
+  .console-window {
+    padding: 10px;
+  }
+  
+  #console {
+    height: 250px;
+  }
+  
+  .pin-input {
+    width: 40px;
+    height: 40px;
+    font-size: 1.3em;
+    margin: 0 3px;
+  }
+  
+  .clue-card {
+    width: 40px;
+    height: 40px;
+    margin: 0 3px;
+  }
+  
+  .clue-option.chosen {
+    line-height: 40px;
+  }
+  
+  button {
+    padding: 8px 15px;
+  }
+  
+  .healthBlock {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  h1 {
+    font-size: 1.5em;
+  }
+  
+  .pin-input {
+    width: 35px;
+    height: 35px;
+    font-size: 1.2em;
+    margin: 0 2px;
+  }
+  
+  .clue-card {
+    width: 35px;
+    height: 35px;
+    margin: 0 2px;
+  }
+  
+  .clue-option.chosen {
+    line-height: 35px;
+    font-size: 2em;
+  }
+  
+  #console {
+    height: 200px;
+    font-size: 0.9em;
+  }
+  
+  .healthBlock {
+    width: 12px;
+    height: 12px;
+  }
+  
+  #clueBoard {
+    margin-bottom: 15px;
+  }
+  
+  .feedback-btn {
+    padding: 8px;
+    margin: 3px;
+  }
 }
