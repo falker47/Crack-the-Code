@@ -161,7 +161,7 @@ function updateMenuConsole() {
     else if (codeLength == 7) lengthClass = "length-red";
     
     let html = `<div class="levelTitleContainer">${data.levelName}</div>`;
-    html += `<div class="summaryLine">Codice: <span class="codeLengthIndicator ${lengthClass}">${codeLength} digits</span> &nbsp;|&nbsp; Difficoltà: <span class="difficultyIndicator ${difficulty}">${difficultyText}</span></div>`;
+    html += `<div class="summaryLine">Codice: <span class="codeLengthIndicator ${lengthClass}">${codeLength} digits</span><br class="mobile-break">Difficoltà: <span class="difficultyIndicator ${difficulty}">${difficultyText}</span></div>`;
     menuConsole.innerHTML = html;
   } else {
     menuConsole.textContent = "Scegli le impostazioni per iniziare la sfida.\n\nInserisci la lunghezza del codice che vuoi crackare e quanto la AI del Codemaster può aiutarti nell'impresa";

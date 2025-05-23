@@ -482,7 +482,28 @@ button:hover { background: #66fcf1; }
     width: 15px;
     height: 15px;
   }
+  
+  /* Modifica per andare a capo nella summaryLine su mobile */
+  .summaryLine br {
+    display: block;
+  }
+  
+  /* Mostra l'a capo su mobile */
+  .mobile-break {
+    display: block;
+  }
 }
+
+/* Nasconde l'a capo su desktop */
+.mobile-break {
+  display: none;
+}
+
+@media screen and (min-width: 769px) {
+  /* Su desktop, nascondi l'a capo */
+  .summaryLine br {
+    display: none;
+  }
 }
 }
 }
