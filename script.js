@@ -21,7 +21,7 @@ const levelData = {
       epilogoSconfitta: "Messaggio di sistema: Il telefono sarà bloccato per 345674 giorni.<br>Il tuo amico è visibilmente disperato siccome a malapena si può permettere di mangiare la pasta con il tonno.<br>Press F to pay respects."
     },
     5: {
-      levelName: "Hackera l'account Instagram di quella persona poco simpatica",
+      levelName: "Hackera l'account Instagram della tua nemesi",
       lore: "Dietro i post patinati si nascondono verità scomode. Metti alla prova il tuo ingegno per scoprire cosa si cela dietro i filtri.",
       epilogoVittoria: "L'account è stato violato e i segreti sono esposti. Il potere dell'informazione è tuo.",
       epilogoSconfitta: "L'account resta impenetrabile. Il mistero rimane, e la tua sfida fallisce."
@@ -239,7 +239,7 @@ function updateHealthBar() {
   healthBar.innerHTML = blocksHTML;
 }
 
-// Avvia la sfida: resetta health bar, clue board, genera il digit segreto, crea gli input PIN
+// Avvia la sfida: resetta health bar, genera il digit segreto, crea gli input PIN
 function startGame() {
   const devToggle = document.getElementById("devToggle");
   secretCode = generateSecretCode(codeLength);
@@ -248,7 +248,7 @@ function startGame() {
   startTime = Date.now();
   updateHealthBar();
   
-  // Crea prima gli input PIN
+  // Crea gli input PIN
   const pinInputContainer = document.getElementById("pinInputContainer");
   pinInputContainer.innerHTML = "";
   for (let i = 0; i < codeLength; i++) {
@@ -261,10 +261,6 @@ function startGame() {
     input.pattern = "[0-9]";
     pinInputContainer.appendChild(input);
   }
-  
-  // Poi crea le clue card allineate con gli input
-  clueBoard.innerHTML = "";
-  createClueCards();
   
   consoleDiv.innerHTML = "";
   addMessage("codemaster", "Scansione... Vulnerabilità individuate:\nInizia a crackare il digit!");
@@ -287,6 +283,16 @@ function startGame() {
   });
   if (pinInputs.length > 0) { pinInputs[0].focus(); }
 }
+
+// Rimuovi tutte le funzioni relative alla clueboard:
+// - createClueCards()
+// - buildClueCardGrid()
+// - expandClueCard()
+// - collapseClueCard()
+// - excludeFromCards()
+// - createChosenCard()
+// - closeCardOnOutsideClick()
+// E tutti i relativi event listener
 
 // Aggiunge un messaggio alla console; per i messaggi del giocatore, usa il colore della health bar PRIMA dell'aggiornamento e grassetto
 function addMessage(sender, text) {

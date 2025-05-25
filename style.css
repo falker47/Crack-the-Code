@@ -76,6 +76,99 @@ input[type="range"]::-moz-range-thumb {
   border: 2px solid #0b0c10;
 }
 
+/* ... existing code ... */
+
+/* Rimozione di tutte le regole CSS relative alla clueboard */
+/* Rimuovi tutte le sezioni che contengono:
+- #clueBoard
+- .clue-card
+- .clue-digit
+- .clue-option
+- .clue-row
+- #clueCardContainer
+*/
+
+/* Nuovi stili per i bottoni della schermata di lore */
+.lore-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+/* Bottone principale (Inizia la sfida) */
+.primary-btn {
+  background: linear-gradient(135deg, #2ecca2, #17a181);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 15px 30px;
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: inherit;
+}
+
+.primary-btn:hover {
+  background: linear-gradient(135deg, #27ae60, #2ecc71);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(46, 204, 113, 0.6);
+}
+
+.primary-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(46, 204, 113, 0.4);
+}
+
+/* Bottone secondario (Torna al menu) */
+.secondary-btn {
+  background: transparent;
+  color: #45a29e;
+  border: 2px solid #45a29e;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.secondary-btn:hover {
+  background: #45a29e;
+  color: #0b0c10;
+  transform: translateY(-1px);
+}
+
+/* Media query per dispositivi mobili */
+@media screen and (max-width: 768px) {
+  .lore-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .primary-btn {
+    padding: 12px 25px;
+    font-size: 1.1em;
+    width: 100%;
+    max-width: 280px;
+  }
+  
+  .secondary-btn {
+    padding: 8px 15px;
+    font-size: 0.9em;
+    width: 100%;
+    max-width: 200px;
+  }
+}
+
+/* ... existing code ... */
+
 /* Console-window per menu, lore e game over con altezza fissa */
 .console-window {
   background: #000;
