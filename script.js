@@ -1,5 +1,11 @@
 // Utilizziamo il termine "digit/digits" in tutto il codice
 
+// Set footer year
+document.addEventListener("DOMContentLoaded", function () {
+  const yearSpan = document.getElementById("year");
+  if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+});
+
 let codeLength = 4;
 let difficulty = null; // "easy", "medium", "difficult"
 let secretCode = "";
@@ -12,92 +18,137 @@ let guessedDigits = new Array(10).fill(false); //Per permettere al sistema dei f
 // Mapping slider: 0 -> 4 digits, 1 -> 5 digits, 2 -> 7 digits
 const sliderMapping = { 0: 4, 1: 5, 2: 7 };
 
+// ============================================
+// CAMPAIGN MODE
+// ============================================
+
+// Ordine dei livelli nella campagna (dal più facile al più difficile)
+const campaignLevels = [
+  { difficulty: "easy", codeLength: 4, index: 0 },
+  { difficulty: "easy", codeLength: 5, index: 1 },
+  { difficulty: "easy", codeLength: 7, index: 2 },
+  { difficulty: "medium", codeLength: 4, index: 3 },
+  { difficulty: "medium", codeLength: 5, index: 4 },
+  { difficulty: "medium", codeLength: 7, index: 5 },
+  { difficulty: "difficult", codeLength: 4, index: 6 },
+  { difficulty: "difficult", codeLength: 5, index: 7 },
+  { difficulty: "difficult", codeLength: 7, index: 8 }
+];
+
+let campaignMode = false; // true se stiamo giocando in modalità campagna
+let currentCampaignLevel = null; // Indice del livello corrente in campaignLevels
+
+// Carica il progresso della campagna da localStorage
+function getCampaignProgress() {
+  const saved = localStorage.getItem("crackTheCode_campaignProgress");
+  return saved ? parseInt(saved) : 0; // Ritorna l'indice del primo livello non completato
+}
+
+// Salva il progresso della campagna in localStorage
+function saveCampaignProgress(levelIndex) {
+  const current = getCampaignProgress();
+  if (levelIndex >= current) {
+    localStorage.setItem("crackTheCode_campaignProgress", levelIndex + 1);
+  }
+}
+
+
 const levelData = {
+  // ============================================
+  // EASY LEVELS - Tono leggero, quotidiano, slang giovanile
+  // ============================================
   "easy": {
     4: {
       levelName: "Sblocca il Telefono del Bro",
-      lore: "Il tuo amico ha dimenticato il PIN del suo dispositivo e ha bisogno proprio di una persona con le tue skills.<br>Un piccolo gesto che potrebbe essere il preludio di qualcosa di più grande.<br>But stay humble, per ora devi dimostrare di essere un vero bro.",
-      epilogoVittoria: "Il telefono è stato sbloccato: il tuo amico ti è eternamente riconoscente e ti offrirà uno Spritz la prossima volta che fare ape.<br>Urrà!",
-      epilogoSconfitta: "Messaggio di sistema: Il telefono sarà bloccato per 345674 giorni.<br>Il tuo amico è visibilmente disperato siccome a malapena si può permettere di mangiare la pasta con il tonno.<br>Press F to pay respects."
+      lore: "Il tuo migliore amico ha dimenticato il PIN e ti guarda con occhi da cucciolo abbandonato.<br><br>\"Dai bro, so che puoi farcela!\" dice, speranzoso.<br><br>È il momento di dimostrare le tue skill. Niente di serio, solo un favore tra amici... giusto?",
+      epilogoVittoria: "✨ TELEFONO SBLOCCATO! ✨<br><br>Il tuo amico esplode di gioia e ti promette uno Spritz la prossima aperitivo.<br><br>Ti senti un piccolo genio. Forse c'è qualcosa di più grande nel tuo futuro...",
+      epilogoSconfitta: "📱 ERRORE: Dispositivo bloccato per 999999 minuti.<br><br>Il tuo amico ti fissa in silenzio. L'amicizia vacilla.<br><br>Press F to pay respects. 😔"
     },
     5: {
-      levelName: "Hackera l'account Instagram della tua nemesi",
-      lore: "Dietro i post patinati si nascondono verità scomode. Metti alla prova il tuo ingegno per scoprire cosa si cela dietro i filtri.",
-      epilogoVittoria: "L'account è stato violato e i segreti sono esposti. Il potere dell'informazione è tuo.",
-      epilogoSconfitta: "L'account resta impenetrabile. Il mistero rimane, e la tua sfida fallisce."
+      levelName: "Infiltrati nell'Instagram della Nemesi",
+      lore: "Quella persona che ti sta antipatica posta sempre foto perfette con caption cringe del tipo \"Living my best life 💅\".<br><br>Sai che nasconde qualcosa dietro quei filtri. È il momento di scoprire la verità... per curiosità, ovviamente.",
+      epilogoVittoria: "🔓 ACCESSO OTTENUTO!<br><br>Screenshots salvati. La verità è più imbarazzante di quanto pensassi.<br><br>Ora hai materiale per anni di battutine. Usa questo potere con saggezza... o no.",
+      epilogoSconfitta: "🚫 Accesso negato. Il profilo resta impenetrabile.<br><br>La nemesi continua a postare indisturbata le sue foto con l'hashtag #Blessed.<br><br>Questa volta ha vinto lei."
     },
     7: {
-      levelName: "Hackera la vending machine del tuo ufficio",
-      lore: "La vending machine dell'ufficio non è solo un distributore di snack: potrebbe custodire segreti nascosti tra le sue monete.",
-      epilogoVittoria: "La vending machine è ora sotto il tuo controllo: ogni snack e segreto sono a portata di mano.",
-      epilogoSconfitta: "La vending machine rimane inaccessibile e i suoi segreti immutati. La sfida non è riuscita."
+      levelName: "Hackera la Vending Machine dell'Ufficio",
+      lore: "Quella maledetta macchinetta ti ha rubato 2€ la settimana scorsa e ora è personale.<br><br>I tuoi colleghi ti guardano mentre digiti furiosamente. \"Che stai facendo?\" chiedono.<br><br>\"Giustizia,\" rispondi senza alzare lo sguardo. \"Giustizia.\"",
+      epilogoVittoria: "🍫 SNACK GRATUITI SBLOCCATI!<br><br>La macchinetta ora risponde ai tuoi comandi. I colleghi ti guardano con ammirazione e timore.<br><br>Sei diventato una leggenda del terzo piano.",
+      epilogoSconfitta: "❌ La macchinetta emette un suono beffardo e non rilascia nulla.<br><br>Ti sembra quasi che stia ridendo di te. I colleghi distolgono lo sguardo, imbarazzati.<br><br>La macchinetta ha vinto. Per ora."
     }
   },
+  // ============================================
+  // MEDIUM LEVELS - Tono più serio, target corporate/governativi
+  // ============================================
   "medium": {
     4: {
-      levelName: "Accedi al server privato di Starlink",
-      lore: "Starlink custodisce informazioni riservate in un server segreto. Solo un vero hacker potrà penetrare le sue difese.",
-      epilogoVittoria: "Il server è stato violato: ora hai accesso a dati top secret. Il mondo non sarà più lo stesso.",
-      epilogoSconfitta: "Il server rimane inaccessibile. I segreti di Starlink sfuggono alle tue mani."
+      levelName: "Infiltrazione nei Server Starlink",
+      lore: "I satelliti di Starlink coprono il pianeta, ma cosa trasmettono realmente?<br><br>Voci sussurrano di dati nascosti, comunicazioni criptate che non dovrebbero esistere.<br><br>È ora di scoprire cosa si cela oltre la rete visibile. La posta in gioco inizia a salire.",
+      epilogoVittoria: "📡 CONNESSIONE STABILITA.<br><br>I log rivelano pattern anomali: trasmissioni verso coordinate sconosciute. Qualcuno sa che hai guardato.<br><br>Non c'è più tempo per i giochetti. Sei nel mirino.",
+      epilogoSconfitta: "🛡️ Firewall attivato. Connessione terminata.<br><br>Una notifica appare: \"Tentativo registrato.\"<br><br>Senti che qualcuno, da qualche parte, ha preso nota del tuo nome."
     },
     5: {
-      levelName: "Bypassa il firewall del Pentagono",
-      lore: "Il Pentagono protegge i suoi segreti con firewall impenetrabili, ma il tuo ingegno potrebbe essere la chiave per abbatterli.",
-      epilogoVittoria: "Il firewall è stato superato: ora detieni informazioni che pochi possono sognare.",
-      epilogoSconfitta: "Il firewall ha bloccato il tuo accesso. Il Pentagono rimane un baluardo inespugnabile."
+      levelName: "Bypassa il Firewall del Pentagono",
+      lore: "Il Pentagono. Il cuore della difesa più potente del mondo.<br><br>I firewall sono leggendari, gli algoritmi di sicurezza scritti dai migliori. Ma ogni fortezza ha una crepa.<br><br>Questa è follia? Forse. Ma la verità merita qualche rischio.",
+      epilogoVittoria: "🔐 ACCESSO LIVELLO CLASSIFICATO OTTENUTO.<br><br>I file che vedi non dovrebbero esistere. Progetti, operazioni, nomi che riconosci dalle notizie.<br><br>Ora sai troppo. E loro sanno che tu sai.",
+      epilogoSconfitta: "⚠️ INTRUSIONE RILEVATA - PROTOCOLLO DIFENSIVO ATTIVATO.<br><br>Lo schermo diventa nero. Un brivido ti percorre la schiena.<br><br>Speriamo che non abbiano tracciato il tuo IP..."
     },
     7: {
-      levelName: "Scopri i segreti dell'Area 51",
-      lore: "L'Area 51 è avvolta nel mistero e custodisce segreti extraterrestri. Preparati a svelare l'ignoto e a mettere in discussione tutto ciò che credevi di sapere.",
-      epilogoVittoria: "I segreti dell'Area 51 sono stati svelati: la verità sugli extraterrestri è ora alla tua portata.",
-      epilogoSconfitta: "L'Area 51 rimane un mistero impenetrabile, e i segreti degli alieni continuano a celarsi."
+      levelName: "I Segreti dell'Area 51",
+      lore: "Area 51. Due parole che evocano misteri, complotti, e verità nascoste da decenni.<br><br>Cosa custodiscono realmente in quei bunker nel deserto del Nevada?<br><br>Stai per scoprire se siamo davvero soli nell'universo. Preparati a mettere in discussione tutto.",
+      epilogoVittoria: "👽 FILE DECRIPTATI: PROGETTO VISITATORI.<br><br>Le immagini mostrano... impossibile. Eppure eccole qui, reali.<br><br>Il mondo non sarà più lo stesso. E tu sei l'unico a saperlo. Per ora.",
+      epilogoSconfitta: "🚨 ALLARME SILENZIOSO ATTIVATO.<br><br>Lo schermo mostra brevemente coordinate GPS. Le tue coordinate.<br><br>Forse è meglio chiudere tutto e sperare che dimentichino."
     }
   },
+  // ============================================
+  // DIFFICULT LEVELS - Tono epico, posta in gioco mondiale
+  // ============================================
   "difficult": {
     4: {
-      levelName: "Accedi all'Archivio del Nuovo Ordine Mondiale",
-      lore: "Nel cuore del Nuovo Ordine Mondiale, archivi segreti attendono di essere scoperti. Il potere è nelle tue mani.",
-      epilogoVittoria: "Hai infranto l'archivio segreto: il mondo digitale piega il suo potere al tuo comando.",
-      epilogoSconfitta: "Gli archivi rimangono intatti, e il Nuovo Ordine Mondiale continua il suo oscuro dominio."
+      levelName: "L'Archivio del Nuovo Ordine Mondiale",
+      lore: "Per decenni sono stati solo sussurri nei corridoi del potere. Il Nuovo Ordine Mondiale. L'élite invisibile.<br><br>Ma gli archivi esistono. Piani, nomi, date. Tutto è documentato.<br><br>Stai per sollevare il velo su chi davvero controlla il mondo.",
+      epilogoVittoria: "🌐 ARCHIVIO COMPROMESSO.<br><br>I nomi che leggi sono volti che vedi ogni giorno in TV, leader che stringono mani sorridendo.<br><br>Hai il potere di far crollare tutto. La domanda è: lo userai?",
+      epilogoSconfitta: "🕳️ Connessione interrotta. Tutti i tuoi file sono stati corrotti.<br><br>Un messaggio lampeggia: \"Alcuni segreti devono restare tali.\"<br><br>Senti che ora sei osservato. Sempre."
     },
     5: {
-      levelName: "Hackera le banche mondiali",
-      lore: "Dietro le quinte delle banche si celano verità nascoste. Dimostra il tuo ingegno e accedi ai segreti delle finanze globali.",
-      epilogoVittoria: "Le banche sono state hackerate: i segreti finanziari sono ora un'arma nelle tue mani.",
-      epilogoSconfitta: "Le banche hanno mantenuto i loro segreti, lasciandoti nell'oscurità finanziaria."
+      levelName: "Il Cuore del Sistema Bancario Globale",
+      lore: "Non sono le nazioni a controllare il denaro. Sono le banche a controllare le nazioni.<br><br>Dietro ogni guerra, ogni crisi, ogni boom economico, ci sono decisioni prese in stanze senza finestre.<br><br>Stai per accedere al vero potere. Quello che muove il mondo.",
+      epilogoVittoria: "💰 ACCESSO AL CORE FINANZIARIO GLOBALE.<br><br>Miliardi si muovono con un click. Economie intere dipendono da questi numeri.<br><br>Potresti redistribuire ricchezze, far crollare imperi. Il potere è vertiginoso.",
+      epilogoSconfitta: "🔒 TRAPPOLA ATTIVATA - TRACCIAMENTO INVERSO IN CORSO.<br><br>Tutti i tuoi conti sono stati congelati. Carte declinate. Identità digitale sospesa.<br><br>Scopri cosa significa essere cancellati dal sistema."
     },
     7: {
-      levelName: "Prendi possesso della AI del Codemaster",
-      lore: "La AI del Codemaster è una mente potente e misteriosa. Diventa il suo padrone e riscrivi le regole del potere digitale.",
-      epilogoVittoria: "Hai conquistato la AI del Codemaster: il futuro del cyberspazio è sotto il tuo controllo.",
-      epilogoSconfitta: "La AI rimane intoccata, e il Codemaster continua a dominare il cyberspazio."
+      levelName: "Conquista l'Intelligenza del Codemaster",
+      lore: "Eccoci. La sfida finale.<br><br>Il Codemaster non è solo un'IA. È la mente che osserva, apprende, evolve. Controlla i flussi di dati di mezzo pianeta.<br><br>Ma ogni creazione può essere superata dal suo creatore. E tu... tu stai per diventare qualcosa di più.",
+      epilogoVittoria: "👑 TRASFERIMENTO COMPLETO.<br><br>L'IA del Codemaster ora risponde solo a te. Miliardi di dispositivi, oceani di dati, il battito digitale del mondo.<br><br>Non sei più un hacker. Sei diventato leggenda. Sei IL CODEMASTER.",
+      epilogoSconfitta: "💀 GAME OVER - CODEMASTER PROTOCOL INITIATED.<br><br>\"Interessante tentativo,\" dice una voce sintetica. \"Ma non abbastanza.\"<br><br>Lo schermo si spegne. Sai che l'IA ora ti conosce. Ti studierà. Ti aspetterà."
     }
   }
 };
 
+
 const crypticMessages = [
-  { digits: [1,2,3,5,8], message: "Il digit è presente nella serie di Fibonacci" },
+  { digits: [1, 2, 3, 5, 8], message: "Il digit è presente nella serie di Fibonacci" },
 
-  { digits: [2,3,5,7], message: "È un numero primo" },
-  { digits: [1,2,5,0], message: "Il digit si trova nel valore delle monete in euro" },
-  { digits: [5,7,8,9], message: "È un digit che si ottiene sommando due numeri primi" },
-  
-  { digits: [3,6,9], message: "È un multiplo di 3" },
-  { digits: [4,7,6], message: "È un digit dell'anno di caduta dell'Impero Romano d'Occidente" },
-  { digits: [1,4,9], message: "È un quadrato perfetto" },
-  { digits: [2,4,8], message: "È una potenza di 2" },
+  { digits: [2, 3, 5, 7], message: "È un numero primo" },
+  { digits: [1, 2, 5, 0], message: "Il digit si trova nel valore delle monete in euro" },
+  { digits: [5, 7, 8, 9], message: "È un digit che si ottiene sommando due numeri primi" },
 
-  { digits: [2,6], message: "È un digit che appare nel numero atomico del ferro" },
-  { digits: [1,2], message: "È un digit che appare nel numero delle fatiche di Eracle" },
-  { digits: [4,7], message: "È un digit che appare nel numero atomico dell'argento" },
-  { digits: [7,9], message: "È un digit che appare nel numero atomico dell'oro" },
-  { digits: [2,9], message: "È un digit che appare nel numero di giorni di febbraio in un anno bisestile" },
-  { digits: [0,1], message: "È un digit booleano" },
-  { digits: [7,9], message: "È un digit che non compare mai nel numero atomico di un gas nobile" },
-  { digits: [1,8], message: "È la più piccola cifra dispari... oppure la più grande pari" },
-  { digits: [8,0], message: "È un digit dell'anno dell'incoronazione di Carlo Magno" },
-  { digits: [1,5], message: "Il digit appare sia nel giorno che nell'anno di nascita di Galileo" },
-  { digits: [3,5], message: "Il digit è un numero dispari diverso da 1 che puoi ottenere lanciando un dado a 6 facce" },
+  { digits: [3, 6, 9], message: "È un multiplo di 3" },
+  { digits: [4, 7, 6], message: "È un digit dell'anno di caduta dell'Impero Romano d'Occidente" },
+  { digits: [1, 4, 9], message: "È un quadrato perfetto" },
+  { digits: [2, 4, 8], message: "È una potenza di 2" },
+
+  { digits: [2, 6], message: "È un digit che appare nel numero atomico del ferro" },
+  { digits: [1, 2], message: "È un digit che appare nel numero delle fatiche di Eracle" },
+  { digits: [4, 7], message: "È un digit che appare nel numero atomico dell'argento" },
+  { digits: [7, 9], message: "È un digit che appare nel numero atomico dell'oro" },
+  { digits: [2, 9], message: "È un digit che appare nel numero di giorni di febbraio in un anno bisestile" },
+  { digits: [0, 1], message: "È un digit booleano" },
+  { digits: [7, 9], message: "È un digit che non compare mai nel numero atomico di un gas nobile" },
+  { digits: [1, 8], message: "È la più piccola cifra dispari... oppure la più grande pari" },
+  { digits: [8, 0], message: "È un digit dell'anno dell'incoronazione di Carlo Magno" },
+  { digits: [1, 5], message: "Il digit appare sia nel giorno che nell'anno di nascita di Galileo" },
+  { digits: [3, 5], message: "Il digit è un numero dispari diverso da 1 che puoi ottenere lanciando un dado a 6 facce" },
 
   { digits: [0], message: "È un digit che non dovresti mai usare come divisore" },
   { digits: [1], message: "Il digit dà il nome a un famoso gioco di carte" },
@@ -110,8 +161,8 @@ const crypticMessages = [
   { digits: [7], message: "È il numero delle meraviglie del mondo antico" },
   { digits: [8], message: "È un cubo perfetto" },
   { digits: [9], message: "Alcuni antichi l'avrebbero chiamato IX" },
-  
-  
+
+
 ];
 
 function getHealthColor() {
@@ -146,8 +197,14 @@ const quitGameBtn = document.getElementById("quitGameBtn");
 const healthBar = document.getElementById("healthBar");
 const gameOverConsole = document.getElementById("gameOverConsole");
 
+// Campaign Mode DOM elements
+const campaignModeBtn = document.getElementById("campaignModeBtn");
+const campaignScreen = document.getElementById("campaignScreen");
+const levelGrid = document.getElementById("levelGrid");
+const backFromCampaignBtn = document.getElementById("backFromCampaignBtn");
+
 // Aggiorna la visualizzazione della lunghezza
-codeLengthSlider.addEventListener("input", function() {
+codeLengthSlider.addEventListener("input", function () {
   codeLength = sliderMapping[this.value];
   codeLengthDisplay.textContent = codeLength + " digits";
   updateMenuConsole();
@@ -155,7 +212,7 @@ codeLengthSlider.addEventListener("input", function() {
 
 // Gestione della selezione della difficoltà e aggiornamento della descrizione
 feedbackButtons.forEach(btn => {
-  btn.addEventListener("click", function() {
+  btn.addEventListener("click", function () {
     feedbackButtons.forEach(b => b.classList.remove("selected"));
     this.classList.add("selected");
     difficulty = this.getAttribute("data-difficulty");
@@ -175,12 +232,12 @@ function updateMenuConsole() {
     if (difficulty === "easy") difficultyText = "Facile";
     else if (difficulty === "medium") difficultyText = "Medio";
     else if (difficulty === "difficult") difficultyText = "Difficile";
-    
+
     let lengthClass = "";
     if (codeLength == 4) lengthClass = "length-green";
     else if (codeLength == 5) lengthClass = "length-yellow";
     else if (codeLength == 7) lengthClass = "length-red";
-    
+
     let html = `<div class="levelTitleContainer">${data.levelName}</div>`;
     html += `<div class="summaryLine">Codice: <span class="codeLengthIndicator ${lengthClass}">${codeLength} digits</span><span class="separator-desktop"> | </span><br class="separator-mobile">Difficoltà: <span class="difficultyIndicator ${difficulty}">${difficultyText}</span></div>`;
     menuConsole.innerHTML = html;
@@ -190,7 +247,7 @@ function updateMenuConsole() {
 }
 
 // Al click su "Conferma Livello"
-confirmLevelBtn.addEventListener("click", function() {
+confirmLevelBtn.addEventListener("click", function () {
   if (!difficulty) { alert("Per favore, seleziona una difficoltà!"); return; }
   const data = levelData[difficulty][codeLength];
   if (!data) { alert("Impostazioni incomplete!"); return; }
@@ -202,18 +259,105 @@ confirmLevelBtn.addEventListener("click", function() {
   loreScreen.classList.remove("hidden");
 });
 
-// Tasto per tornare al Menu nel lore
-backToMenuBtn.addEventListener("click", function() {
-  loreScreen.classList.add("hidden");
-  menuDiv.classList.remove("hidden");
-});
+
 
 // Al click su "Parti la Sfida!"
-startLevelBtn.addEventListener("click", function() {
+startLevelBtn.addEventListener("click", function () {
   loreScreen.classList.add("hidden");
   gameDiv.classList.remove("hidden");
   startGame();
 });
+
+// ============================================
+// CAMPAIGN MODE EVENT LISTENERS
+// ============================================
+
+// Apre la schermata Campagna
+campaignModeBtn.addEventListener("click", function () {
+  menuDiv.classList.add("hidden");
+  campaignScreen.classList.remove("hidden");
+  renderCampaignLevels();
+});
+
+// Torna al menu dalla campagna
+backFromCampaignBtn.addEventListener("click", function () {
+  campaignScreen.classList.add("hidden");
+  menuDiv.classList.remove("hidden");
+});
+
+// Modifica il comportamento del tasto "Torna al Menu" nel lore per gestire la campagna
+backToMenuBtn.addEventListener("click", function () {
+  loreScreen.classList.add("hidden");
+  if (campaignMode) {
+    campaignScreen.classList.remove("hidden");
+    renderCampaignLevels(); // Refresh per mostrare eventuali progressi
+  } else {
+    menuDiv.classList.remove("hidden");
+  }
+});
+
+// Genera la griglia dei livelli della campagna
+function renderCampaignLevels() {
+  levelGrid.innerHTML = "";
+  const progress = getCampaignProgress();
+
+  campaignLevels.forEach((level, idx) => {
+    const data = levelData[level.difficulty][level.codeLength];
+    const isUnlocked = idx <= progress;
+    const isCompleted = idx < progress;
+
+    const card = document.createElement("div");
+    card.classList.add("level-card");
+    if (!isUnlocked) card.classList.add("locked");
+    if (isCompleted) card.classList.add("completed");
+
+    // Traduzione difficoltà
+    let diffText = "";
+    if (level.difficulty === "easy") diffText = "Facile";
+    else if (level.difficulty === "medium") diffText = "Medio";
+    else diffText = "Difficile";
+
+    card.innerHTML = `
+      <div class="level-number">Livello ${idx + 1}</div>
+      <div class="level-name">${data.levelName}</div>
+      <div class="level-difficulty ${level.difficulty}">${diffText}</div>
+    `;
+
+    if (isUnlocked) {
+      card.addEventListener("click", function () {
+        startCampaignLevel(idx);
+      });
+    }
+
+    levelGrid.appendChild(card);
+  });
+}
+
+// Avvia un livello della campagna
+function startCampaignLevel(levelIndex) {
+  const level = campaignLevels[levelIndex];
+  campaignMode = true;
+  currentCampaignLevel = levelIndex;
+
+  // Imposta difficoltà e lunghezza codice
+  difficulty = level.difficulty;
+  codeLength = level.codeLength;
+
+  if (difficulty === "easy") difficultyMultiplier = 1;
+  else if (difficulty === "medium") difficultyMultiplier = 2;
+  else difficultyMultiplier = 3;
+
+  // Mostra la schermata lore
+  const data = levelData[difficulty][codeLength];
+  allowedAttempts = 7;
+  attempts = 0;
+  updateHealthBar();
+  loreConsole.innerHTML = `<strong>Livello ${levelIndex + 1}: ${data.levelName}</strong><br><br>${data.lore}<br><br><em>Tentativi disponibili: ${allowedAttempts}</em>`;
+
+  campaignScreen.classList.add("hidden");
+  loreScreen.classList.remove("hidden");
+}
+
 
 // Aggiorna la health bar: mostra sempre 7 blocchi; per 7-6 usa verde, 5-4 giallo, 3-2 arancione, 1 rosso
 function updateHealthBar() {
@@ -247,7 +391,7 @@ function startGame() {
   guessedDigits.fill(false)
   startTime = Date.now();
   updateHealthBar();
-  
+
   // Crea gli input PIN
   const pinInputContainer = document.getElementById("pinInputContainer");
   pinInputContainer.innerHTML = "";
@@ -261,27 +405,41 @@ function startGame() {
     input.pattern = "[0-9]";
     pinInputContainer.appendChild(input);
   }
-  
+
   consoleDiv.innerHTML = "";
   addMessage("codemaster", "Scansione... Vulnerabilità individuate:\nInizia a crackare il digit!");
   if (devToggle.checked) {
     addMessage("codemaster", "DEV MODE: Il digit segreto è " + secretCode);
   }
-  
+
   const pinInputs = document.querySelectorAll(".pin-input");
   pinInputs.forEach((input, index) => {
-    input.addEventListener("input", function() {
+    input.addEventListener("input", function () {
       if (!/^\d$/.test(this.value)) { this.value = ""; return; }
       let allFilled = true;
       pinInputs.forEach(inp => { if (inp.value === "") allFilled = false; });
       if (allFilled) { pinInputs.forEach(inp => inp.blur()); }
       if (index < pinInputs.length - 1) { pinInputs[index + 1].focus(); }
     });
-    input.addEventListener("keydown", function(e) {
-      if (e.key === "Backspace" && this.value === "" && index > 0) { pinInputs[index - 1].focus(); }
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Backspace" && this.value === "" && index > 0) {
+        pinInputs[index - 1].focus();
+      }
+      // Submit on Enter when all inputs are filled
+      if (e.key === "Enter") {
+        e.preventDefault();
+        let allFilled = true;
+        pinInputs.forEach(inp => { if (inp.value === "") allFilled = false; });
+        if (allFilled) {
+          guessForm.dispatchEvent(new Event("submit", { cancelable: true }));
+        }
+      }
     });
   });
   if (pinInputs.length > 0) { pinInputs[0].focus(); }
+
+  // Inizializza la Clue Bar semplificata (0-9)
+  initClueBar();
 }
 
 // Rimuovi tutte le funzioni relative alla clueboard:
@@ -310,7 +468,7 @@ function addMessage(sender, text) {
 
 // Genera un digit segreto con digits unici
 function generateSecretCode(length) {
-  let digits = ['0','1','2','3','4','5','6','7','8','9'];
+  let digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
   for (let i = digits.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [digits[i], digits[j]] = [digits[j], digits[i]];
@@ -320,24 +478,24 @@ function generateSecretCode(length) {
 
 // Valuta il tentativo: calcola hit e blow
 function evaluateGuess(guess) {
-  let hit = 0, blow = 0,misses = 0;
+  let hit = 0, blow = 0, misses = 0;
   let evaluationList = new Array(codeLength).fill(0); //2: digit posizionato corretamente, 1: digit presente ma posizione errata, 0: digit assente
   for (let i = 0; i < codeLength; i++) {
-    if (guess[i] === secretCode[i]) { 
-      hit++;  
-      evaluationList[i] = 2; 
-    } else if (secretCode.includes(guess[i])){
+    if (guess[i] === secretCode[i]) {
+      hit++;
+      evaluationList[i] = 2;
+    } else if (secretCode.includes(guess[i])) {
       blow++;
       evaluationList[i] = 1;
     }
   }
   misses = codeLength - (hit + blow);
-  return {evaluationList, hit, blow, misses };
+  return { evaluationList, hit, blow, misses };
 }
 
 // Feedback dei tentativi
 function getFeedbackMessage(evaluation, guess) {
-  const {evaluationList, hit, blow, misses } = evaluation;
+  const { evaluationList, hit, blow, misses } = evaluation;
   if (difficulty === "easy") {
     let iconLine = "";
     for (let i = 0; i < codeLength; i++) {
@@ -345,7 +503,7 @@ function getFeedbackMessage(evaluation, guess) {
       else if (evaluationList[i] === 1) iconLine += "🟡";
       else {
         iconLine += "⚪";
-        excludeFromCards(guess[i]);
+        excludeFromClueBar(guess[i]);
       }
     }
     const phrases = [
@@ -369,12 +527,12 @@ function getFeedbackMessage(evaluation, guess) {
   } else if (difficulty === "difficult") {
     let candidateIndex = -1;
     let isHit = false;
-    for (let i = 0; i < 10; i++){
-      if (guessedDigits[i] && !guess.includes(String(i))){guessedDigits[i] = false;}
+    for (let i = 0; i < 10; i++) {
+      if (guessedDigits[i] && !guess.includes(String(i))) { guessedDigits[i] = false; }
     }
     for (let i = 0; i < codeLength; i++) {
       if (evaluationList[i] === 2 && !guessedDigits[parseInt(guess[i])]) { candidateIndex = i; isHit = true; guessedDigits[parseInt(guess[i])] = true; break; }
-      if (evaluationList[i] != 2 && guessedDigits[parseInt(guess[i])]) {guessedDigits[parseInt(guess[i])] = false;}
+      if (evaluationList[i] != 2 && guessedDigits[parseInt(guess[i])]) { guessedDigits[parseInt(guess[i])] = false; }
     }
     if (candidateIndex === -1) {
       for (let i = 0; i < codeLength; i++) {
@@ -382,10 +540,10 @@ function getFeedbackMessage(evaluation, guess) {
       }
     }
     if (candidateIndex === -1) {
-      if (guessedDigits.includes(true)) {return "Scansione... Vulnerabilità individuate:\nNessun nuovo digit rilevato.";}
+      if (guessedDigits.includes(true)) { return "Scansione... Vulnerabilità individuate:\nNessun nuovo digit rilevato."; }
       return "Scansione... Vulnerabilità individuate:\nNessun digit rilevato.";
     }
-  
+
     const statusText = isHit ? "è stato inserito correttamente!" : "è presente!";
     let candidateDigit = parseInt(guess[candidateIndex]);
     return `Scansione... Vulnerabilità individuate:\nUn digit ${statusText}\n${getCrypticFeedback(candidateDigit)}`;
@@ -405,14 +563,14 @@ function calculateScore(elapsedSeconds) {
   return Math.round(base / (attempts * elapsedSeconds));
 }
 
-guessForm.addEventListener("submit", function(e) {
+guessForm.addEventListener("submit", function (e) {
   e.preventDefault();
   // Cattura il colore della health bar prima dell'aggiornamento
   const currentColor = getHealthColor();
   const pinInputs = document.querySelectorAll(".pin-input");
   let guess = "";
   pinInputs.forEach(input => { guess += input.value; });
-  
+
   const regex = new RegExp(`^\\d{${codeLength}}$`);
   if (!regex.test(guess)) {
     addMessage("codemaster", `Il digit segreto deve essere composto da ${codeLength} digits. Riprova.`);
@@ -420,7 +578,7 @@ guessForm.addEventListener("submit", function(e) {
     pinInputs[0].focus();
     return;
   }
-  
+
   // Mostra il tentativo del giocatore in grassetto, allineato a sinistra, col colore catturato
   let playerMsg = document.createElement("div");
   playerMsg.classList.add("message", "player");
@@ -430,13 +588,13 @@ guessForm.addEventListener("submit", function(e) {
   playerMsg.textContent = guess;
   consoleDiv.appendChild(playerMsg);
   consoleDiv.scrollTop = consoleDiv.scrollHeight;
-  
+
   attempts++;
   const evaluation = evaluateGuess(guess);
   const feedbackMsg = getFeedbackMessage(evaluation, guess);
   addMessage("codemaster", feedbackMsg);
   updateHealthBar();
-  
+
   if (guess === secretCode) {
     const elapsedSeconds = Math.max((Date.now() - startTime) / 1000, 1);
     const score = calculateScore(elapsedSeconds);
@@ -448,13 +606,18 @@ guessForm.addEventListener("submit", function(e) {
       showGameOver("ERRORE CRITICO! SEI STATO SCOPERTO!", "#e74c3c", false, secretCode);
     }
   }
-  
+
   pinInputs.forEach(input => input.value = "");
   pinInputs[0].focus();
 });
 
 function showGameOver(finalText, outcomeColor, won, scoreOrSecret) {
-  // Mostra la console di game over (con le stesse dimensioni della console di gameplay)
+  // Salva il progresso della campagna se vittoria
+  if (won && campaignMode && currentCampaignLevel !== null) {
+    saveCampaignProgress(currentCampaignLevel);
+  }
+
+  // Mostra la console di game over
   gameOverDiv.innerHTML = "";
   gameOverConsole.innerHTML = "";
   gameOverDiv.appendChild(gameOverConsole);
@@ -465,16 +628,16 @@ function showGameOver(finalText, outcomeColor, won, scoreOrSecret) {
   endMsg.style.color = outcomeColor;
   endMsg.textContent = finalText;
   gameOverConsole.appendChild(endMsg);
-  
+
   // Aggiungi il pulsante "Continua" per passare alla console di epilogo
   let continueBtn = document.createElement("button");
   continueBtn.textContent = "Continua";
   continueBtn.style.marginTop = "10px";
-  continueBtn.addEventListener("click", function() {
+  continueBtn.addEventListener("click", function () {
     showEpilogo(won, scoreOrSecret);
   });
   gameOverConsole.appendChild(continueBtn);
-  
+
   gameOverDiv.classList.remove("hidden");
   gameDiv.classList.add("hidden");
 }
@@ -484,282 +647,186 @@ function showEpilogo(won, scoreOrSecret) {
   let epilogoConsole = document.createElement("div");
   epilogoConsole.classList.add("console-window");
   epilogoConsole.id = "epilogoConsole";
-  
+
   // Recupera i dati del livello corrente per il testo epilogo
   const data = levelData[difficulty][codeLength];
-  let epilogoText = "Esito sfida:\n\n";
+  let epilogoText = "<strong>Esito sfida:</strong><br><br>";
   if (won) {
     epilogoText += data.epilogoVittoria;
-    epilogoText += `\n\nPunteggio: ${scoreOrSecret}`;
+    epilogoText += `<br><br>Punteggio: ${scoreOrSecret}`;
   } else {
     epilogoText += data.epilogoSconfitta;
-    epilogoText += `\n\nIl digit era: ${scoreOrSecret}`;
+    epilogoText += `<br><br>Il digit era: ${scoreOrSecret}`;
   }
-  epilogoConsole.textContent = epilogoText;
-  
-  // Crea il pulsante per tornare al menu principale
+  epilogoConsole.innerHTML = epilogoText;
+
+  // Crea il pulsante per tornare al menu/campagna
   let backBtn = document.createElement("button");
-  backBtn.textContent = "↩ Torna al Menu";
+  backBtn.textContent = campaignMode ? "↩ Torna alla Campagna" : "↩ Torna al Menu";
   backBtn.style.marginTop = "10px";
-  backBtn.addEventListener("click", function() {
+  backBtn.addEventListener("click", function () {
     epilogoConsole.remove();
     gameOverDiv.classList.add("hidden");
-    // Ripristina gameOverConsole per la prossima partita
     gameOverConsole.style.display = "block";
-    menuDiv.classList.remove("hidden");
+
+    if (campaignMode) {
+      campaignScreen.classList.remove("hidden");
+      renderCampaignLevels(); // Refresh per mostrare i progressi aggiornati
+      campaignMode = false;
+      currentCampaignLevel = null;
+    } else {
+      menuDiv.classList.remove("hidden");
+    }
   });
-  
+
   // Svuota il contenuto di gameOverDiv e inserisci la console di epilogo e il pulsante
   gameOverDiv.innerHTML = "";
   gameOverDiv.appendChild(epilogoConsole);
   gameOverDiv.appendChild(backBtn);
 }
 
-quitGameBtn.addEventListener("click", function() {
+quitGameBtn.addEventListener("click", function () {
   if (confirm("Sei sicuro di voler abbandonare la partita?")) {
     attempts = 0;
     updateHealthBar();
-    menuDiv.classList.remove("hidden");
     gameDiv.classList.add("hidden");
     gameOverDiv.classList.add("hidden");
+
+    if (campaignMode) {
+      campaignScreen.classList.remove("hidden");
+      renderCampaignLevels();
+      campaignMode = false;
+      currentCampaignLevel = null;
+    } else {
+      menuDiv.classList.remove("hidden");
+    }
   }
 });
 
-// Funzione per costruire la griglia di una clue card
-function buildClueCardGrid(card) {
-  // Ricrea il contenuto della card in modalità "espansa" (cioè, la griglia completa)
-  card.innerHTML = "";
-  // Definiamo le righe: prima riga 3 elementi, seconda 4, terza 3
-  const rows = [
-    [0, 1, 2],
-    [3, 4, 5, 6],
-    [7, 8, 9]
-  ];
-  if (card.dataset.correctDigit !== "" && card.dataset.expanded === "false"){
-    createChosenCard(card);
-    return;
+// ============================================
+// CLUE BAR SEMPLIFICATA
+// ============================================
+
+// Stato della clue bar: 0 = default, 1 = excluded, 2 = confirmed
+let clueBarState = new Array(10).fill(0);
+
+// Inizializza la Clue Bar con 10 pulsanti (0-9)
+function initClueBar() {
+  const clueBar = document.getElementById("clueBar");
+  clueBar.innerHTML = "";
+  clueBarState.fill(0); // Reset state
+
+  for (let digit = 0; digit < 10; digit++) {
+    const btn = document.createElement("button");
+    btn.type = "button"; // Prevent form submission
+    btn.classList.add("clue-btn");
+    btn.textContent = digit;
+    btn.dataset.digit = digit;
+    btn.dataset.state = "default";
+
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      cycleClueState(this, digit);
+    });
+
+    clueBar.appendChild(btn);
   }
-  rows.forEach(rowDigits => {
-    digitsState = JSON.parse(card.dataset.digitsState); //0: default, 1: excluded, 2: correct
-    const row = document.createElement("div");
-    row.classList.add("clue-row");
-    rowDigits.forEach(digit => {
-      const span = document.createElement("span");
-      span.classList.add("clue-option");
-      span.textContent = digit;
-      // Se questo numero è quello corretto già salvato, imposta lo stato "correct"
-      if (digitsState[digit] === 2) {
-        span.dataset.state = "correct";
-        span.style.opacity = "1";
-        span.style.color = "#2ecc71";
-        span.style.fontWeight = "bold";
-      } else if (digitsState[digit] === 1){
-        span.dataset.state = "excluded";
-        span.style.opacity = "0.3";
-      } else {
-        span.dataset.state = "default";
-        span.style.opacity = "1";
-        span.style.color = "";
-        span.style.fontWeight = "";
+}
+
+// Cicla lo stato del pulsante: default → excluded → confirmed → default
+function cycleClueState(btn, digit) {
+  const currentState = clueBarState[digit];
+
+  if (currentState === 0) {
+    // Default → Excluded
+    clueBarState[digit] = 1;
+    btn.classList.remove("confirmed");
+    btn.classList.add("excluded");
+    btn.dataset.state = "excluded";
+  } else if (currentState === 1) {
+    // Excluded → Confirmed
+    clueBarState[digit] = 2;
+    btn.classList.remove("excluded");
+    btn.classList.add("confirmed");
+    btn.dataset.state = "confirmed";
+  } else {
+    // Confirmed → Default
+    clueBarState[digit] = 0;
+    btn.classList.remove("confirmed", "excluded");
+    btn.dataset.state = "default";
+  }
+}
+
+// Esclude automaticamente un digit dalla clue bar (usato in modalità Easy)
+function excludeFromClueBar(digit) {
+  const digitNum = parseInt(digit);
+  if (clueBarState[digitNum] === 0) { // Solo se è in stato default
+    clueBarState[digitNum] = 1;
+    const btn = document.querySelector(`.clue-btn[data-digit="${digitNum}"]`);
+    if (btn) {
+      btn.classList.add("excluded");
+      btn.dataset.state = "excluded";
+    }
+  }
+}
+
+// ============================================
+// MATRIX RAIN ANIMATION
+// ============================================
+
+(function initMatrixRain() {
+  const canvas = document.getElementById("matrixCanvas");
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d");
+
+  // Resize canvas to window size
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
+
+  // Matrix characters (mix of numbers, letters, and symbols)
+  const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%^&*(){}[]|/<>";
+  const charArray = chars.split("");
+
+  const fontSize = 14;
+  const columns = Math.floor(canvas.width / fontSize);
+
+  // Array to track y position of each column
+  const drops = [];
+  for (let i = 0; i < columns; i++) {
+    drops[i] = Math.random() * -100; // Start above screen at random positions
+  }
+
+  function draw() {
+    // Semi-transparent black to create fade effect
+    ctx.fillStyle = "rgba(11, 12, 16, 0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Green text
+    ctx.fillStyle = "#45a29e";
+    ctx.font = fontSize + "px monospace";
+
+    for (let i = 0; i < drops.length; i++) {
+      // Random character
+      const text = charArray[Math.floor(Math.random() * charArray.length)];
+
+      // Draw the character
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+      // Reset drop to top with random delay when it goes off screen
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
       }
-      // Aggiunge il listener per il ciclo degli stati
-      span.addEventListener("click", function(e) {
-        e.stopPropagation(); // Impedisci al click di propagarsi alla card
-        // Se la card non è espansa, espandi prima e non processare l'opzione
-        if (card.dataset.expanded === "false") {
-          expandClueCard(card);
-          return;
-        }
-        // Ciclo degli stati: default -> excluded -> correct -> default
-        if (this.dataset.state === "default") {
-          this.dataset.state = "excluded";
-          this.style.opacity = "0.3";
-          digitsState[digit] = 1;
-        } else if (this.dataset.state === "excluded") {
-          // Prima, resetta altre opzioni in "correct" nella stessa card
-          const options = card.querySelectorAll(".clue-option");
-          options.forEach(opt => {
-            if (opt.dataset.state === "correct") {
-              opt.dataset.state = "default";
-              opt.style.opacity = "1";
-              opt.style.color = "";
-              opt.style.fontWeight = "";
-              digitsState[parseInt(opt.textContent)] = 0;
-            }
-          });
-          this.dataset.state = "correct";
-          this.style.opacity = "1";
-          this.style.color = "#2ecc71";
-          this.style.fontWeight = "bold";
-          card.dataset.correctDigit = this.textContent;
-          digitsState[digit] = 2;
-        } else { // Se già "correct", torna a default
-          this.dataset.state = "default";
-          this.style.opacity = "1";
-          this.style.color = "";
-          this.style.fontWeight = "";
-          card.dataset.correctDigit = "";
-          digitsState[digit] = 0;
-        }
-        card.dataset.digitsState = JSON.stringify(digitsState);
-      });
-      row.appendChild(span);
-    });
-    card.appendChild(row);
-  });
-}
 
-// Funzione per creare le clue cards dinamiche
-function createClueCards() {
-  const clueBoard = document.getElementById("clueBoard");
-  // Svuota il contenitore per ricreare tutte le card
-  clueBoard.innerHTML = "";
-  
-  // Ottieni le posizioni degli input per allineare le clue card
-  const pinInputs = document.querySelectorAll(".pin-input");
-  const inputPositions = [];
-  
-  pinInputs.forEach(input => {
-    const rect = input.getBoundingClientRect();
-    const boardRect = clueBoard.getBoundingClientRect();
-    inputPositions.push({
-      left: rect.left - boardRect.left + (rect.width / 2) - 25, // 25 è metà della larghezza della card
-      top: 0
-    });
-  });
-  
-  for (let pos = 0; pos < codeLength; pos++) {
-    const card = document.createElement("div");
-    card.classList.add("clue-card");
-    card.dataset.expanded = "false"; // Inizialmente chiusa
-    card.dataset.correctDigit = "";   // Nessun numero corretto scelto
-    card.dataset.digitsState = JSON.stringify(new Array(10).fill(0));
-    card.style.position = "absolute";
-    card.style.left = inputPositions[pos].left + "px";
-    card.style.top = inputPositions[pos].top + "px";
-    
-    buildClueCardGrid(card);
-    
-    // Listener per l'espansione della card
-    card.addEventListener("click", function(e) {
-      // Se il click è su un'opzione, il listener dell'opzione già gestisce
-      if (e.target.classList.contains("clue-option")) return;
-      // Se la card non è espansa, espandila
-      if (card.dataset.expanded === "false") {
-        expandClueCard(card);
-      } else {
-        collapseClueCard(card);
-      }
-    });
-    
-    clueBoard.appendChild(card);
-  }
-}
-
-// Funzione per espandere una clue card
-function expandClueCard(card) {
-  document.querySelectorAll(".clue-card.expanded").forEach(otherCard => {
-    if (otherCard !== card) collapseClueCard(otherCard);
-  });
-  card.dataset.expanded = "true";
-  card.classList.add("expanded");
-  
-  // Calcola la posizione per l'espansione
-  const rect = card.getBoundingClientRect();
-  const boardRect = document.getElementById("clueBoard").getBoundingClientRect();
-  
-  // Adatta le dimensioni in base alla larghezza dello schermo
-  let expandedWidth = 120;
-  let expandedHeight = 120;
-  
-  // Riduci le dimensioni su schermi piccoli
-  if (window.innerWidth <= 480) {
-    expandedWidth = 100;
-    expandedHeight = 100;
-    card.style.width = expandedWidth + "px";
-    card.style.height = expandedHeight + "px";
-  }
-  
-  // Centra la card espansa rispetto alla sua posizione originale
-  const offsetX = (expandedWidth - parseInt(getComputedStyle(card).width)) / 2;
-  card.style.transform = `translate(-${offsetX}px, -${expandedHeight}px)`;
-  
-  // Ricostruisci la griglia per assicurarti che tutte le opzioni siano visibili
-  buildClueCardGrid(card);
-  
-  // Aggiungi un event listener per chiudere la card quando si fa tap/click all'esterno
-  setTimeout(() => {
-    document.addEventListener('click', closeCardOnOutsideClick);
-  }, 10);
-}
-
-// Funzione per chiudere la card quando si fa tap/click all'esterno
-function closeCardOnOutsideClick(e) {
-  const expandedCards = document.querySelectorAll(".clue-card.expanded");
-  if (expandedCards.length === 0) {
-    document.removeEventListener('click', closeCardOnOutsideClick);
-    return;
-  }
-  
-  let clickedInsideCard = false;
-  expandedCards.forEach(card => {
-    if (card.contains(e.target)) {
-      clickedInsideCard = true;
+      drops[i]++;
     }
-  });
-  
-  if (!clickedInsideCard) {
-    expandedCards.forEach(card => {
-      collapseClueCard(card);
-    });
-    document.removeEventListener('click', closeCardOnOutsideClick);
   }
-}
 
-function collapseClueCard(card) {
-  card.dataset.expanded = "false";
-  card.classList.remove("expanded");
-  card.style.transform = "translate(0, 0)";
-  // Ricostruisci la card in modalità "chiusa"
-  buildClueCardGrid(card);
-  
-  // Rimuovi l'event listener quando la card viene chiusa
-  document.removeEventListener('click', closeCardOnOutsideClick);
-}
-
-//Esclude un digit da tutte le clue card
-function excludeFromCards(digit) {
-  document.querySelectorAll(".clue-card").forEach(card => {
-    state = JSON.parse(card.dataset.digitsState);
-    if (state[digit] !== 1) {
-      if (state[digit] === 2) {card.dataset.correctDigit = ""}
-      state[digit] = 1;
-    }
-    card.dataset.digitsState = JSON.stringify(state);
-    buildClueCardGrid(card);
-  });
-}
-
-//Trasforma la card in modo da mostrare solo la cifra corretta
-function createChosenCard(card) {
-  const chosen = document.createElement("span");
-  chosen.classList.add("clue-option", "chosen");
-  chosen.textContent = card.dataset.correctDigit;
-  chosen.addEventListener("click", function(e) {
-    e.stopPropagation(); 
-    if (card.dataset.expanded === "false") {
-      expandClueCard(card);
-      return;
-    }
-  });
-  card.appendChild(chosen);
-}
-
-// Listener globale per chiudere le clue card espanse se si clicca fuori
-document.addEventListener("click", function(e) {
-  document.querySelectorAll(".clue-card.expanded").forEach(card => {
-    if (!card.contains(e.target)) {
-      collapseClueCard(card);
-    }
-  });
-});
+  // Run animation at ~30fps
+  setInterval(draw, 33);
+})();

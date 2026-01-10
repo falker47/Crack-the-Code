@@ -1,88 +1,125 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="icon" type="image/png" href="favicon.png">
   <title>Crack the Code: La Sfida del Codemaster</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <!-- Titolo del gioco: ridotto e con a capo dopo ":" -->
-  <header id="title"><strong>Crack the Code:<br>La Sfida del Codemaster</strong></header>
-  
+  <!-- Matrix Rain Background -->
+  <canvas id="matrixCanvas"></canvas>
+
+  <!-- Titolo del gioco con effetto Glitch -->
+  <header id="title" data-text="Crack the Code: La Sfida del Codemaster"><strong>Crack the Code:<br>La Sfida del
+      Codemaster</strong></header>
+
   <!-- Menu Principale -->
   <div id="menu">
     <!-- Console del Menu -->
     <div id="menuConsole" class="console-window">
       Scegli le impostazioni per iniziare la sfida.
-      
+
       Inserisci la lunghezza del codice che vuoi crackare e quanto la AI del Codemaster può aiutarti nell'impresa
     </div>
-    
+
     <!-- Selezione Lunghezza del Codice -->
     <div class="setting">
       <label for="codeLengthSlider">Lunghezza del codice:</label>
       <input type="range" id="codeLengthSlider" min="0" max="2" step="1" value="0">
       <span id="codeLengthDisplay">4 digits</span>
     </div>
-    
+
     <!-- Toggle DEV -->
     <div class="setting">
       <label for="devToggle">DEV: Mostra digit segreto</label>
       <input type="checkbox" id="devToggle">
     </div>
-    
+
     <!-- Selezione Tipo di Feedback -->
     <div class="setting">
       <p>Seleziona il livello di feedback:</p>
       <div id="feedbackButtons">
-        <button class="feedback-btn" id="btnEasy" data-difficulty="easy" data-desc="L'AI del codemaster è a tua completa disposizione">Facile</button>
-        <button class="feedback-btn" id="btnMedium" data-difficulty="medium" data-desc="L'AI del codemaster offre qualche indizio, ma il pieno potenziale rimane bloccato">Medio</button>
-        <button class="feedback-btn" id="btnDifficult" data-difficulty="difficult" data-desc="L'AI del codemaster viene censurata, può aiutarci solo fornendoci indizi criptici"">Difficile</button>
+        <button class="feedback-btn" id="btnEasy" data-difficulty="easy"
+          data-desc="L'AI del codemaster è a tua completa disposizione">Facile</button>
+        <button class="feedback-btn" id="btnMedium" data-difficulty="medium"
+          data-desc="L'AI del codemaster offre qualche indizio, ma il pieno potenziale rimane bloccato">Medio</button>
+        <button class="feedback-btn" id="btnDifficult" data-difficulty="difficult"
+          data-desc="L'AI del codemaster viene censurata, può aiutarci solo fornendoci indizi criptici"">Difficile</button>
       </div>
     </div>
     
     <!-- Console per la descrizione della difficoltà -->
-    <div id="descConsole" class="console-window"> </div>
-    
-    <!-- Pulsante per confermare il livello -->
-    <button id="confirmLevelBtn">Conferma Livello</button>
-  </div>
-  
-  <!-- Schermata di Lore -->
-  <div id="loreScreen" class="hidden">
-    <div class="console-window" id="loreConsole"></div>
-    <div class="lore-buttons">
-      <button id="backToMenuBtn" class="secondary-btn">↩ Torna al Menu</button>
-      <button id="startLevelBtn" class="primary-btn">🚀 INIZIA LA SFIDA!</button>
+    <div id=" descConsole" class="console-window">
+      </div>
+
+      <!-- Pulsanti per le modalità di gioco -->
+      <div class="mode-buttons">
+        <button id="confirmLevelBtn" class="arcade-btn">🎮 Partita Libera</button>
+        <button id="campaignModeBtn" class="campaign-btn">🏆 Modalità Campagna</button>
+      </div>
     </div>
-  </div>
-  
-  <!-- Schermata di Gioco -->
-  <div id="game" class="hidden">
-    <!-- Header di stato: Health Bar e tasto per abbandonare (X) -->
-    <div id="gameStatus">
-      <div id="healthBar"></div>
-      <button id="quitGameBtn" class="quit-btn">✖</button>
+
+    <!-- Schermata Campagna (Selezione Livelli) -->
+    <div id="campaignScreen" class="hidden">
+      <div class="console-window" id="campaignConsole">
+        <strong>🏆 MODALITÀ CAMPAGNA</strong><br><br>
+        Completa i livelli in ordine per diventare un vero Codemaster!<br>
+        Ogni livello sbloccato ti avvicina alla leggenda.
+      </div>
+      <div id="levelGrid">
+        <!-- I livelli verranno generati dinamicamente da JS -->
+      </div>
+      <button id="backFromCampaignBtn" class="secondary-btn">↩ Torna al Menu</button>
     </div>
-    
-    <div id="console">
-      <!-- Messaggi del Codemaster e del giocatore -->
+
+    <!-- Schermata di Lore -->
+    <div id="loreScreen" class="hidden">
+      <div class="console-window" id="loreConsole"></div>
+      <div class="lore-buttons">
+        <button id="backToMenuBtn" class="secondary-btn">↩ Torna al Menu</button>
+        <button id="startLevelBtn" class="primary-btn">🚀 INIZIA LA SFIDA!</button>
+      </div>
     </div>
-    
-    <!-- Form per l'invio del tentativo in stile PIN -->
-    <form id="guessForm">
-      <div id="pinInputContainer"></div>
-      <button type="submit" id="submitPin">Invia</button>
-    </form>
-  </div>
-  
-  <!-- Schermata Game Over -->
-  <div id="gameOver" class="hidden">
-    <div id="gameOverConsole" class="console-window"></div>
-    
-  </div>
-  
-  <script src="script.js"></script>
+
+    <!-- Schermata di Gioco -->
+    <div id="game" class="hidden">
+      <!-- Header di stato: Health Bar e tasto per abbandonare (X) -->
+      <div id="gameStatus">
+        <div id="healthBar"></div>
+        <button id="quitGameBtn" class="quit-btn">✖</button>
+      </div>
+
+      <div id="console">
+        <!-- Messaggi del Codemaster e del giocatore -->
+      </div>
+
+      <!-- Barra Indizi Semplificata (0-9) -->
+      <div id="clueBar"></div>
+
+      <!-- Form per l'invio del tentativo in stile PIN -->
+      <form id="guessForm">
+        <div id="pinInputContainer"></div>
+        <button type="submit" id="submitPin">Invia</button>
+      </form>
+    </div>
+
+    <!-- Schermata Game Over -->
+    <div id="gameOver" class="hidden">
+      <div id="gameOverConsole" class="console-window"></div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="custom-footer">
+      <a href="https://falker47.github.io/Nexus-portfolio/" target="_blank">© <span id="year"></span> Maurizio Falconi -
+        falker47</a>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
+
 </html>
