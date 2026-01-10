@@ -432,7 +432,7 @@ function startGame() {
 
   consoleDiv.innerHTML = "";
   addMessage("codemaster", "Scansione... Vulnerabilità individuate:\nInizia a crackare il digit!");
-  if (devToggle.checked) {
+  if (devToggle && devToggle.checked) {
     addMessage("codemaster", "DEV MODE: Il digit segreto è " + secretCode);
   }
 
@@ -794,6 +794,84 @@ function excludeFromClueBar(digit) {
     }
   }
 }
+
+// ============================================
+// VIRTUAL KEYBOARD
+// ============================================
+
+// Initialize virtual keyboard event listeners
+function initVirtualKeyboard() {
+  const virtualKeyboard = document.getElementById("virtualKeyboard");
+  if (!virtualKeyboard) return;
+
+  const keys = virtualKeyboard.querySelectorAll(".vk-key");
+
+  keys.forEach(key => {
+    key.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const keyValue = this.dataset.key;
+
+      if (keyValue === "backspace") {
+        handleVirtualBackspace();
+      } else if (keyValue === "submit") {
+        handleVirtualSubmit();
+      } else {
+        handleVirtualDigit(keyValue);
+      }
+    });
+  });
+}
+
+// Handle digit input from virtual keyboard
+function handleVirtualDigit(digit) {
+  const pinInputs = document.querySelectorAll(".pin-input");
+
+  // Find the first empty input
+  for (let i = 0; i < pinInputs.length; i++) {
+    if (pinInputs[i].value === "") {
+      pinInputs[i].value = digit;
+      // Visual feedback
+      pinInputs[i].style.transform = "scale(1.1)";
+      setTimeout(() => {
+        pinInputs[i].style.transform = "scale(1)";
+      }, 100);
+      break;
+    }
+  }
+}
+
+// Handle backspace from virtual keyboard
+function handleVirtualBackspace() {
+  const pinInputs = document.querySelectorAll(".pin-input");
+
+  // Find the last filled input and clear it
+  for (let i = pinInputs.length - 1; i >= 0; i--) {
+    if (pinInputs[i].value !== "") {
+      pinInputs[i].value = "";
+      // Visual feedback
+      pinInputs[i].style.transform = "scale(0.9)";
+      setTimeout(() => {
+        pinInputs[i].style.transform = "scale(1)";
+      }, 100);
+      break;
+    }
+  }
+}
+
+// Handle submit from virtual keyboard
+function handleVirtualSubmit() {
+  const guessForm = document.getElementById("guessForm");
+  if (guessForm) {
+    guessForm.dispatchEvent(new Event("submit", { cancelable: true }));
+  }
+}
+
+// Initialize virtual keyboard when DOM is ready
+document.addEventListener("DOMContentLoaded", function () {
+  initVirtualKeyboard();
+});
 
 // ============================================
 // MATRIX RAIN ANIMATION

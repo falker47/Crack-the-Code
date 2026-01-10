@@ -117,9 +117,35 @@
       <!-- Barra Indizi Semplificata (0-9) -->
       <div id="clueBar"></div>
 
-      <!-- Form per l'invio del tentativo in stile PIN -->
+      <!-- Display per i numeri inseriti (PIN) -->
+      <div id="pinInputContainer"></div>
+
+      <!-- Tastiera Virtuale per Mobile -->
+      <div id="virtualKeyboard">
+        <div class="vk-row">
+          <button type="button" class="vk-key" data-key="1">1</button>
+          <button type="button" class="vk-key" data-key="2">2</button>
+          <button type="button" class="vk-key" data-key="3">3</button>
+        </div>
+        <div class="vk-row">
+          <button type="button" class="vk-key" data-key="4">4</button>
+          <button type="button" class="vk-key" data-key="5">5</button>
+          <button type="button" class="vk-key" data-key="6">6</button>
+        </div>
+        <div class="vk-row">
+          <button type="button" class="vk-key" data-key="7">7</button>
+          <button type="button" class="vk-key" data-key="8">8</button>
+          <button type="button" class="vk-key" data-key="9">9</button>
+        </div>
+        <div class="vk-row">
+          <button type="button" class="vk-key vk-backspace" data-key="backspace">⌫</button>
+          <button type="button" class="vk-key" data-key="0">0</button>
+          <button type="button" class="vk-key vk-submit" data-key="submit">✓</button>
+        </div>
+      </div>
+
+      <!-- Form per l'invio del tentativo (nascosto su mobile, usato per JS) -->
       <form id="guessForm">
-        <div id="pinInputContainer"></div>
         <button type="submit" id="submitPin">Invia</button>
       </form>
     </div>
