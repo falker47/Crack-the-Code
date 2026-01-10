@@ -144,6 +144,8 @@ body {
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  padding-bottom: 60px;
+  /* Spazio per il footer */
   min-height: 100vh;
   position: relative;
 }
@@ -172,6 +174,58 @@ body {
 }
 
 /* Slider */
+.slider-container {
+  position: relative;
+  width: 100%;
+  padding-top: 5px;
+  padding-bottom: 25px;
+}
+
+.slider-tick-marks {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  margin-bottom: 8px;
+}
+
+.slider-tick {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.slider-tick:hover {
+  transform: scale(1.1);
+}
+
+.slider-tick-dot {
+  width: 12px;
+  height: 12px;
+  background: #45a29e;
+  border-radius: 50%;
+  margin-bottom: 4px;
+  transition: all 0.3s ease;
+}
+
+.slider-tick.active .slider-tick-dot {
+  background: #66fcf1;
+  box-shadow: 0 0 10px rgba(102, 252, 241, 0.6);
+  transform: scale(1.2);
+}
+
+.slider-tick-label {
+  font-size: 0.75em;
+  color: #888;
+  transition: color 0.3s ease;
+}
+
+.slider-tick.active .slider-tick-label {
+  color: #66fcf1;
+  font-weight: bold;
+}
+
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
@@ -181,25 +235,55 @@ input[type="range"] {
   border-radius: 5px;
   outline: none;
   margin: 10px 0;
+  cursor: pointer;
 }
 
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: #66fcf1;
   cursor: pointer;
-  border: 2px solid #0b0c10;
+  border: 3px solid #0b0c10;
+  box-shadow: 0 0 10px rgba(102, 252, 241, 0.5);
+  transition: all 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 15px rgba(102, 252, 241, 0.8);
 }
 
 input[type="range"]::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: #66fcf1;
   cursor: pointer;
-  border: 2px solid #0b0c10;
+  border: 3px solid #0b0c10;
+  box-shadow: 0 0 10px rgba(102, 252, 241, 0.5);
+}
+
+/* Hint animato per lo slider */
+.slider-hint {
+  font-size: 0.7em;
+  color: #45a29e;
+  text-align: center;
+  margin-top: 5px;
+  animation: pulse-hint 2s infinite;
+}
+
+@keyframes pulse-hint {
+
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
+  }
 }
 
 /* Lore buttons */
@@ -806,6 +890,7 @@ button:hover {
 @media screen and (max-width: 768px) {
   body {
     padding: 10px;
+    padding-bottom: 50px;
   }
 
   #game,
@@ -887,6 +972,93 @@ button:hover {
 
   #clueBar {
     gap: 4px;
+  }
+
+  .slider-hint {
+    display: block;
+  }
+}
+
+/* Ottimizzazioni per quando la tastiera è aperta su mobile */
+@media screen and (max-height: 500px) {
+  body {
+    padding: 5px;
+    padding-bottom: 40px;
+  }
+
+  #title {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+  }
+
+  #game {
+    padding: 10px;
+  }
+
+  #console {
+    height: 120px;
+    font-size: 0.85em;
+  }
+
+  #clueBar {
+    margin: 8px 0;
+    gap: 3px;
+  }
+
+  .clue-btn {
+    width: 26px;
+    height: 26px;
+    font-size: 0.85em;
+  }
+
+  .pin-input {
+    width: 35px;
+    height: 35px;
+    font-size: 1.1em;
+    margin: 0 2px;
+  }
+
+  #guessForm button {
+    padding: 8px 20px;
+    margin-top: 8px;
+    font-size: 0.9em;
+  }
+
+  #gameStatus {
+    margin-bottom: 5px;
+  }
+
+  .healthBlock {
+    width: 12px;
+    height: 12px;
+    margin: 1px;
+  }
+
+  .custom-footer {
+    padding: 5px 10px;
+  }
+
+  .custom-footer a {
+    font-size: 0.75em;
+  }
+}
+
+/* Viewport molto piccolo (tastiera grande) */
+@media screen and (max-height: 400px) {
+  #title {
+    display: none;
+  }
+
+  #console {
+    height: 80px;
+  }
+
+  .custom-footer {
+    display: none;
+  }
+
+  body {
+    padding-bottom: 5px;
   }
 }
 

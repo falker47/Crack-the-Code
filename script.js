@@ -207,7 +207,31 @@ const backFromCampaignBtn = document.getElementById("backFromCampaignBtn");
 codeLengthSlider.addEventListener("input", function () {
   codeLength = sliderMapping[this.value];
   codeLengthDisplay.textContent = codeLength + " digits";
+  updateSliderTickMarks(this.value);
   updateMenuConsole();
+});
+
+// Sync slider tick marks with slider value
+function updateSliderTickMarks(value) {
+  const ticks = document.querySelectorAll(".slider-tick");
+  ticks.forEach(tick => {
+    tick.classList.remove("active");
+    if (tick.dataset.value === String(value)) {
+      tick.classList.add("active");
+    }
+  });
+}
+
+// Click handler for tick marks
+document.querySelectorAll(".slider-tick").forEach(tick => {
+  tick.addEventListener("click", function () {
+    const value = this.dataset.value;
+    codeLengthSlider.value = value;
+    codeLength = sliderMapping[value];
+    codeLengthDisplay.textContent = codeLength + " digits";
+    updateSliderTickMarks(value);
+    updateMenuConsole();
+  });
 });
 
 // Gestione della selezione della difficoltà e aggiornamento della descrizione
