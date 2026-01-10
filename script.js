@@ -419,14 +419,26 @@ function startGame() {
   // Crea gli input PIN
   const pinInputContainer = document.getElementById("pinInputContainer");
   pinInputContainer.innerHTML = "";
+
+  // Detect mobile to disable native keyboard
+  const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
   for (let i = 0; i < codeLength; i++) {
     let input = document.createElement("input");
     input.type = "tel";
-    input.inputMode = "numeric";
     input.maxLength = 1;
     input.classList.add("pin-input");
     input.autocomplete = "off";
     input.pattern = "[0-9]";
+
+    // On mobile, prevent native keyboard by making inputs readonly
+    if (isMobile) {
+      input.readOnly = true;
+      input.inputMode = "none";
+    } else {
+      input.inputMode = "numeric";
+    }
+
     pinInputContainer.appendChild(input);
   }
 
