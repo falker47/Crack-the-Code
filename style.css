@@ -999,6 +999,11 @@ button:hover {
     height: 140px;
   }
 
+  /* Hide redundant digits display on mobile - already visible in console */
+  #codeLengthDisplay {
+    display: none;
+  }
+
   #console {
     height: 250px;
   }
@@ -1068,6 +1073,8 @@ button:hover {
 
   .slider-hint {
     display: block;
+    font-size: 0.6em;
+    margin-top: 2px;
   }
 
   /* Virtual keyboard: show on mobile */
