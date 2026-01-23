@@ -18,7 +18,7 @@
 
 /* Titolo del gioco con effetto Glitch */
 #title {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
   font-size: 1.8em;
   color: #45a29e;
   margin-bottom: 20px;
@@ -51,7 +51,6 @@
 }
 
 @keyframes glitch {
-
   0%,
   90%,
   100% {
@@ -76,7 +75,6 @@
 }
 
 @keyframes glitch-1 {
-
   0%,
   80%,
   100% {
@@ -106,7 +104,6 @@
 }
 
 @keyframes glitch-2 {
-
   0%,
   75%,
   100% {
@@ -137,7 +134,8 @@
 
 /* Impostazioni generali */
 body {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
+  zoom: 0.8;
   background: #0b0c10;
   color: #66fcf1;
   display: flex;
@@ -149,7 +147,6 @@ body {
   min-height: 100vh;
   position: relative;
 }
-
 
 /* Menu principale */
 #menu {
@@ -275,7 +272,6 @@ input[type="range"]::-moz-range-thumb {
 }
 
 @keyframes pulse-hint {
-
   0%,
   100% {
     opacity: 0.6;
@@ -402,7 +398,10 @@ input[type="range"]::-moz-range-thumb {
   color: #66fcf1;
   cursor: pointer;
   width: 30%;
-  transition: background 0.3s, border-color 0.3s, opacity 0.3s;
+  transition:
+    background 0.3s,
+    border-color 0.3s,
+    opacity 0.3s;
 }
 
 .feedback-btn:hover {
@@ -735,7 +734,7 @@ button:hover {
   height: 50px;
   font-size: 1.4em;
   font-weight: bold;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
   border: 2px solid #45a29e;
   border-radius: 8px;
   background: linear-gradient(180deg, #1f2833 0%, #0b0c10 100%);
@@ -975,7 +974,6 @@ button:hover {
 /* ============================================
    MOBILE RESPONSIVE
    ============================================ */
-
 
 @media screen and (max-width: 768px) {
   body {
