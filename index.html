@@ -50,12 +50,6 @@
       <span id="codeLengthDisplay">4 digits</span>
     </div>
 
-    <!-- Toggle DEV -->
-    <!-- <div class="setting">
-      <label for="devToggle">DEV: Mostra digit segreto</label>
-      <input type="checkbox" id="devToggle">
-    </div> -->
-
     <!-- Selezione Tipo di Feedback -->
     <div class="setting">
       <p>Seleziona il livello di feedback:</p>
@@ -65,12 +59,12 @@
         <button class="feedback-btn" id="btnMedium" data-difficulty="medium"
           data-desc="L'AI del codemaster offre qualche indizio, ma il pieno potenziale rimane bloccato">Medio</button>
         <button class="feedback-btn" id="btnDifficult" data-difficulty="difficult"
-          data-desc="L'AI del codemaster viene censurata, può aiutarci solo fornendoci indizi criptici"">Difficile</button>
+          data-desc="L'AI del codemaster viene censurata, può aiutarci solo fornendoci indizi criptici">Difficile</button>
       </div>
     </div>
     
     <!-- Console per la descrizione della difficoltà -->
-    <div id=" descConsole" class="console-window">
+    <div id="descConsole" class="console-window">
       </div>
 
       <!-- Pulsanti per le modalità di gioco -->
@@ -138,9 +132,9 @@
           <button type="button" class="vk-key" data-key="9">9</button>
         </div>
         <div class="vk-row">
-          <button type="button" class="vk-key vk-backspace" data-key="backspace">⌫</button>
+          <button type="button" class="vk-key vk-backspace" data-key="backspace" aria-label="Cancella">⌫</button>
           <button type="button" class="vk-key" data-key="0">0</button>
-          <button type="button" class="vk-key vk-submit" data-key="submit">✓</button>
+          <button type="button" class="vk-key vk-submit" data-key="submit" aria-label="Invia tentativo">✓</button>
         </div>
       </div>
 
