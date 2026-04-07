@@ -19,6 +19,7 @@ const gameState = {
   campaignMode: false,
   currentCampaignLevel: null,
   clueBarState: new Array(10).fill(0), // 0=default, 1=excluded, 2=confirmed
+  crypticCache: {}, // Indizi criptici persistenti per partita
 };
 
 // Mapping slider: 0 -> 4 digits, 1 -> 5 digits, 2 -> 7 digits
@@ -289,6 +290,7 @@ function startGame() {
   gameState.secretCode = generateSecretCode(gameState.codeLength);
   gameState.attempts = 0;
   gameState.guessedDigits.fill(false);
+  gameState.crypticCache = {};
   gameState.startTime = Date.now();
   updateHealthBar();
 
@@ -362,6 +364,9 @@ function addMessage(sender, text) {
   }
   msgDiv.textContent = text;
   consoleDiv.appendChild(msgDiv);
+  while (consoleDiv.children.length > 50) {
+    consoleDiv.removeChild(consoleDiv.firstChild);
+  }
   consoleDiv.scrollTop = consoleDiv.scrollHeight;
 }
 
@@ -443,13 +448,6 @@ function getFeedbackMessage(evaluation, guess) {
 function getDifficultFeedback(evaluationList, guess) {
   const { codeLength, secretCode, guessedDigits } = gameState;
 
-  // Resetta i digit che non sono più nel tentativo corrente
-  for (let i = 0; i < 10; i++) {
-    if (guessedDigits[i] && !guess.includes(String(i))) {
-      guessedDigits[i] = false;
-    }
-  }
-
   // Cerca prima un digit hit (posizione corretta) non ancora confermato
   let candidateIndex = -1;
   let isHit = false;
@@ -461,9 +459,6 @@ function getDifficultFeedback(evaluationList, guess) {
       isHit = true;
       guessedDigits[digitValue] = true;
       break;
-    }
-    if (evaluationList[i] !== 2 && guessedDigits[digitValue]) {
-      guessedDigits[digitValue] = false;
     }
   }
 
@@ -493,15 +488,19 @@ function getDifficultFeedback(evaluationList, guess) {
 }
 
 function getCrypticFeedback(digit) {
+  if (gameState.crypticCache[digit]) return gameState.crypticCache[digit];
   let candidates = crypticMessages.filter(cond => cond.digits.includes(digit));
   if (candidates.length === 0) { candidates = [{ message: "Il digit è avvolto nel mistero." }]; }
   const chosen = candidates[Math.floor(Math.random() * candidates.length)];
+  gameState.crypticCache[digit] = chosen.message;
   return chosen.message;
 }
 
 function calculateScore(elapsedSeconds) {
   const base = gameState.codeLength * 1000 * gameState.difficultyMultiplier;
-  return Math.round(base / (gameState.attempts * elapsedSeconds));
+  const attemptBonus = Math.max(0, gameState.allowedAttempts - gameState.attempts) * 500;
+  const timeBonus = Math.max(0, 120 - elapsedSeconds) * 10;
+  return Math.round(base + attemptBonus + timeBonus);
 }
 
 guessForm.addEventListener("submit", function (e) {
@@ -515,6 +514,13 @@ guessForm.addEventListener("submit", function (e) {
   const regex = new RegExp(`^\\d{${gameState.codeLength}}$`);
   if (!regex.test(guess)) {
     addMessage("codemaster", `Il digit segreto deve essere composto da ${gameState.codeLength} digits. Riprova.`);
+    pinInputs.forEach(input => input.value = "");
+    pinInputs[0].focus();
+    return;
+  }
+
+  if (new Set(guess).size !== gameState.codeLength) {
+    addMessage("codemaster", "Ogni digit deve essere unico. Riprova.");
     pinInputs.forEach(input => input.value = "");
     pinInputs[0].focus();
     return;
