@@ -1,107 +1,95 @@
-# 🔐 Crack the Code: La Sfida del Codemaster
+# Crack the Code: La Sfida del Codemaster
 
-[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
-[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
-[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+![Crack the Code](crack-the-code.webp)
 
-> 🎮 Un puzzle game in stile Mastermind con estetica cyberpunk e meccaniche di decifrazione codici.
+Puzzle game browser-based ispirato a **Mastermind**: devi ricostruire un codice numerico segreto a cifre uniche sfruttando feedback progressivamente meno espliciti.
 
----
+**Live demo:** https://falker47.github.io/Crack-the-Code/
 
-## 🎯 Descrizione
+## Modalità
 
-**Crack the Code** è un gioco browser-based in cui il giocatore deve indovinare un codice numerico segreto generato dal "Codemaster", un'intelligenza artificiale antagonista. Ogni tentativo rivela indizi sulla correttezza delle cifre, sfidando le abilità di logica e deduzione.
+### Partita libera
 
----
+Scegli:
 
-## ✨ Features
+- lunghezza del codice: **4, 5 o 7 cifre**;
+- difficoltà: **Facile, Medio o Difficile**;
+- hai **7 tentativi** per trovare il codice.
 
-| Feature | Descrizione |
-|---------|-------------|
-| 🎮 **Partita Libera** | Personalizza lunghezza codice (4/5/7 cifre) e difficoltà |
-| 🏆 **Modalità Campagna** | 9 livelli progressivi con progressi salvati |
-| 🧩 **Clue Bar** | Toggle rapido per escludere/confermare cifre |
-| 💀 **Health Bar** | 7 tentativi per violare il sistema |
-| 📖 **Narrativa Escalante** | Dal furto di password all'hacking di AI globali |
-| 🎨 **Effetti Visivi** | Glitch title + Matrix rain background |
+### Campagna
 
----
+La campagna contiene **9 livelli**, cioè tutte le combinazioni tra le tre lunghezze e le tre difficoltà. I livelli si sbloccano in sequenza e il progresso viene salvato localmente nel browser tramite `localStorage`.
 
-## 🎮 Come Giocare
+## Feedback
 
-1. **Scegli la modalità**: Partita Libera o Campagna
-2. **Inserisci il codice**: Usa i campi numerici per comporre il tuo tentativo
-3. **Analizza gli indizi**:
-   - 🟢 **Verde** = Cifra corretta nella posizione giusta
-   - 🟡 **Giallo** = Cifra corretta ma posizione sbagliata
-   - ⚪ **Bianco** = Cifra non presente nel codice
-4. **Usa la Clue Bar**: Clicca sui numeri 0-9 per escluderli o confermarli
-5. **Vinci prima che finiscano i tentativi!**
+| Difficoltà | Feedback |
+| --- | --- |
+| **Facile** | Indicatore posizione-per-posizione: cifra corretta, presente altrove o assente |
+| **Medio** | Solo conteggi complessivi di hit, presenti fuori posizione e assenti |
+| **Difficile** | Un singolo indizio criptico su una cifra rilevata, senza quadro completo del tentativo |
 
-### Livelli di Difficoltà
+Il **Codemaster** è un personaggio/interfaccia narrativa del gioco: non viene usato alcun modello AI o servizio esterno.
 
-| Difficoltà | Feedback | Strategia |
-|------------|----------|-----------|
-| **Facile** | Indizi dettagliati per ogni cifra | Ideale per principianti |
-| **Medio** | Indizi ridotti, più ragionamento | Per giocatori esperti |
-| **Difficile** | Solo conteggi, nessuna posizione | Sfida estrema |
+## Regole
 
----
+- il codice segreto usa cifre **tutte diverse**;
+- anche ogni tentativo deve usare cifre diverse;
+- verde = cifra corretta nella posizione corretta;
+- giallo = cifra presente ma in posizione diversa;
+- bianco = cifra assente;
+- la **Clue Bar** permette di segnare manualmente cifre escluse o confermate;
+- in Facile le cifre sicuramente assenti vengono escluse automaticamente.
 
-## 🚀 Avvio Rapido
+## Scope corrente
 
-1. Clona o scarica il repository
-2. Apri `index.html` in un browser moderno
-3. Inizia a giocare!
+Il progetto è considerato un gioco single-player completo nel suo scope attuale: **Partita libera + campagna locale da 9 livelli**.
+
+Multiplayer, leaderboard, effetti sonori o altre espansioni possono essere valutati in futuro, ma non fanno parte della release corrente e non sono mantenuti come backlog pubblico nel README.
+
+## Avvio locale
+
+Non ci sono dipendenze runtime o build step.
 
 ```bash
 git clone https://github.com/falker47/Crack-the-Code.git
 cd Crack-the-Code
-start index.html  # Windows
-# oppure: open index.html  # macOS
+python -m http.server
 ```
 
----
+Poi apri `http://localhost:8000`.
 
-## 🛠️ Tecnologie
+## Verifica
 
-- **HTML5** - Struttura semantica
-- **CSS3** - Animazioni, glassmorphism, Matrix rain
-- **JavaScript (Vanilla)** - Logica di gioco, localStorage
+La CI controlla la sintassi JavaScript e la coerenza dei dati della campagna:
 
----
-
-## 📁 Struttura Progetto
-
-```
-Crack-the-Code/
-├── index.html      # Entry point
-├── style.css       # Stili e animazioni
-├── script.js       # Logica di gioco
-└── README.md       # Documentazione
+```bash
+node --check data.js
+node --check script.js
+node test/validate-data.mjs
 ```
 
----
+## Struttura
 
-## 🔮 Idee Future
+```
+├── index.html
+├── style.css
+├── script.js
+├── data.js
+├── crack-the-code.webp
+└── test/
+    └── validate-data.mjs
+```
 
-- [ ] Rivedere bilanciamento difficoltà
-- [ ] Affinare testi narrativi
-- [ ] Aggiungere effetti sonori
-- [ ] Modalità multiplayer locale
-- [ ] Leaderboard con punteggi
+## Implementazione
 
----
+- HTML5
+- CSS3
+- JavaScript Vanilla
+- `localStorage` per il progresso campagna
+- nessun backend e nessuna dipendenza runtime
 
-## 👤 Autore
+## Autore
 
-**Maurizio Falconi** - [@falker47](https://github.com/falker47)
+**Maurizio Falconi** — [falker47](https://github.com/falker47)
 
-🌐 [Portfolio](https://falker47.github.io/Nexus-portfolio/)
-
----
-
-## 📄 Licenza
-
-Questo progetto è distribuito sotto licenza MIT. Vedi il file [LICENSE](LICENSE) per maggiori dettagli.
+[Portfolio](https://falker47.github.io/Nexus-portfolio/)
