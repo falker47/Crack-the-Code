@@ -2,7 +2,7 @@
 
 ![Crack the Code](crack-the-code.webp)
 
-Puzzle game browser-based ispirato a **Mastermind**: devi ricostruire un codice numerico segreto a cifre uniche sfruttando feedback progressivamente meno espliciti.
+**Crack the Code** è un puzzle di deduzione numerica ispirato a **Mastermind**. Hai sette tentativi per ricostruire un codice composto da cifre uniche, usando indizi progressivamente meno espliciti.
 
 **Live demo:** https://falker47.github.io/Crack-the-Code/
 
@@ -10,41 +10,41 @@ Puzzle game browser-based ispirato a **Mastermind**: devi ricostruire un codice 
 
 ### Partita libera
 
-Scegli:
+Configura liberamente la sfida:
 
 - lunghezza del codice: **4, 5 o 7 cifre**;
-- difficoltà: **Facile, Medio o Difficile**;
-- hai **7 tentativi** per trovare il codice.
+- feedback: **Completo, Sintetico o Criptico**;
+- **7 tentativi** per trovare il codice.
+
+Ogni combinazione usa uno scenario narrativo standalone.
 
 ### Campagna
 
-La campagna contiene **9 livelli**, cioè tutte le combinazioni tra le tre lunghezze e le tre difficoltà. I livelli si sbloccano in sequenza e il progresso viene salvato localmente nel browser tramite `localStorage`.
+La campagna contiene **9 livelli**, cioè tutte le combinazioni tra le tre lunghezze e i tre livelli di feedback.
+
+La progressione parte da piccoli hack tra amici e cresce fino a sistemi sempre più importanti, collegati da un unico filo narrativo. I livelli si sbloccano in sequenza e il progresso viene salvato localmente nel browser tramite `localStorage`.
 
 ## Feedback
 
-| Difficoltà | Feedback |
+| Livello | Informazioni ricevute |
 | --- | --- |
-| **Facile** | Indicatore posizione-per-posizione: cifra corretta, presente altrove o assente |
-| **Medio** | Solo conteggi complessivi di hit, presenti fuori posizione e assenti |
-| **Difficile** | Un singolo indizio criptico su una cifra rilevata, senza quadro completo del tentativo |
+| **Completo** | Esito cifra per cifra: posizione corretta, presente altrove o assente |
+| **Sintetico** | Solo i conteggi complessivi delle tre categorie |
+| **Criptico** | Al massimo un'informazione parziale su una cifra rilevata, accompagnata da un indizio |
 
-Il **Codemaster** è un personaggio/interfaccia narrativa del gioco: non viene usato alcun modello AI o servizio esterno.
+Il **Codemaster** è il personaggio/interfaccia narrativa che restituisce il feedback.
+
+Nella fiction viene presentato come una mente digitale; il gioco, però, **non utilizza modelli AI, API esterne o servizi backend**. Tutta la logica gira localmente nel browser.
 
 ## Regole
 
 - il codice segreto usa cifre **tutte diverse**;
 - anche ogni tentativo deve usare cifre diverse;
-- verde = cifra corretta nella posizione corretta;
-- giallo = cifra presente ma in posizione diversa;
-- bianco = cifra assente;
-- la **Clue Bar** permette di segnare manualmente cifre escluse o confermate;
-- in Facile le cifre sicuramente assenti vengono escluse automaticamente.
-
-## Scope corrente
-
-Il progetto è considerato un gioco single-player completo nel suo scope attuale: **Partita libera + campagna locale da 9 livelli**.
-
-Multiplayer, leaderboard, effetti sonori o altre espansioni possono essere valutati in futuro, ma non fanno parte della release corrente e non sono mantenuti come backlog pubblico nel README.
+- 🟢 = cifra corretta nella posizione corretta;
+- 🟡 = cifra presente ma in posizione diversa;
+- ⚪ = cifra assente;
+- la barra **Appunti** permette di segnare manualmente cifre escluse o confermate;
+- con feedback Completo, le cifre sicuramente assenti vengono escluse automaticamente dagli Appunti.
 
 ## Avvio locale
 
@@ -60,7 +60,7 @@ Poi apri `http://localhost:8000`.
 
 ## Verifica
 
-La CI controlla la sintassi JavaScript e la coerenza dei dati della campagna:
+La CI controlla la sintassi JavaScript e la coerenza dei dati narrativi e della campagna:
 
 ```bash
 node --check data.js
@@ -85,8 +85,9 @@ node test/validate-data.mjs
 - HTML5
 - CSS3
 - JavaScript Vanilla
-- `localStorage` per il progresso campagna
-- nessun backend e nessuna dipendenza runtime
+- `localStorage` per il progresso della campagna
+- nessun backend
+- nessuna dipendenza runtime
 
 ## Autore
 
