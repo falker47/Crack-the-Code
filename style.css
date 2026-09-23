@@ -1154,14 +1154,21 @@ button:hover {
     margin-bottom: 10px;
   }
 
+  #menu .slider-tick-dot {
+    width: 16px;
+    height: 16px;
+    margin-bottom: 6px;
+  }
+
   #menu .slider-tick-label {
-    font-size: 1em;
+    font-size: 1.25em;
+    line-height: 1;
   }
 
   #menu .slider-hint {
-    font-size: 0.72em;
-    line-height: 1.35;
-    margin-top: 5px;
+    font-size: 0.92em;
+    line-height: 1.4;
+    margin-top: 8px;
   }
 
   #menu .feedback-btn {
@@ -1194,13 +1201,13 @@ button:hover {
 
 @media screen and (max-width: 768px) and (min-height: 760px) {
   #menu {
-    transform: translateY(clamp(50px, 12vh, 110px));
+    transform: translateY(clamp(85px, 16vh, 145px));
   }
 }
 
 @media screen and (max-width: 360px) and (min-height: 760px) {
   #menu {
-    transform: translateY(clamp(30px, 7.5vh, 65px));
+    transform: translateY(clamp(55px, 11vh, 95px));
   }
 }
 
