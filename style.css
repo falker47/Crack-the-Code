@@ -1005,6 +1005,8 @@ button:hover {
     zoom: 0.8;
     padding: 10px;
     padding-bottom: 50px;
+    min-height: 125vh;
+    min-height: 125dvh;
   }
 
   #game,
@@ -1196,18 +1198,6 @@ button:hover {
     font-size: 0.9em;
     letter-spacing: 0.5px;
     white-space: nowrap;
-  }
-}
-
-@media screen and (max-width: 768px) and (min-height: 760px) {
-  #menu {
-    transform: translateY(clamp(85px, 16vh, 145px));
-  }
-}
-
-@media screen and (max-width: 360px) and (min-height: 760px) {
-  #menu {
-    transform: translateY(clamp(55px, 11vh, 95px));
   }
 }
 
