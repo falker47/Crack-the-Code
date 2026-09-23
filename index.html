@@ -21,9 +21,9 @@
   <div id="menu">
     <!-- Console del Menu -->
     <div id="menuConsole" class="console-window">
-      Scegli le impostazioni per iniziare la sfida.
+      Configura la sfida.
 
-      Inserisci la lunghezza del codice che vuoi crackare e quanto la AI del Codemaster può aiutarti nell'impresa
+      Scegli la lunghezza del codice e il livello di feedback che riceverai dal Codemaster.
     </div>
 
     <!-- Selezione Lunghezza del Codice -->
@@ -45,21 +45,21 @@
           </div>
         </div>
         <input type="range" id="codeLengthSlider" min="0" max="2" step="1" value="0">
-        <div class="slider-hint">👆 Trascina o clicca per scegliere la lunghezza</div>
+        <div class="slider-hint">👆 Trascina o tocca per scegliere la lunghezza</div>
       </div>
-      <span id="codeLengthDisplay">4 digits</span>
+      <span id="codeLengthDisplay">4 cifre</span>
     </div>
 
     <!-- Selezione Tipo di Feedback -->
     <div class="setting">
-      <p>Seleziona il livello di feedback:</p>
+      <p>Livello di feedback:</p>
       <div id="feedbackButtons">
         <button class="feedback-btn" id="btnEasy" data-difficulty="easy"
-          data-desc="L'AI del codemaster è a tua completa disposizione">Facile</button>
+          data-desc="Il Codemaster mostra l'esito di ogni cifra, posizione per posizione.">Completo</button>
         <button class="feedback-btn" id="btnMedium" data-difficulty="medium"
-          data-desc="L'AI del codemaster offre qualche indizio, ma il pieno potenziale rimane bloccato">Medio</button>
+          data-desc="Il Codemaster mostra solo i totali: cifre corrette, presenti altrove e assenti.">Sintetico</button>
         <button class="feedback-btn" id="btnDifficult" data-difficulty="difficult"
-          data-desc="L'AI del codemaster viene censurata, può aiutarci solo fornendoci indizi criptici">Difficile</button>
+          data-desc="Il Codemaster rivela al massimo un'informazione utile per tentativo.">Criptico</button>
       </div>
     </div>
     
@@ -77,9 +77,10 @@
     <!-- Schermata Campagna (Selezione Livelli) -->
     <div id="campaignScreen" class="hidden">
       <div class="console-window" id="campaignConsole">
-        <strong>🏆 MODALITÀ CAMPAGNA</strong><br><br>
-        Completa i livelli in ordine per diventare un vero Codemaster!<br>
-        Ogni livello sbloccato ti avvicina alla leggenda.
+        <strong>🏆 CAMPAGNA</strong><br><br>
+        Nove livelli. Ogni vittoria sblocca il successivo.<br><br>
+        Parti dalle piccole sfide e scopri fin dove riesci ad arrivare.<br><br>
+        I progressi vengono salvati su questo browser.
       </div>
       <div id="levelGrid">
         <!-- I livelli verranno generati dinamicamente da JS -->
@@ -92,7 +93,7 @@
       <div class="console-window" id="loreConsole"></div>
       <div class="lore-buttons">
         <button id="backToMenuBtn" class="secondary-btn">↩ Torna al Menu</button>
-        <button id="startLevelBtn" class="primary-btn">🚀 INIZIA LA SFIDA!</button>
+        <button id="startLevelBtn" class="primary-btn">🚀 Avvia la sfida</button>
       </div>
     </div>
 
@@ -108,7 +109,8 @@
         <!-- Messaggi del Codemaster e del giocatore -->
       </div>
 
-      <!-- Barra Indizi Semplificata (0-9) -->
+      <!-- Barra Appunti (0-9) -->
+      <div class="clue-bar-label">Appunti: tocca una cifra per segnarla come esclusa o confermata.</div>
       <div id="clueBar"></div>
 
       <!-- Display per i numeri inseriti (PIN) -->
