@@ -1213,6 +1213,31 @@ button:hover {
   }
 }
 
+/* Pre-level mobile refinement */
+@media screen and (max-width: 768px) {
+  #loreScreen {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
+  #loreConsole {
+    font-size: 1.08em;
+    line-height: 1.45;
+    padding: 16px 14px;
+  }
+
+  #loreConsole > strong:first-child {
+    display: inline-block;
+    font-size: 1.32em;
+    line-height: 1.25;
+  }
+
+  #loreConsole > em:last-child {
+    display: inline-block;
+    margin-top: 4px;
+  }
+}
+
 /* Ottimizzazioni per quando la tastiera è aperta su mobile */
 @media screen and (max-height: 500px) {
   body {
