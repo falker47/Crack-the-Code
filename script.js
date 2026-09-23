@@ -1,4 +1,4 @@
-// Utilizziamo il termine "digit/digits" in tutto il codice
+// Gli identificatori interni restano in inglese; la UI usa "cifra/cifre" e "codice".
 
 // Set footer year
 document.addEventListener("DOMContentLoaded", function () {
@@ -84,7 +84,7 @@ const backFromCampaignBtn = document.getElementById("backFromCampaignBtn");
 // Aggiorna la visualizzazione della lunghezza
 codeLengthSlider.addEventListener("input", function () {
   gameState.codeLength = sliderMapping[this.value];
-  codeLengthDisplay.textContent = gameState.codeLength + " digits";
+  codeLengthDisplay.textContent = gameState.codeLength + " cifre";
   updateSliderTickMarks(this.value);
   updateMenuConsole();
 });
@@ -106,7 +106,7 @@ document.querySelectorAll(".slider-tick").forEach(tick => {
     const value = this.dataset.value;
     codeLengthSlider.value = value;
     gameState.codeLength = sliderMapping[value];
-    codeLengthDisplay.textContent = gameState.codeLength + " digits";
+    codeLengthDisplay.textContent = gameState.codeLength + " cifre";
     updateSliderTickMarks(value);
     updateMenuConsole();
   });
@@ -131,24 +131,24 @@ function updateMenuConsole() {
   const { difficulty, codeLength } = gameState;
   if (difficulty && codeLength) {
     const data = levelData[difficulty][codeLength];
-    const difficultyTextMap = { easy: "Facile", medium: "Medio", difficult: "Difficile" };
+    const difficultyTextMap = { easy: "Completo", medium: "Sintetico", difficult: "Criptico" };
     const lengthClassMap = { 4: "length-green", 5: "length-yellow", 7: "length-red" };
     const difficultyText = difficultyTextMap[difficulty] || "";
     const lengthClass = lengthClassMap[codeLength] || "";
 
     let html = `<div class="levelTitleContainer">${data.levelName}</div>`;
-    html += `<div class="summaryLine">Codice: <span class="codeLengthIndicator ${lengthClass}">${codeLength} digits</span><span class="separator-desktop"> | </span><br class="separator-mobile">Difficoltà: <span class="difficultyIndicator ${difficulty}">${difficultyText}</span></div>`;
+    html += `<div class="summaryLine">Codice: <span class="codeLengthIndicator ${lengthClass}">${codeLength} cifre</span><span class="separator-desktop"> | </span><br class="separator-mobile">Feedback: <span class="difficultyIndicator ${difficulty}">${difficultyText}</span></div>`;
     menuConsole.innerHTML = html;
   } else {
-    menuConsole.textContent = "Scegli le impostazioni per iniziare la sfida.\n\nInserisci la lunghezza del codice che vuoi crackare e quanto la AI del Codemaster può aiutarti nell'impresa";
+    menuConsole.textContent = "Configura la sfida.\n\nScegli la lunghezza del codice e il livello di feedback che riceverai dal Codemaster.";
   }
 }
 
 // Al click su "Conferma Livello"
 confirmLevelBtn.addEventListener("click", function () {
   if (!gameState.difficulty) {
-    addMessage("codemaster", "Per favore, seleziona una difficoltà!");
-    descConsole.textContent = "Seleziona una difficoltà per continuare.";
+    addMessage("codemaster", "Seleziona un livello di feedback per continuare.");
+    descConsole.textContent = "Seleziona un livello di feedback per continuare.";
     return;
   }
   const data = levelData[gameState.difficulty][gameState.codeLength];
@@ -159,7 +159,9 @@ confirmLevelBtn.addEventListener("click", function () {
   gameState.allowedAttempts = 7;
   gameState.attempts = 0;
   updateHealthBar();
-  loreConsole.innerHTML = `<strong>${data.levelName}</strong><br><br>${data.lore}<br><br><em>Tentativi disponibili: ${gameState.allowedAttempts}</em>`;
+  gameState.campaignMode = false;
+  gameState.currentCampaignLevel = null;
+  loreConsole.innerHTML = `<strong>${data.levelName}</strong><br><br>${data.freePlay.lore}<br><br><em>Tentativi disponibili: ${gameState.allowedAttempts}</em>`;
   menuDiv.classList.add("hidden");
   loreScreen.classList.remove("hidden");
 });
@@ -218,9 +220,9 @@ function renderCampaignLevels() {
 
     // Traduzione difficoltà
     let diffText = "";
-    if (level.difficulty === "easy") diffText = "Facile";
-    else if (level.difficulty === "medium") diffText = "Medio";
-    else diffText = "Difficile";
+    if (level.difficulty === "easy") diffText = "Completo";
+    else if (level.difficulty === "medium") diffText = "Sintetico";
+    else diffText = "Criptico";
 
     card.innerHTML = `
       <div class="level-number">Livello ${idx + 1}</div>
@@ -254,7 +256,7 @@ function startCampaignLevel(levelIndex) {
   gameState.allowedAttempts = 7;
   gameState.attempts = 0;
   updateHealthBar();
-  loreConsole.innerHTML = `<strong>Livello ${levelIndex + 1}: ${data.levelName}</strong><br><br>${data.lore}<br><br><em>Tentativi disponibili: ${gameState.allowedAttempts}</em>`;
+  loreConsole.innerHTML = `<strong>Livello ${levelIndex + 1}: ${data.levelName}</strong><br><br>${data.campaign.lore}<br><br><em>Tentativi disponibili: ${gameState.allowedAttempts}</em>`;
 
   campaignScreen.classList.add("hidden");
   loreScreen.classList.remove("hidden");
@@ -321,7 +323,7 @@ function startGame() {
   }
 
   consoleDiv.innerHTML = "";
-  addMessage("codemaster", "Scansione... Vulnerabilità individuate:\nInizia a crackare il digit!");
+  addMessage("codemaster", "Connessione stabilita.\n\nCodice protetto rilevato.\n\nInizia l'analisi.");
 
   const pinInputs = document.querySelectorAll(".pin-input");
   pinInputs.forEach((input, index) => {
@@ -399,10 +401,6 @@ function evaluateGuess(guess) {
 }
 
 // Feedback dei tentativi
-function getRandomPhrase(phrases) {
-  return phrases[Math.floor(Math.random() * phrases.length)];
-}
-
 function getFeedbackMessage(evaluation, guess) {
   const { evaluationList, hit, blow, misses } = evaluation;
   const { difficulty, codeLength } = gameState;
@@ -417,24 +415,12 @@ function getFeedbackMessage(evaluation, guess) {
         excludeFromClueBar(guess[i]);
       }
     }
-    const phrase = getRandomPhrase([
-      "Stai andando alla grande!",
-      "Continua così, hacker!",
-      "Attenzione: sei sulla strada giusta!",
-      "Non mollare, il successo è vicino!"
-    ]);
-    return `Scansione... Vulnerabilità individuate:\n${iconLine}\n${phrase}`;
+    return `ANALISI DEL TENTATIVO\n${iconLine}`;
   }
 
   if (difficulty === "medium") {
-    const totalLine = `${hit}🟢 | ${blow}🟡 | ${misses}⚪`;
-    const phrase = getRandomPhrase([
-      "Il sistema è in allerta, ma sei ancora in gioco!",
-      "Continua ad analizzare i dati...",
-      "Ogni tentativo conta, hacker!",
-      "Non perdere la concentrazione!"
-    ]);
-    return `Scansione... Vulnerabilità individuate:\n${totalLine}\n${phrase}`;
+    const totalLine = `${hit} 🟢 · ${blow} 🟡 · ${misses} ⚪`;
+    return `ANALISI DEL TENTATIVO\n${totalLine}`;
   }
 
   if (difficulty === "difficult") {
@@ -444,11 +430,8 @@ function getFeedbackMessage(evaluation, guess) {
   return "";
 }
 
-// Logica feedback per difficoltà "difficult" estratta in funzione dedicata
 function getDifficultFeedback(evaluationList, guess) {
   const { codeLength, secretCode, guessedDigits } = gameState;
-
-  // Cerca prima un digit hit (posizione corretta) non ancora confermato
   let candidateIndex = -1;
   let isHit = false;
 
@@ -462,35 +445,35 @@ function getDifficultFeedback(evaluationList, guess) {
     }
   }
 
-  // Se nessun hit, cerca un digit presente ma in posizione sbagliata
   if (candidateIndex === -1) {
     for (let i = 0; i < codeLength; i++) {
       const digitValue = parseInt(guess[i], 10);
       if (secretCode.includes(guess[i]) && !guessedDigits[digitValue]) {
         candidateIndex = i;
-        isHit = false;
         break;
       }
     }
   }
 
-  // Nessun candidato trovato
   if (candidateIndex === -1) {
     const hasConfirmed = guessedDigits.includes(true);
     return hasConfirmed
-      ? "Scansione... Vulnerabilità individuate:\nNessun nuovo digit rilevato."
-      : "Scansione... Vulnerabilità individuate:\nNessun digit rilevato.";
+      ? "ANALISI PARZIALE\nNessuna nuova informazione ricavabile da questo tentativo."
+      : "ANALISI PARZIALE\nNessuna cifra utile rilevata in questo tentativo.";
   }
 
-  const statusText = isHit ? "è stato inserito correttamente!" : "è presente!";
   const candidateDigit = parseInt(guess[candidateIndex], 10);
-  return `Scansione... Vulnerabilità individuate:\nUn digit ${statusText}\n${getCrypticFeedback(candidateDigit)}`;
+  const statusText = isHit
+    ? "Una cifra è corretta e nella posizione giusta."
+    : "Una cifra appartiene al codice, ma si trova nella posizione sbagliata.";
+
+  return `ANALISI PARZIALE\n${statusText}\nINDIZIO: ${getCrypticFeedback(candidateDigit)}`;
 }
 
 function getCrypticFeedback(digit) {
   if (gameState.crypticCache[digit]) return gameState.crypticCache[digit];
   let candidates = crypticMessages.filter(cond => cond.digits.includes(digit));
-  if (candidates.length === 0) { candidates = [{ message: "Il digit è avvolto nel mistero." }]; }
+  if (candidates.length === 0) candidates = [{ message: "Indizio non disponibile." }];
   const chosen = candidates[Math.floor(Math.random() * candidates.length)];
   gameState.crypticCache[digit] = chosen.message;
   return chosen.message;
@@ -513,14 +496,14 @@ guessForm.addEventListener("submit", function (e) {
 
   const regex = new RegExp(`^\\d{${gameState.codeLength}}$`);
   if (!regex.test(guess)) {
-    addMessage("codemaster", `Il digit segreto deve essere composto da ${gameState.codeLength} digits. Riprova.`);
+    addMessage("codemaster", `Inserisci esattamente ${gameState.codeLength} cifre.`);
     pinInputs.forEach(input => input.value = "");
     pinInputs[0].focus();
     return;
   }
 
   if (new Set(guess).size !== gameState.codeLength) {
-    addMessage("codemaster", "Ogni digit deve essere unico. Riprova.");
+    addMessage("codemaster", "Ogni cifra può comparire una sola volta.");
     pinInputs.forEach(input => input.value = "");
     pinInputs[0].focus();
     return;
@@ -545,9 +528,9 @@ guessForm.addEventListener("submit", function (e) {
   if (guess === gameState.secretCode) {
     const elapsedSeconds = Math.max((Date.now() - gameState.startTime) / 1000, 1);
     const score = calculateScore(elapsedSeconds);
-    showGameOver("COMPLIMENTI! SISTEMA VIOLATO", "#2ecc71", true, score);
+    showGameOver("CODICE DECIFRATO", "#2ecc71", true, score);
   } else if (gameState.allowedAttempts - gameState.attempts <= 0) {
-    showGameOver("ERRORE CRITICO! SEI STATO SCOPERTO!", "#e74c3c", false, gameState.secretCode);
+    showGameOver("TENTATIVI ESAURITI", "#e74c3c", false, gameState.secretCode);
   }
 
   pinInputs.forEach(input => input.value = "");
@@ -593,19 +576,20 @@ function showEpilogo(won, scoreOrSecret) {
 
   // Recupera i dati del livello corrente per il testo epilogo
   const data = levelData[gameState.difficulty][gameState.codeLength];
-  let epilogoText = "<strong>Esito sfida:</strong><br><br>";
+  const narrative = gameState.campaignMode ? data.campaign : data.freePlay;
+  let epilogoText = "<strong>ESITO DELLA SFIDA</strong><br><br>";
   if (won) {
-    epilogoText += data.epilogoVittoria;
+    epilogoText += narrative.victory;
     epilogoText += `<br><br>Punteggio: ${scoreOrSecret}`;
   } else {
-    epilogoText += data.epilogoSconfitta;
-    epilogoText += `<br><br>Il digit era: ${scoreOrSecret}`;
+    epilogoText += narrative.defeat;
+    epilogoText += `<br><br>Codice corretto: ${scoreOrSecret}`;
   }
   epilogoConsole.innerHTML = epilogoText;
 
   // Crea il pulsante per tornare al menu/campagna
   let backBtn = document.createElement("button");
-  backBtn.textContent = gameState.campaignMode ? "↩ Torna alla Campagna" : "↩ Torna al Menu";
+  backBtn.textContent = gameState.campaignMode ? "↩ Torna alla campagna" : "↩ Torna al menu";
   backBtn.style.marginTop = "10px";
   backBtn.addEventListener("click", function () {
     epilogoConsole.remove();
@@ -629,7 +613,7 @@ function showEpilogo(won, scoreOrSecret) {
 }
 
 quitGameBtn.addEventListener("click", function () {
-  if (confirm("Sei sicuro di voler abbandonare la partita?")) {
+  if (confirm("Abbandonare la partita?\n\nIl tentativo corrente andrà perso.")) {
     gameState.attempts = 0;
     updateHealthBar();
     gameDiv.classList.add("hidden");
