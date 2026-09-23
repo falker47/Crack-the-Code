@@ -31,9 +31,20 @@ for (const difficulty of expectedDifficulties) {
     const data = levelData?.[difficulty]?.[length];
     if (!data) throw new Error(`Missing levelData for ${key}`);
 
-    for (const field of ['levelName', 'lore', 'epilogoVittoria', 'epilogoSconfitta']) {
-      if (typeof data[field] !== 'string' || data[field].trim() === '') {
-        throw new Error(`Missing ${field} for ${key}`);
+    if (typeof data.levelName !== 'string' || data.levelName.trim() === '') {
+      throw new Error(`Missing levelName for ${key}`);
+    }
+
+    for (const mode of ['campaign', 'freePlay']) {
+      const narrative = data[mode];
+      if (!narrative || typeof narrative !== 'object') {
+        throw new Error(`Missing ${mode} narrative for ${key}`);
+      }
+
+      for (const field of ['lore', 'victory', 'defeat']) {
+        if (typeof narrative[field] !== 'string' || narrative[field].trim() === '') {
+          throw new Error(`Missing ${mode}.${field} for ${key}`);
+        }
       }
     }
   }
@@ -58,6 +69,12 @@ for (const [index, hint] of crypticMessages.entries()) {
     if (!Number.isInteger(digit) || digit < 0 || digit > 9) {
       throw new Error(`Hint ${index} contains invalid digit ${digit}`);
     }
+  }
+}
+
+for (let digit = 0; digit <= 9; digit++) {
+  if (!crypticMessages.some(hint => hint.digits.includes(digit))) {
+    throw new Error(`No cryptic hints available for digit ${digit}`);
   }
 }
 
