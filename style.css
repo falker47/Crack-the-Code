@@ -1192,6 +1192,12 @@ button:hover {
   }
 }
 
+@media screen and (max-width: 768px) and (min-height: 760px) {
+  #menu {
+    transform: translateY(clamp(40px, 9vh, 85px));
+  }
+}
+
 @media screen and (max-width: 360px) {
   #menu .mode-buttons {
     flex-direction: column;
