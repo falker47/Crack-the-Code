@@ -1,0 +1,4325 @@
+{
+  "schema": 1,
+  "status": "complete",
+  "seed": "ctc-2026-10-12-confirmatory-v1",
+  "options": {
+    "games": 1000,
+    "seed": "ctc-2026-10-12-confirmatory-v1",
+    "out": "analysis/results/length5",
+    "guessSample": 48,
+    "secretSample": 256,
+    "maxSeconds": 1200,
+    "maxMemoryMB": 384,
+    "strategies": [
+      "random",
+      "elimination",
+      "expected",
+      "information"
+    ],
+    "levels": [
+      2,
+      5,
+      8
+    ]
+  },
+  "method": "uniform seeded secrets; shared secret and sequential hint streams; independent solver streams; exact posterior filtering; bounded one-step scores",
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64",
+    "cpu": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz"
+  },
+  "source": {
+    "data.js": "00907c35e3ba6cb54da9a69df7b4ccb268ddd3caf60e5f018bc2320300c3c825",
+    "script.js": "9b1a3bd8fd573920275bc68d4d53e35a04dcd26c5a1a06b4707e807483892e50",
+    "analysis/core.mjs": "6e0008d96298ba075c890b045bb56b020695b1c4ac7e4a54fe8d8c09fba38ffd",
+    "analysis/engine.mjs": "962e48f2492a22e51440e59fb8d4ca14cd243651c3641697c122481210b1727a",
+    "analysis/belief.mjs": "ff3c73e47467e4e989d1a9141dc71aed65b90e9067662b9f2ca8954a0a1419fc",
+    "analysis/solver.mjs": "0c0dfd4f49fbb1bcd54db1512fc1eb523ecd9f5d681573a451c81cd65a8892c1",
+    "analysis/simulate.mjs": "d539530c626ee747b3bc22742c3334f202624d59a2f686ea1f83126fd66eeeac",
+    "analysis/random.mjs": "76047d455039cb45f208b42b9bedde3972796c4b5333d2f0097d11d5d28b677e"
+  },
+  "results": [
+    {
+      "level": 2,
+      "length": 5,
+      "mode": "easy",
+      "name": "Infiltrati nell'Instagram della Nemesi",
+      "strategy": "random",
+      "games": 1000,
+      "wins": 0,
+      "winRate": 0,
+      "win95": {
+        "low": 2.168404344971009e-19,
+        "high": 0.0038267584855551234
+      },
+      "meanAttemptsWins": null,
+      "meanAttemptsAll": 7,
+      "distribution": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "loss": 1000
+      },
+      "residualAll": {
+        "mean": 1.56,
+        "median": 1,
+        "p90": 3,
+        "min": 1,
+        "max": 16
+      },
+      "residualLoss": {
+        "mean": 1.56,
+        "median": 1,
+        "p90": 3,
+        "min": 1,
+        "max": 16
+      },
+      "residualByTurn": [
+        {
+          "turn": 1,
+          "mean": 431.184,
+          "median": 480,
+          "p90": 780,
+          "min": 5,
+          "max": 780
+        },
+        {
+          "turn": 2,
+          "mean": 46.21,
+          "median": 24,
+          "p90": 117,
+          "min": 1,
+          "max": 480
+        },
+        {
+          "turn": 3,
+          "mean": 12.825,
+          "median": 6,
+          "p90": 32,
+          "min": 1,
+          "max": 192
+        },
+        {
+          "turn": 4,
+          "mean": 5.634,
+          "median": 3,
+          "p90": 14,
+          "min": 1,
+          "max": 60
+        },
+        {
+          "turn": 5,
+          "mean": 3.128,
+          "median": 2,
+          "p90": 7,
+          "min": 1,
+          "max": 32
+        },
+        {
+          "turn": 6,
+          "mean": 2.057,
+          "median": 1,
+          "p90": 4,
+          "min": 1,
+          "max": 26
+        },
+        {
+          "turn": 7,
+          "mean": 1.56,
+          "median": 1,
+          "p90": 3,
+          "min": 1,
+          "max": 16
+        }
+      ],
+      "lossExamples": [
+        {
+          "trial": 0,
+          "secret": "82605",
+          "residual": 1,
+          "history": [
+            {
+              "guess": "21309",
+              "observation": {
+                "attempt": 1,
+                "feedback": {
+                  "kind": "full",
+                  "marks": [
+                    1,
+                    0,
+                    0,
+                    2,
+                    0
+                  ]
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 180
+            },
+            {
+              "guess": "39062",
+              "observation": {
+                "attempt": 2,
+                "feedback": {
+                  "kind": "full",
+                  "marks": [
+                    0,
+                    0,
+                    1,
+                    1,
+                    1
+                  ]
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 72
+            },
+            {
+              "guess": "98613",
+              "observation": {
+                "attempt": 3,
+                "feedback": {
+                  "kind": "full",
+                  "marks": [
+                    0,
+                    1,
+                    2,
+                    0,
+                    0
+                  ]
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 6
+            },
+            {
+              "guess": "95172",
+              "observation": {
+                "attempt": 4,
+                "feedback": {
+                  "kind": "full",
+                  "marks": [
+                    0,
+                    1,
+                    0,
+                    0,
+                    1
+                  ]
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 2
+            },
+            {
+              "guess": "12869",
+              "observation": {
+                "attempt": 5,
+                "feedback": {
+                  "kind": "full",
+                  "marks": [
+                    0,
+                    2,
+                    1,
+                    1,
+                    0
+                  ]
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 2
+            },
+            {
+              "guess": "83054",
+              "observation": {
+                "attempt": 6,
+                "feedback": {
+                  "kind": "full",
+                  "marks": [
+                    2,
+                    0,
+                    1,
+                    1,
+                    0
+                  ]
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 1
+            },
+            {
+              "guess": "69501",
+              "observation": {
+                "attempt": 7,
+                "feedback": {
+                  "kind": "full",
+                  "marks": [
+                    1,
+                    0,
+                    1,
+                    2,
+                    0
+                  ]
+                },
+                "won": false,
+                "terminal": true
+              },
+              "candidates": 1
+            }
+          ]
+        },
+        {
+          "trial": 1,
+          "secret": "97350",
+          "residual": 1,
+          "history": [
+            {
+              "guess": "16304",
+              "observation": {
+                "attempt": 1,
+                "feedback": {
+                  "kind": "full",
+                  "marks": [
+                    0,
+                    0,
+                    2,
+                    1,
+                    0
+                  ]
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 180
+            },
+            {
+              "guess": "97435",
+              "observation": {
+                "attempt": 2,
+                "feedback": {
+                  "kind": "full",
+                  "marks": [
+                    2,
+                    2,
+                    0,
+                    1,
+                    1
+                  ]
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 1
+            },
+            {
+              "guess": "42389",
+              "observation": {
+                "attempt": 3,
+                "feedback": {
+                  "kind": "full",
+                  "marks": [
+                    0,
+                    0,
+                    2,
+                    0,
+                    1
+                  ]
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 1
+            },
+            {
+              "guess": "42807",
+              "observation": {
+                "attempt": 4,
+                "feedback": {
+                  "kind": "full",
+                  "marks": [
+                    0,
+                    0,
+                    0,
+                    1,
+                    1
+                  ]
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 1
+            },
+            {
+              "guess": "18724",
+              "observation": {
+                "attempt": 5,
+                "feedback": {
+                  "kind": "full",
+                  "marks": [
+                    0,
+                    0,
+                    1,
+                    0,
+                    0
+                  ]
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 1
+            },
+            {
+              "guess": "56830",
+              "observation": {
+                "attempt": 6,
+                "feedback": {
+                  "kind": "full",
+                  "marks": [
+                    1,
+                    0,
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 1
+            },
+            {
+              "guess": "41365",
+              "observation": {
+                "attempt": 7,
+                "feedback": {
+                  "kind": "full",
+                  "marks": [
+                    0,
+                    0,
+                    2,
+                    0,
+                    1
+                  ]
+                },
+                "won": false,
+                "terminal": true
+              },
+              "candidates": 1
+            }
+          ]
+        },
+        {
+          "trial": 2,
+          "secret": "83146",
+          "residual": 3,
+          "history": [
+            {
+              "guess": "46318",
+              "observation": {
+                "attempt": 1,
+                "feedback": {
+                  "kind": "full",
+                  "marks": [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                  ]
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 44
+            },
+            {
+              "guess": "38629",
+              "observation": {
+                "attempt": 2,
+                "feedback": {
+                  "kind": "full",
+                  "marks": [
+                    1,
+                    1,
+                    1,
+                    0,
+                    0
+                  ]
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 20
+            },
+            {
+              "guess": "38560",
+              "observation": {
+                "attempt": 3,
+                "feedback": {
+                  "kind": "full",
+                  "marks": [
+                    1,
+                    1,
+                    0,
+                    1,
+                    0
+                  ]
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 14
+            },
+            {
+              "guess": "28374",
+              "observation": {
+                "attempt": 4,
+                "feedback": {
+                  "kind": "full",
+                  "marks": [
+                    0,
+                    1,
+                    1,
+                    0,
+                    1
+                  ]
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 12
+            },
+            {
+              "guess": "43078",
+              "observation": {
+                "attempt": 5,
+                "feedback": {
+                  "kind": "full",
+                  "marks": [
+                    1,
+                    2,
+                    0,
+                    0,
+                    1
+                  ]
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 5
+            },
+            {
+              "guess": "72809",
+              "observation": {
+                "attempt": 6,
+                "feedback": {
+                  "kind": "full",
+                  "marks": [
+                    0,
+                    0,
+                    1,
+                    0,
+                    0
+                  ]
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 3
+            },
+            {
+              "guess": "50612",
+              "observation": {
+                "attempt": 7,
+                "feedback": {
+                  "kind": "full",
+                  "marks": [
+                    0,
+                    0,
+                    1,
+                    1,
+                    0
+                  ]
+                },
+                "won": false,
+                "terminal": true
+              },
+              "candidates": 3
+            }
+          ]
+        }
+      ],
+      "seconds": 5.616037315000001,
+      "cpuSeconds": 5.868658,
+      "peakRssMB": 70.28125,
+      "spaceBytes": 181440,
+      "scoredPairs": 0
+    },
+    {
+      "level": 2,
+      "length": 5,
+      "mode": "easy",
+      "name": "Infiltrati nell'Instagram della Nemesi",
+      "strategy": "elimination",
+      "games": 1000,
+      "wins": 1000,
+      "winRate": 1,
+      "win95": {
+        "low": 0.996173241514445,
+        "high": 1
+      },
+      "meanAttemptsWins": 4.114,
+      "meanAttemptsAll": 4.114,
+      "distribution": {
+        "1": 0,
+        "2": 6,
+        "3": 160,
+        "4": 570,
+        "5": 242,
+        "6": 22,
+        "7": 0,
+        "loss": 0
+      },
+      "residualAll": {
+        "mean": 1,
+        "median": 1,
+        "p90": 1,
+        "min": 1,
+        "max": 1
+      },
+      "residualLoss": {
+        "mean": null,
+        "median": null,
+        "p90": null,
+        "min": null,
+        "max": null
+      },
+      "residualByTurn": [
+        {
+          "turn": 1,
+          "mean": 442.291,
+          "median": 480,
+          "p90": 780,
+          "min": 5,
+          "max": 780
+        },
+        {
+          "turn": 2,
+          "mean": 20.874,
+          "median": 11,
+          "p90": 64,
+          "min": 1,
+          "max": 90
+        },
+        {
+          "turn": 3,
+          "mean": 2.1217303822937628,
+          "median": 1,
+          "p90": 4,
+          "min": 1,
+          "max": 18
+        },
+        {
+          "turn": 4,
+          "mean": 1.0515587529976018,
+          "median": 1,
+          "p90": 1,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "turn": 5,
+          "mean": 1,
+          "median": 1,
+          "p90": 1,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "turn": 6,
+          "mean": 1,
+          "median": 1,
+          "p90": 1,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "turn": 7,
+          "mean": null,
+          "median": null,
+          "p90": null,
+          "min": null,
+          "max": null
+        }
+      ],
+      "lossExamples": [],
+      "seconds": 5.025049927,
+      "cpuSeconds": 5.102661,
+      "peakRssMB": 124.97265625,
+      "spaceBytes": 181440,
+      "scoredPairs": 0
+    },
+    {
+      "level": 2,
+      "length": 5,
+      "mode": "easy",
+      "name": "Infiltrati nell'Instagram della Nemesi",
+      "strategy": "expected",
+      "games": 1000,
+      "wins": 1000,
+      "winRate": 1,
+      "win95": {
+        "low": 0.996173241514445,
+        "high": 1
+      },
+      "meanAttemptsWins": 3.966,
+      "meanAttemptsAll": 3.966,
+      "distribution": {
+        "1": 0,
+        "2": 2,
+        "3": 199,
+        "4": 630,
+        "5": 169,
+        "6": 0,
+        "7": 0,
+        "loss": 0
+      },
+      "residualAll": {
+        "mean": 1,
+        "median": 1,
+        "p90": 1,
+        "min": 1,
+        "max": 1
+      },
+      "residualLoss": {
+        "mean": null,
+        "median": null,
+        "p90": null,
+        "min": null,
+        "max": null
+      },
+      "residualByTurn": [
+        {
+          "turn": 1,
+          "mean": 437.308,
+          "median": 480,
+          "p90": 780,
+          "min": 5,
+          "max": 780
+        },
+        {
+          "turn": 2,
+          "mean": 16.533,
+          "median": 9,
+          "p90": 40,
+          "min": 1,
+          "max": 90
+        },
+        {
+          "turn": 3,
+          "mean": 1.718436873747495,
+          "median": 1,
+          "p90": 4,
+          "min": 1,
+          "max": 12
+        },
+        {
+          "turn": 4,
+          "mean": 1,
+          "median": 1,
+          "p90": 1,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "turn": 5,
+          "mean": 1,
+          "median": 1,
+          "p90": 1,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "turn": 6,
+          "mean": null,
+          "median": null,
+          "p90": null,
+          "min": null,
+          "max": null
+        },
+        {
+          "turn": 7,
+          "mean": null,
+          "median": null,
+          "p90": null,
+          "min": null,
+          "max": null
+        }
+      ],
+      "lossExamples": [],
+      "seconds": 10.503899013000002,
+      "cpuSeconds": 10.595519,
+      "peakRssMB": 142.56640625,
+      "spaceBytes": 181440,
+      "scoredPairs": 22554089
+    },
+    {
+      "level": 2,
+      "length": 5,
+      "mode": "easy",
+      "name": "Infiltrati nell'Instagram della Nemesi",
+      "strategy": "information",
+      "games": 1000,
+      "wins": 1000,
+      "winRate": 1,
+      "win95": {
+        "low": 0.996173241514445,
+        "high": 1
+      },
+      "meanAttemptsWins": 3.964,
+      "meanAttemptsAll": 3.964,
+      "distribution": {
+        "1": 0,
+        "2": 2,
+        "3": 215,
+        "4": 601,
+        "5": 181,
+        "6": 1,
+        "7": 0,
+        "loss": 0
+      },
+      "residualAll": {
+        "mean": 1,
+        "median": 1,
+        "p90": 1,
+        "min": 1,
+        "max": 1
+      },
+      "residualLoss": {
+        "mean": null,
+        "median": null,
+        "p90": null,
+        "min": null,
+        "max": null
+      },
+      "residualByTurn": [
+        {
+          "turn": 1,
+          "mean": 436.589,
+          "median": 480,
+          "p90": 780,
+          "min": 5,
+          "max": 780
+        },
+        {
+          "turn": 2,
+          "mean": 18.193,
+          "median": 9,
+          "p90": 56,
+          "min": 1,
+          "max": 84
+        },
+        {
+          "turn": 3,
+          "mean": 1.9098196392785571,
+          "median": 1,
+          "p90": 4,
+          "min": 1,
+          "max": 15
+        },
+        {
+          "turn": 4,
+          "mean": 1.003831417624521,
+          "median": 1,
+          "p90": 1,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "turn": 5,
+          "mean": 1,
+          "median": 1,
+          "p90": 1,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "turn": 6,
+          "mean": 1,
+          "median": 1,
+          "p90": 1,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "turn": 7,
+          "mean": null,
+          "median": null,
+          "p90": null,
+          "min": null,
+          "max": null
+        }
+      ],
+      "lossExamples": [],
+      "seconds": 10.329380933,
+      "cpuSeconds": 10.351759,
+      "peakRssMB": 145.34765625,
+      "spaceBytes": 181440,
+      "scoredPairs": 22729387
+    },
+    {
+      "level": 5,
+      "length": 5,
+      "mode": "medium",
+      "name": "Bypassa il Firewall del Pentagono",
+      "strategy": "random",
+      "games": 1000,
+      "wins": 0,
+      "winRate": 0,
+      "win95": {
+        "low": 2.168404344971009e-19,
+        "high": 0.0038267584855551234
+      },
+      "meanAttemptsWins": null,
+      "meanAttemptsAll": 7,
+      "distribution": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "loss": 1000
+      },
+      "residualAll": {
+        "mean": 2.021,
+        "median": 1,
+        "p90": 4,
+        "min": 1,
+        "max": 16
+      },
+      "residualLoss": {
+        "mean": 2.021,
+        "median": 1,
+        "p90": 4,
+        "min": 1,
+        "max": 16
+      },
+      "residualByTurn": [
+        {
+          "turn": 1,
+          "mean": 4770.601,
+          "median": 4200,
+          "p90": 7800,
+          "min": 44,
+          "max": 7800
+        },
+        {
+          "turn": 2,
+          "mean": 784.553,
+          "median": 660,
+          "p90": 1776,
+          "min": 4,
+          "max": 5040
+        },
+        {
+          "turn": 3,
+          "mean": 139.228,
+          "median": 94,
+          "p90": 321,
+          "min": 1,
+          "max": 1152
+        },
+        {
+          "turn": 4,
+          "mean": 29.508,
+          "median": 17,
+          "p90": 76,
+          "min": 1,
+          "max": 340
+        },
+        {
+          "turn": 5,
+          "mean": 8.525,
+          "median": 5,
+          "p90": 20,
+          "min": 1,
+          "max": 81
+        },
+        {
+          "turn": 6,
+          "mean": 3.471,
+          "median": 2,
+          "p90": 7,
+          "min": 1,
+          "max": 36
+        },
+        {
+          "turn": 7,
+          "mean": 2.021,
+          "median": 1,
+          "p90": 4,
+          "min": 1,
+          "max": 16
+        }
+      ],
+      "lossExamples": [
+        {
+          "trial": 0,
+          "secret": "82605",
+          "residual": 1,
+          "history": [
+            {
+              "guess": "21309",
+              "observation": {
+                "attempt": 1,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 1,
+                  "misses": 3
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 3600
+            },
+            {
+              "guess": "39062",
+              "observation": {
+                "attempt": 2,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 3,
+                  "misses": 2
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 792
+            },
+            {
+              "guess": "98613",
+              "observation": {
+                "attempt": 3,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 1,
+                  "misses": 3
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 99
+            },
+            {
+              "guess": "95172",
+              "observation": {
+                "attempt": 4,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 2,
+                  "misses": 3
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 31
+            },
+            {
+              "guess": "12869",
+              "observation": {
+                "attempt": 5,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 2,
+                  "misses": 2
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 4
+            },
+            {
+              "guess": "83054",
+              "observation": {
+                "attempt": 6,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 2,
+                  "misses": 2
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 1
+            },
+            {
+              "guess": "69501",
+              "observation": {
+                "attempt": 7,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 2,
+                  "misses": 2
+                },
+                "won": false,
+                "terminal": true
+              },
+              "candidates": 1
+            }
+          ]
+        },
+        {
+          "trial": 1,
+          "secret": "97350",
+          "residual": 1,
+          "history": [
+            {
+              "guess": "16304",
+              "observation": {
+                "attempt": 1,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 1,
+                  "misses": 3
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 3600
+            },
+            {
+              "guess": "97435",
+              "observation": {
+                "attempt": 2,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 2,
+                  "blow": 2,
+                  "misses": 1
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 52
+            },
+            {
+              "guess": "42389",
+              "observation": {
+                "attempt": 3,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 1,
+                  "misses": 3
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 11
+            },
+            {
+              "guess": "42807",
+              "observation": {
+                "attempt": 4,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 2,
+                  "misses": 3
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 4
+            },
+            {
+              "guess": "18724",
+              "observation": {
+                "attempt": 5,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 1,
+                  "misses": 4
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 3
+            },
+            {
+              "guess": "56830",
+              "observation": {
+                "attempt": 6,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 2,
+                  "misses": 2
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 1
+            },
+            {
+              "guess": "41365",
+              "observation": {
+                "attempt": 7,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 1,
+                  "misses": 3
+                },
+                "won": false,
+                "terminal": true
+              },
+              "candidates": 1
+            }
+          ]
+        },
+        {
+          "trial": 2,
+          "secret": "83146",
+          "residual": 3,
+          "history": [
+            {
+              "guess": "46318",
+              "observation": {
+                "attempt": 1,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 5,
+                  "misses": 0
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 44
+            },
+            {
+              "guess": "38629",
+              "observation": {
+                "attempt": 2,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 3,
+                  "misses": 2
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 20
+            },
+            {
+              "guess": "38560",
+              "observation": {
+                "attempt": 3,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 3,
+                  "misses": 2
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 14
+            },
+            {
+              "guess": "28374",
+              "observation": {
+                "attempt": 4,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 3,
+                  "misses": 2
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 12
+            },
+            {
+              "guess": "43078",
+              "observation": {
+                "attempt": 5,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 2,
+                  "misses": 2
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 5
+            },
+            {
+              "guess": "72809",
+              "observation": {
+                "attempt": 6,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 1,
+                  "misses": 4
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 3
+            },
+            {
+              "guess": "50612",
+              "observation": {
+                "attempt": 7,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 2,
+                  "misses": 3
+                },
+                "won": false,
+                "terminal": true
+              },
+              "candidates": 3
+            }
+          ]
+        }
+      ],
+      "seconds": 5.211733305999998,
+      "cpuSeconds": 5.330665,
+      "peakRssMB": 145.34765625,
+      "spaceBytes": 181440,
+      "scoredPairs": 0
+    },
+    {
+      "level": 5,
+      "length": 5,
+      "mode": "medium",
+      "name": "Bypassa il Firewall del Pentagono",
+      "strategy": "elimination",
+      "games": 1000,
+      "wins": 968,
+      "winRate": 0.968,
+      "win95": {
+        "low": 0.9551752619162314,
+        "high": 0.9772428921412891
+      },
+      "meanAttemptsWins": 5.855371900826446,
+      "meanAttemptsAll": 5.892,
+      "distribution": {
+        "1": 0,
+        "2": 1,
+        "3": 7,
+        "4": 57,
+        "5": 252,
+        "6": 400,
+        "7": 251,
+        "loss": 32
+      },
+      "residualAll": {
+        "mean": 1.005,
+        "median": 1,
+        "p90": 1,
+        "min": 1,
+        "max": 2
+      },
+      "residualLoss": {
+        "mean": 1.15625,
+        "median": 1,
+        "p90": 2,
+        "min": 1,
+        "max": 2
+      },
+      "residualByTurn": [
+        {
+          "turn": 1,
+          "mean": 4820.007,
+          "median": 4200,
+          "p90": 7800,
+          "min": 25,
+          "max": 7800
+        },
+        {
+          "turn": 2,
+          "mean": 694.271,
+          "median": 568,
+          "p90": 1636,
+          "min": 1,
+          "max": 1778
+        },
+        {
+          "turn": 3,
+          "mean": 89.90490490490491,
+          "median": 52,
+          "p90": 241,
+          "min": 1,
+          "max": 390
+        },
+        {
+          "turn": 4,
+          "mean": 11.754032258064516,
+          "median": 6,
+          "p90": 31,
+          "min": 1,
+          "max": 84
+        },
+        {
+          "turn": 5,
+          "mean": 2.2866310160427807,
+          "median": 1,
+          "p90": 5,
+          "min": 1,
+          "max": 18
+        },
+        {
+          "turn": 6,
+          "mean": 1.1566617862371888,
+          "median": 1,
+          "p90": 2,
+          "min": 1,
+          "max": 6
+        },
+        {
+          "turn": 7,
+          "mean": 1.017667844522968,
+          "median": 1,
+          "p90": 1,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "lossExamples": [
+        {
+          "trial": 9,
+          "secret": "15078",
+          "residual": 1,
+          "history": [
+            {
+              "guess": "53679",
+              "observation": {
+                "attempt": 1,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 1,
+                  "misses": 3
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 3600
+            },
+            {
+              "guess": "42607",
+              "observation": {
+                "attempt": 2,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 2,
+                  "misses": 3
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 792
+            },
+            {
+              "guess": "51286",
+              "observation": {
+                "attempt": 3,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 3,
+                  "misses": 2
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 142
+            },
+            {
+              "guess": "63810",
+              "observation": {
+                "attempt": 4,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 3,
+                  "misses": 2
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 16
+            },
+            {
+              "guess": "28173",
+              "observation": {
+                "attempt": 5,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 2,
+                  "misses": 2
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 4
+            },
+            {
+              "guess": "10578",
+              "observation": {
+                "attempt": 6,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 3,
+                  "blow": 2,
+                  "misses": 0
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 2
+            },
+            {
+              "guess": "80571",
+              "observation": {
+                "attempt": 7,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 4,
+                  "misses": 0
+                },
+                "won": false,
+                "terminal": true
+              },
+              "candidates": 1
+            }
+          ]
+        },
+        {
+          "trial": 108,
+          "secret": "68402",
+          "residual": 1,
+          "history": [
+            {
+              "guess": "13209",
+              "observation": {
+                "attempt": 1,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 1,
+                  "misses": 3
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 3600
+            },
+            {
+              "guess": "19574",
+              "observation": {
+                "attempt": 2,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 1,
+                  "misses": 4
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 260
+            },
+            {
+              "guess": "82607",
+              "observation": {
+                "attempt": 3,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 3,
+                  "misses": 1
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 41
+            },
+            {
+              "guess": "80265",
+              "observation": {
+                "attempt": 4,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 4,
+                  "misses": 1
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 6
+            },
+            {
+              "guess": "26408",
+              "observation": {
+                "attempt": 5,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 2,
+                  "blow": 3,
+                  "misses": 0
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 3
+            },
+            {
+              "guess": "46802",
+              "observation": {
+                "attempt": 6,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 2,
+                  "blow": 3,
+                  "misses": 0
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 2
+            },
+            {
+              "guess": "24806",
+              "observation": {
+                "attempt": 7,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 4,
+                  "misses": 0
+                },
+                "won": false,
+                "terminal": true
+              },
+              "candidates": 1
+            }
+          ]
+        },
+        {
+          "trial": 161,
+          "secret": "50948",
+          "residual": 1,
+          "history": [
+            {
+              "guess": "38714",
+              "observation": {
+                "attempt": 1,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 2,
+                  "misses": 3
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 7800
+            },
+            {
+              "guess": "80263",
+              "observation": {
+                "attempt": 2,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 1,
+                  "misses": 3
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 874
+            },
+            {
+              "guess": "47205",
+              "observation": {
+                "attempt": 3,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 3,
+                  "misses": 2
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 174
+            },
+            {
+              "guess": "54061",
+              "observation": {
+                "attempt": 4,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 2,
+                  "misses": 2
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 22
+            },
+            {
+              "guess": "09467",
+              "observation": {
+                "attempt": 5,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 3,
+                  "misses": 2
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 8
+            },
+            {
+              "guess": "85049",
+              "observation": {
+                "attempt": 6,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 4,
+                  "misses": 0
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 3
+            },
+            {
+              "guess": "84950",
+              "observation": {
+                "attempt": 7,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 4,
+                  "misses": 0
+                },
+                "won": false,
+                "terminal": true
+              },
+              "candidates": 1
+            }
+          ]
+        }
+      ],
+      "seconds": 5.459701676000004,
+      "cpuSeconds": 5.540699,
+      "peakRssMB": 146.82421875,
+      "spaceBytes": 181440,
+      "scoredPairs": 0
+    },
+    {
+      "level": 5,
+      "length": 5,
+      "mode": "medium",
+      "name": "Bypassa il Firewall del Pentagono",
+      "strategy": "expected",
+      "games": 1000,
+      "wins": 993,
+      "winRate": 0.993,
+      "win95": {
+        "low": 0.9856216845342334,
+        "high": 0.9966051315990092
+      },
+      "meanAttemptsWins": 5.8207452165156095,
+      "meanAttemptsAll": 5.829,
+      "distribution": {
+        "1": 0,
+        "2": 1,
+        "3": 4,
+        "4": 47,
+        "5": 270,
+        "6": 469,
+        "7": 202,
+        "loss": 7
+      },
+      "residualAll": {
+        "mean": 1,
+        "median": 1,
+        "p90": 1,
+        "min": 1,
+        "max": 1
+      },
+      "residualLoss": {
+        "mean": 1,
+        "median": 1,
+        "p90": 1,
+        "min": 1,
+        "max": 1
+      },
+      "residualByTurn": [
+        {
+          "turn": 1,
+          "mean": 4702.7,
+          "median": 4200,
+          "p90": 7800,
+          "min": 20,
+          "max": 7800
+        },
+        {
+          "turn": 2,
+          "mean": 698.055,
+          "median": 592,
+          "p90": 1636,
+          "min": 1,
+          "max": 2016
+        },
+        {
+          "turn": 3,
+          "mean": 91.87087087087087,
+          "median": 60,
+          "p90": 232,
+          "min": 1,
+          "max": 371
+        },
+        {
+          "turn": 4,
+          "mean": 9.887437185929649,
+          "median": 5,
+          "p90": 26,
+          "min": 1,
+          "max": 71
+        },
+        {
+          "turn": 5,
+          "mean": 1.6540084388185654,
+          "median": 1,
+          "p90": 3,
+          "min": 1,
+          "max": 10
+        },
+        {
+          "turn": 6,
+          "mean": 1.0162241887905605,
+          "median": 1,
+          "p90": 1,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "turn": 7,
+          "mean": 1,
+          "median": 1,
+          "p90": 1,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "lossExamples": [
+        {
+          "trial": 586,
+          "secret": "16308",
+          "residual": 1,
+          "history": [
+            {
+              "guess": "57014",
+              "observation": {
+                "attempt": 1,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 2,
+                  "misses": 3
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 7800
+            },
+            {
+              "guess": "68241",
+              "observation": {
+                "attempt": 2,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 3,
+                  "misses": 2
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 1680
+            },
+            {
+              "guess": "82195",
+              "observation": {
+                "attempt": 3,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 2,
+                  "misses": 3
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 317
+            },
+            {
+              "guess": "94762",
+              "observation": {
+                "attempt": 4,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 1,
+                  "misses": 4
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 18
+            },
+            {
+              "guess": "16380",
+              "observation": {
+                "attempt": 5,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 3,
+                  "blow": 2,
+                  "misses": 0
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 4
+            },
+            {
+              "guess": "10386",
+              "observation": {
+                "attempt": 6,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 2,
+                  "blow": 3,
+                  "misses": 0
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 2
+            },
+            {
+              "guess": "13680",
+              "observation": {
+                "attempt": 7,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 4,
+                  "misses": 0
+                },
+                "won": false,
+                "terminal": true
+              },
+              "candidates": 1
+            }
+          ]
+        },
+        {
+          "trial": 597,
+          "secret": "98760",
+          "residual": 1,
+          "history": [
+            {
+              "guess": "08527",
+              "observation": {
+                "attempt": 1,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 2,
+                  "misses": 2
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 4200
+            },
+            {
+              "guess": "86420",
+              "observation": {
+                "attempt": 2,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 2,
+                  "misses": 2
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 592
+            },
+            {
+              "guess": "54128",
+              "observation": {
+                "attempt": 3,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 1,
+                  "misses": 4
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 40
+            },
+            {
+              "guess": "36087",
+              "observation": {
+                "attempt": 4,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 4,
+                  "misses": 1
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 6
+            },
+            {
+              "guess": "68790",
+              "observation": {
+                "attempt": 5,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 3,
+                  "blow": 2,
+                  "misses": 0
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 3
+            },
+            {
+              "guess": "68970",
+              "observation": {
+                "attempt": 6,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 2,
+                  "blow": 3,
+                  "misses": 0
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 2
+            },
+            {
+              "guess": "78690",
+              "observation": {
+                "attempt": 7,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 2,
+                  "blow": 3,
+                  "misses": 0
+                },
+                "won": false,
+                "terminal": true
+              },
+              "candidates": 1
+            }
+          ]
+        },
+        {
+          "trial": 673,
+          "secret": "59403",
+          "residual": 1,
+          "history": [
+            {
+              "guess": "63124",
+              "observation": {
+                "attempt": 1,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 2,
+                  "misses": 3
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 7800
+            },
+            {
+              "guess": "29680",
+              "observation": {
+                "attempt": 2,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 1,
+                  "misses": 3
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 874
+            },
+            {
+              "guess": "41987",
+              "observation": {
+                "attempt": 3,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 2,
+                  "misses": 3
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 166
+            },
+            {
+              "guess": "15270",
+              "observation": {
+                "attempt": 4,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 2,
+                  "misses": 3
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 28
+            },
+            {
+              "guess": "97635",
+              "observation": {
+                "attempt": 5,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 3,
+                  "misses": 2
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 4
+            },
+            {
+              "guess": "09453",
+              "observation": {
+                "attempt": 6,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 3,
+                  "blow": 2,
+                  "misses": 0
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 2
+            },
+            {
+              "guess": "09543",
+              "observation": {
+                "attempt": 7,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 2,
+                  "blow": 3,
+                  "misses": 0
+                },
+                "won": false,
+                "terminal": true
+              },
+              "candidates": 1
+            }
+          ]
+        }
+      ],
+      "seconds": 13.505227632999995,
+      "cpuSeconds": 13.545075,
+      "peakRssMB": 176.02734375,
+      "spaceBytes": 181440,
+      "scoredPairs": 39524836
+    },
+    {
+      "level": 5,
+      "length": 5,
+      "mode": "medium",
+      "name": "Bypassa il Firewall del Pentagono",
+      "strategy": "information",
+      "games": 1000,
+      "wins": 993,
+      "winRate": 0.993,
+      "win95": {
+        "low": 0.9856216845342334,
+        "high": 0.9966051315990092
+      },
+      "meanAttemptsWins": 5.771399798590131,
+      "meanAttemptsAll": 5.78,
+      "distribution": {
+        "1": 0,
+        "2": 0,
+        "3": 8,
+        "4": 54,
+        "5": 271,
+        "6": 484,
+        "7": 176,
+        "loss": 7
+      },
+      "residualAll": {
+        "mean": 1,
+        "median": 1,
+        "p90": 1,
+        "min": 1,
+        "max": 1
+      },
+      "residualLoss": {
+        "mean": 1,
+        "median": 1,
+        "p90": 1,
+        "min": 1,
+        "max": 1
+      },
+      "residualByTurn": [
+        {
+          "turn": 1,
+          "mean": 4809.264,
+          "median": 4200,
+          "p90": 7800,
+          "min": 44,
+          "max": 7800
+        },
+        {
+          "turn": 2,
+          "mean": 700.783,
+          "median": 568,
+          "p90": 1636,
+          "min": 4,
+          "max": 2016
+        },
+        {
+          "turn": 3,
+          "mean": 88.542,
+          "median": 54,
+          "p90": 233,
+          "min": 1,
+          "max": 383
+        },
+        {
+          "turn": 4,
+          "mean": 10.117943548387096,
+          "median": 5,
+          "p90": 28,
+          "min": 1,
+          "max": 65
+        },
+        {
+          "turn": 5,
+          "mean": 1.664179104477612,
+          "median": 1,
+          "p90": 3,
+          "min": 1,
+          "max": 16
+        },
+        {
+          "turn": 6,
+          "mean": 1.0239880059970015,
+          "median": 1,
+          "p90": 1,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "turn": 7,
+          "mean": 1,
+          "median": 1,
+          "p90": 1,
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "lossExamples": [
+        {
+          "trial": 295,
+          "secret": "73620",
+          "residual": 1,
+          "history": [
+            {
+              "guess": "59012",
+              "observation": {
+                "attempt": 1,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 2,
+                  "misses": 3
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 7800
+            },
+            {
+              "guess": "08349",
+              "observation": {
+                "attempt": 2,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 2,
+                  "misses": 3
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 1778
+            },
+            {
+              "guess": "14273",
+              "observation": {
+                "attempt": 3,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 3,
+                  "misses": 2
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 366
+            },
+            {
+              "guess": "31607",
+              "observation": {
+                "attempt": 4,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 3,
+                  "misses": 1
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 26
+            },
+            {
+              "guess": "36791",
+              "observation": {
+                "attempt": 5,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 3,
+                  "misses": 2
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 7
+            },
+            {
+              "guess": "47106",
+              "observation": {
+                "attempt": 6,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 3,
+                  "misses": 2
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 2
+            },
+            {
+              "guess": "72630",
+              "observation": {
+                "attempt": 7,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 3,
+                  "blow": 2,
+                  "misses": 0
+                },
+                "won": false,
+                "terminal": true
+              },
+              "candidates": 1
+            }
+          ]
+        },
+        {
+          "trial": 538,
+          "secret": "80164",
+          "residual": 1,
+          "history": [
+            {
+              "guess": "78149",
+              "observation": {
+                "attempt": 1,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 2,
+                  "misses": 2
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 4200
+            },
+            {
+              "guess": "79651",
+              "observation": {
+                "attempt": 2,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 2,
+                  "misses": 3
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 957
+            },
+            {
+              "guess": "18932",
+              "observation": {
+                "attempt": 3,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 2,
+                  "misses": 3
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 169
+            },
+            {
+              "guess": "97240",
+              "observation": {
+                "attempt": 4,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 2,
+                  "misses": 3
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 19
+            },
+            {
+              "guess": "06184",
+              "observation": {
+                "attempt": 5,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 2,
+                  "blow": 3,
+                  "misses": 0
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 4
+            },
+            {
+              "guess": "04168",
+              "observation": {
+                "attempt": 6,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 2,
+                  "blow": 3,
+                  "misses": 0
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 2
+            },
+            {
+              "guess": "46108",
+              "observation": {
+                "attempt": 7,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 4,
+                  "misses": 0
+                },
+                "won": false,
+                "terminal": true
+              },
+              "candidates": 1
+            }
+          ]
+        },
+        {
+          "trial": 590,
+          "secret": "98562",
+          "residual": 1,
+          "history": [
+            {
+              "guess": "57943",
+              "observation": {
+                "attempt": 1,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 2,
+                  "misses": 3
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 7800
+            },
+            {
+              "guess": "86431",
+              "observation": {
+                "attempt": 2,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 2,
+                  "misses": 3
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 1776
+            },
+            {
+              "guess": "05178",
+              "observation": {
+                "attempt": 3,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 2,
+                  "misses": 3
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 355
+            },
+            {
+              "guess": "21596",
+              "observation": {
+                "attempt": 4,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 3,
+                  "misses": 1
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 22
+            },
+            {
+              "guess": "61729",
+              "observation": {
+                "attempt": 5,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 0,
+                  "blow": 3,
+                  "misses": 2
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 5
+            },
+            {
+              "guess": "29865",
+              "observation": {
+                "attempt": 6,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 4,
+                  "misses": 0
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 2
+            },
+            {
+              "guess": "92856",
+              "observation": {
+                "attempt": 7,
+                "feedback": {
+                  "kind": "summary",
+                  "hit": 1,
+                  "blow": 4,
+                  "misses": 0
+                },
+                "won": false,
+                "terminal": true
+              },
+              "candidates": 1
+            }
+          ]
+        }
+      ],
+      "seconds": 13.955859426000004,
+      "cpuSeconds": 13.972855,
+      "peakRssMB": 178.52734375,
+      "spaceBytes": 181440,
+      "scoredPairs": 39191876
+    },
+    {
+      "level": 8,
+      "length": 5,
+      "mode": "difficult",
+      "name": "Il Cuore del Sistema Bancario Globale",
+      "strategy": "random",
+      "games": 1000,
+      "wins": 0,
+      "winRate": 0,
+      "win95": {
+        "low": 2.168404344971009e-19,
+        "high": 0.0038267584855551234
+      },
+      "meanAttemptsWins": null,
+      "meanAttemptsAll": 7,
+      "distribution": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "loss": 1000
+      },
+      "residualAll": {
+        "mean": 6.286,
+        "median": 3,
+        "p90": 14,
+        "min": 1,
+        "max": 91
+      },
+      "residualLoss": {
+        "mean": 6.286,
+        "median": 3,
+        "p90": 14,
+        "min": 1,
+        "max": 91
+      },
+      "residualByTurn": [
+        {
+          "turn": 1,
+          "mean": 6866.937,
+          "median": 5711,
+          "p90": 13549,
+          "min": 120,
+          "max": 17969
+        },
+        {
+          "turn": 2,
+          "mean": 1572.229,
+          "median": 1140,
+          "p90": 3333,
+          "min": 18,
+          "max": 10036
+        },
+        {
+          "turn": 3,
+          "mean": 400.565,
+          "median": 234,
+          "p90": 922,
+          "min": 4,
+          "max": 4929
+        },
+        {
+          "turn": 4,
+          "mean": 113.934,
+          "median": 62,
+          "p90": 276,
+          "min": 2,
+          "max": 1438
+        },
+        {
+          "turn": 5,
+          "mean": 37.264,
+          "median": 18,
+          "p90": 94,
+          "min": 1,
+          "max": 537
+        },
+        {
+          "turn": 6,
+          "mean": 14.684,
+          "median": 6,
+          "p90": 32,
+          "min": 1,
+          "max": 417
+        },
+        {
+          "turn": 7,
+          "mean": 6.286,
+          "median": 3,
+          "p90": 14,
+          "min": 1,
+          "max": 91
+        }
+      ],
+      "lossExamples": [
+        {
+          "trial": 0,
+          "secret": "82605",
+          "residual": 1,
+          "history": [
+            {
+              "guess": "21309",
+              "observation": {
+                "attempt": 1,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "Compare nel numero totale di carte di un mazzo italiano tradizionale."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 2136
+            },
+            {
+              "guess": "39062",
+              "observation": {
+                "attempt": 2,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "È il numero di facce di un cubo."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 316
+            },
+            {
+              "guess": "98613",
+              "observation": {
+                "attempt": 3,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "È il numero di facce di un cubo."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 56
+            },
+            {
+              "guess": "95172",
+              "observation": {
+                "attempt": 4,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "È un risultato dispari maggiore di 1 ottenibile con un dado a sei facce."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 20
+            },
+            {
+              "guess": "12869",
+              "observation": {
+                "attempt": 5,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "È una potenza di 2."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 10
+            },
+            {
+              "guess": "83054",
+              "observation": {
+                "attempt": 6,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "Si può ottenere sommando due numeri primi distinti."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 1
+            },
+            {
+              "guess": "69501",
+              "observation": {
+                "attempt": 7,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "È un risultato dispari maggiore di 1 ottenibile con un dado a sei facce."
+                },
+                "won": false,
+                "terminal": true
+              },
+              "candidates": 1
+            }
+          ]
+        },
+        {
+          "trial": 1,
+          "secret": "97350",
+          "residual": 2,
+          "history": [
+            {
+              "guess": "16304",
+              "observation": {
+                "attempt": 1,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "È un numero primo."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 2394
+            },
+            {
+              "guess": "97435",
+              "observation": {
+                "attempt": 2,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "È un multiplo di 3."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 294
+            },
+            {
+              "guess": "42389",
+              "observation": {
+                "attempt": 3,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "none-confirmed"
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 48
+            },
+            {
+              "guess": "42807",
+              "observation": {
+                "attempt": 4,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "Compare nel numero totale di carte di un mazzo italiano tradizionale."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 18
+            },
+            {
+              "guess": "18724",
+              "observation": {
+                "attempt": 5,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "Compare nel numero atomico dell'argento."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 5
+            },
+            {
+              "guess": "56830",
+              "observation": {
+                "attempt": 6,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "Compare nel numero totale di carte di un mazzo italiano tradizionale."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 3
+            },
+            {
+              "guess": "41365",
+              "observation": {
+                "attempt": 7,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "Compare in almeno uno dei valori delle monete in euro."
+                },
+                "won": false,
+                "terminal": true
+              },
+              "candidates": 2
+            }
+          ]
+        },
+        {
+          "trial": 2,
+          "secret": "83146",
+          "residual": 10,
+          "history": [
+            {
+              "guess": "46318",
+              "observation": {
+                "attempt": 1,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "Compare nel numero atomico dell'argento."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 8544
+            },
+            {
+              "guess": "38629",
+              "observation": {
+                "attempt": 2,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "È un risultato dispari maggiore di 1 ottenibile con un dado a sei facce."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 1890
+            },
+            {
+              "guess": "38560",
+              "observation": {
+                "attempt": 3,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "È un risultato dispari maggiore di 1 ottenibile con un dado a sei facce."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 1458
+            },
+            {
+              "guess": "28374",
+              "observation": {
+                "attempt": 4,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "Compare nella successione di Fibonacci."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 533
+            },
+            {
+              "guess": "43078",
+              "observation": {
+                "attempt": 5,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "È un risultato dispari maggiore di 1 ottenibile con un dado a sei facce."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 143
+            },
+            {
+              "guess": "72809",
+              "observation": {
+                "attempt": 6,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "Compare nella successione di Fibonacci."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 70
+            },
+            {
+              "guess": "50612",
+              "observation": {
+                "attempt": 7,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "È il numero di facce di un cubo."
+                },
+                "won": false,
+                "terminal": true
+              },
+              "candidates": 10
+            }
+          ]
+        }
+      ],
+      "seconds": 6.646997888999991,
+      "cpuSeconds": 6.880468,
+      "peakRssMB": 179.984375,
+      "spaceBytes": 181440,
+      "scoredPairs": 0
+    },
+    {
+      "level": 8,
+      "length": 5,
+      "mode": "difficult",
+      "name": "Il Cuore del Sistema Bancario Globale",
+      "strategy": "elimination",
+      "games": 1000,
+      "wins": 427,
+      "winRate": 0.427,
+      "win95": {
+        "low": 0.3966791104990976,
+        "high": 0.4578795962397934
+      },
+      "meanAttemptsWins": 6.374707259953162,
+      "meanAttemptsAll": 6.733,
+      "distribution": {
+        "1": 0,
+        "2": 2,
+        "3": 1,
+        "4": 11,
+        "5": 41,
+        "6": 138,
+        "7": 234,
+        "loss": 573
+      },
+      "residualAll": {
+        "mean": 2.505,
+        "median": 1,
+        "p90": 6,
+        "min": 1,
+        "max": 40
+      },
+      "residualLoss": {
+        "mean": 3.6265270506108203,
+        "median": 2,
+        "p90": 7,
+        "min": 1,
+        "max": 40
+      },
+      "residualByTurn": [
+        {
+          "turn": 1,
+          "mean": 7176.145,
+          "median": 6745,
+          "p90": 13549,
+          "min": 120,
+          "max": 17969
+        },
+        {
+          "turn": 2,
+          "mean": 1578.971,
+          "median": 1274,
+          "p90": 3200,
+          "min": 1,
+          "max": 7508
+        },
+        {
+          "turn": 3,
+          "mean": 339.8817635270541,
+          "median": 247,
+          "p90": 776,
+          "min": 1,
+          "max": 2312
+        },
+        {
+          "turn": 4,
+          "mean": 79.64292878635908,
+          "median": 49,
+          "p90": 180,
+          "min": 1,
+          "max": 658
+        },
+        {
+          "turn": 5,
+          "mean": 21.16024340770791,
+          "median": 13,
+          "p90": 49,
+          "min": 1,
+          "max": 260
+        },
+        {
+          "turn": 6,
+          "mean": 6.625396825396826,
+          "median": 4,
+          "p90": 15,
+          "min": 1,
+          "max": 66
+        },
+        {
+          "turn": 7,
+          "mean": 2.864931846344486,
+          "median": 2,
+          "p90": 6,
+          "min": 1,
+          "max": 40
+        }
+      ],
+      "lossExamples": [
+        {
+          "trial": 2,
+          "secret": "83146",
+          "residual": 1,
+          "history": [
+            {
+              "guess": "71629",
+              "observation": {
+                "attempt": 1,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "È la più piccola cifra dispari positiva oppure la più grande cifra pari."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 5005
+            },
+            {
+              "guess": "15284",
+              "observation": {
+                "attempt": 2,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "È la più piccola cifra dispari positiva oppure la più grande cifra pari."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 2525
+            },
+            {
+              "guess": "59018",
+              "observation": {
+                "attempt": 3,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "È la più piccola cifra dispari positiva oppure la più grande cifra pari."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 84
+            },
+            {
+              "guess": "68132",
+              "observation": {
+                "attempt": 4,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "È la più piccola cifra dispari positiva oppure la più grande cifra pari."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 42
+            },
+            {
+              "guess": "82143",
+              "observation": {
+                "attempt": 5,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "È la più piccola cifra dispari positiva oppure la più grande cifra pari."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 24
+            },
+            {
+              "guess": "82163",
+              "observation": {
+                "attempt": 6,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "È un multiplo di 3."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 4
+            },
+            {
+              "guess": "38146",
+              "observation": {
+                "attempt": 7,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "A Briscola, il re vale questo numero di punti."
+                },
+                "won": false,
+                "terminal": true
+              },
+              "candidates": 1
+            }
+          ]
+        },
+        {
+          "trial": 3,
+          "secret": "41709",
+          "residual": 1,
+          "history": [
+            {
+              "guess": "10269",
+              "observation": {
+                "attempt": 1,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "Compare nel numero atomico dell'oro."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 1909
+            },
+            {
+              "guess": "86159",
+              "observation": {
+                "attempt": 2,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "Dà il nome a un celebre gioco di carte."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 168
+            },
+            {
+              "guess": "51039",
+              "observation": {
+                "attempt": 3,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "Dà il nome a un celebre gioco di carte."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 68
+            },
+            {
+              "guess": "31579",
+              "observation": {
+                "attempt": 4,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "Compare nel numero atomico dell'oro."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 10
+            },
+            {
+              "guess": "71049",
+              "observation": {
+                "attempt": 5,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "Compare nel numero atomico dell'oro."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 4
+            },
+            {
+              "guess": "01729",
+              "observation": {
+                "attempt": 6,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "Compare nel numero atomico dell'oro."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 3
+            },
+            {
+              "guess": "41729",
+              "observation": {
+                "attempt": 7,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "Compare nell'anno tradizionalmente associato alla caduta dell'Impero romano d'Occidente."
+                },
+                "won": false,
+                "terminal": true
+              },
+              "candidates": 1
+            }
+          ]
+        },
+        {
+          "trial": 4,
+          "secret": "92461",
+          "residual": 1,
+          "history": [
+            {
+              "guess": "15823",
+              "observation": {
+                "attempt": 1,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "È una delle due cifre del sistema binario."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 8544
+            },
+            {
+              "guess": "51632",
+              "observation": {
+                "attempt": 2,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "È una delle due cifre del sistema binario."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 2820
+            },
+            {
+              "guess": "49201",
+              "observation": {
+                "attempt": 3,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "È una delle due cifre del sistema binario."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 733
+            },
+            {
+              "guess": "96104",
+              "observation": {
+                "attempt": 4,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "Compare nel numero di giorni di febbraio in un anno bisestile."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 104
+            },
+            {
+              "guess": "97401",
+              "observation": {
+                "attempt": 5,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "Compare nel numero atomico dell'argento."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 29
+            },
+            {
+              "guess": "97381",
+              "observation": {
+                "attempt": 6,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "none-confirmed"
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 5
+            },
+            {
+              "guess": "97041",
+              "observation": {
+                "attempt": 7,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "none-confirmed"
+                },
+                "won": false,
+                "terminal": true
+              },
+              "candidates": 1
+            }
+          ]
+        }
+      ],
+      "seconds": 5.0830882980000025,
+      "cpuSeconds": 5.279247,
+      "peakRssMB": 180.75,
+      "spaceBytes": 181440,
+      "scoredPairs": 0
+    },
+    {
+      "level": 8,
+      "length": 5,
+      "mode": "difficult",
+      "name": "Il Cuore del Sistema Bancario Globale",
+      "strategy": "expected",
+      "games": 1000,
+      "wins": 770,
+      "winRate": 0.77,
+      "win95": {
+        "low": 0.7429132441380307,
+        "high": 0.7950203062797695
+      },
+      "meanAttemptsWins": 6.5285714285714285,
+      "meanAttemptsAll": 6.637,
+      "distribution": {
+        "1": 0,
+        "2": 0,
+        "3": 1,
+        "4": 13,
+        "5": 45,
+        "6": 230,
+        "7": 481,
+        "loss": 230
+      },
+      "residualAll": {
+        "mean": 1.264,
+        "median": 1,
+        "p90": 2,
+        "min": 1,
+        "max": 40
+      },
+      "residualLoss": {
+        "mean": 2.1478260869565218,
+        "median": 1,
+        "p90": 4,
+        "min": 1,
+        "max": 40
+      },
+      "residualByTurn": [
+        {
+          "turn": 1,
+          "mean": 6022.792,
+          "median": 5082,
+          "p90": 9804,
+          "min": 120,
+          "max": 16229
+        },
+        {
+          "turn": 2,
+          "mean": 1073.075,
+          "median": 886,
+          "p90": 2054,
+          "min": 14,
+          "max": 5560
+        },
+        {
+          "turn": 3,
+          "mean": 183.051,
+          "median": 137,
+          "p90": 385,
+          "min": 1,
+          "max": 1349
+        },
+        {
+          "turn": 4,
+          "mean": 32.888888888888886,
+          "median": 23,
+          "p90": 71,
+          "min": 1,
+          "max": 365
+        },
+        {
+          "turn": 5,
+          "mean": 6.974645030425964,
+          "median": 5,
+          "p90": 16,
+          "min": 1,
+          "max": 100
+        },
+        {
+          "turn": 6,
+          "mean": 2.0318809776833158,
+          "median": 1,
+          "p90": 4,
+          "min": 1,
+          "max": 45
+        },
+        {
+          "turn": 7,
+          "mean": 1.371308016877637,
+          "median": 1,
+          "p90": 2,
+          "min": 1,
+          "max": 40
+        }
+      ],
+      "lossExamples": [
+        {
+          "trial": 1,
+          "secret": "97350",
+          "residual": 3,
+          "history": [
+            {
+              "guess": "54296",
+              "observation": {
+                "attempt": 1,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "È un numero primo."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 11224
+            },
+            {
+              "guess": "86953",
+              "observation": {
+                "attempt": 2,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "È un numero primo."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 2054
+            },
+            {
+              "guess": "92658",
+              "observation": {
+                "attempt": 3,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "È un multiplo di 3."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 537
+            },
+            {
+              "guess": "17653",
+              "observation": {
+                "attempt": 4,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "Compare nel numero atomico dell'argento."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 69
+            },
+            {
+              "guess": "28064",
+              "observation": {
+                "attempt": 5,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "Compare nell'anno dell'incoronazione imperiale di Carlo Magno."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 21
+            },
+            {
+              "guess": "37650",
+              "observation": {
+                "attempt": 6,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "Compare nell'anno dell'incoronazione imperiale di Carlo Magno."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 5
+            },
+            {
+              "guess": "47650",
+              "observation": {
+                "attempt": 7,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "none-confirmed"
+                },
+                "won": false,
+                "terminal": true
+              },
+              "candidates": 3
+            }
+          ]
+        },
+        {
+          "trial": 5,
+          "secret": "97618",
+          "residual": 2,
+          "history": [
+            {
+              "guess": "70265",
+              "observation": {
+                "attempt": 1,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "Si può ottenere sommando due numeri primi distinti."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 9024
+            },
+            {
+              "guess": "34671",
+              "observation": {
+                "attempt": 2,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "Divide perfettamente 12 ed è maggiore di 2."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 2396
+            },
+            {
+              "guess": "64027",
+              "observation": {
+                "attempt": 3,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "Si può ottenere sommando due numeri primi distinti."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 210
+            },
+            {
+              "guess": "14793",
+              "observation": {
+                "attempt": 4,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "Dà il nome a un celebre gioco di carte."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 62
+            },
+            {
+              "guess": "37159",
+              "observation": {
+                "attempt": 5,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "Si può ottenere sommando due numeri primi distinti."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 25
+            },
+            {
+              "guess": "37918",
+              "observation": {
+                "attempt": 6,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "Dà il nome a un celebre gioco di carte."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 7
+            },
+            {
+              "guess": "37518",
+              "observation": {
+                "attempt": 7,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "Compare nell'anno dell'incoronazione imperiale di Carlo Magno."
+                },
+                "won": false,
+                "terminal": true
+              },
+              "candidates": 2
+            }
+          ]
+        },
+        {
+          "trial": 9,
+          "secret": "15078",
+          "residual": 3,
+          "history": [
+            {
+              "guess": "68790",
+              "observation": {
+                "attempt": 1,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "Compare nella successione di Fibonacci."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 5485
+            },
+            {
+              "guess": "47829",
+              "observation": {
+                "attempt": 2,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "Compare nell'anno tradizionalmente associato alla caduta dell'Impero romano d'Occidente."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 2054
+            },
+            {
+              "guess": "79184",
+              "observation": {
+                "attempt": 3,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "Compare nell'anno tradizionalmente associato alla caduta dell'Impero romano d'Occidente."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 377
+            },
+            {
+              "guess": "40297",
+              "observation": {
+                "attempt": 4,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "È un quadrato perfetto."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 54
+            },
+            {
+              "guess": "95240",
+              "observation": {
+                "attempt": 5,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "È un numero primo."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 12
+            },
+            {
+              "guess": "85971",
+              "observation": {
+                "attempt": 6,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "Compare nell'anno tradizionalmente associato alla caduta dell'Impero romano d'Occidente."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 4
+            },
+            {
+              "guess": "05378",
+              "observation": {
+                "attempt": 7,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "Compare nella successione di Fibonacci."
+                },
+                "won": false,
+                "terminal": true
+              },
+              "candidates": 3
+            }
+          ]
+        }
+      ],
+      "seconds": 25.470362957000006,
+      "cpuSeconds": 25.453824,
+      "peakRssMB": 180.75,
+      "spaceBytes": 181440,
+      "scoredPairs": 45021410
+    },
+    {
+      "level": 8,
+      "length": 5,
+      "mode": "difficult",
+      "name": "Il Cuore del Sistema Bancario Globale",
+      "strategy": "information",
+      "games": 1000,
+      "wins": 782,
+      "winRate": 0.782,
+      "win95": {
+        "low": 0.7553565227948386,
+        "high": 0.8064851854193084
+      },
+      "meanAttemptsWins": 6.551150895140665,
+      "meanAttemptsAll": 6.649,
+      "distribution": {
+        "1": 0,
+        "2": 0,
+        "3": 2,
+        "4": 15,
+        "5": 37,
+        "6": 224,
+        "7": 504,
+        "loss": 218
+      },
+      "residualAll": {
+        "mean": 1.233,
+        "median": 1,
+        "p90": 2,
+        "min": 1,
+        "max": 10
+      },
+      "residualLoss": {
+        "mean": 2.0688073394495414,
+        "median": 2,
+        "p90": 4,
+        "min": 1,
+        "max": 10
+      },
+      "residualByTurn": [
+        {
+          "turn": 1,
+          "mean": 6091.401,
+          "median": 5159,
+          "p90": 9804,
+          "min": 120,
+          "max": 15289
+        },
+        {
+          "turn": 2,
+          "mean": 1093.517,
+          "median": 850,
+          "p90": 2124,
+          "min": 32,
+          "max": 6295
+        },
+        {
+          "turn": 3,
+          "mean": 194.951,
+          "median": 135,
+          "p90": 418,
+          "min": 1,
+          "max": 1888
+        },
+        {
+          "turn": 4,
+          "mean": 35.26753507014028,
+          "median": 22,
+          "p90": 78,
+          "min": 1,
+          "max": 511
+        },
+        {
+          "turn": 5,
+          "mean": 7.258392675483215,
+          "median": 5,
+          "p90": 16,
+          "min": 1,
+          "max": 73
+        },
+        {
+          "turn": 6,
+          "mean": 2.0126849894291756,
+          "median": 1,
+          "p90": 4,
+          "min": 1,
+          "max": 21
+        },
+        {
+          "turn": 7,
+          "mean": 1.3227146814404431,
+          "median": 1,
+          "p90": 2,
+          "min": 1,
+          "max": 10
+        }
+      ],
+      "lossExamples": [
+        {
+          "trial": 0,
+          "secret": "82605",
+          "residual": 2,
+          "history": [
+            {
+              "guess": "16745",
+              "observation": {
+                "attempt": 1,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "Compare sia nel giorno sia nell'anno di nascita di Galileo Galilei."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 4932
+            },
+            {
+              "guess": "61875",
+              "observation": {
+                "attempt": 2,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "È il numero di facce di un cubo."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 1385
+            },
+            {
+              "guess": "13706",
+              "observation": {
+                "attempt": 3,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "È una delle due cifre del sistema binario."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 108
+            },
+            {
+              "guess": "42396",
+              "observation": {
+                "attempt": 4,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "È una potenza di 2."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 17
+            },
+            {
+              "guess": "57236",
+              "observation": {
+                "attempt": 5,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "È il numero di facce di un cubo."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 7
+            },
+            {
+              "guess": "79460",
+              "observation": {
+                "attempt": 6,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "È il numero di facce di un cubo."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 3
+            },
+            {
+              "guess": "48605",
+              "observation": {
+                "attempt": 7,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "È il numero di facce di un cubo."
+                },
+                "won": false,
+                "terminal": true
+              },
+              "candidates": 2
+            }
+          ]
+        },
+        {
+          "trial": 7,
+          "secret": "96285",
+          "residual": 2,
+          "history": [
+            {
+              "guess": "45961",
+              "observation": {
+                "attempt": 1,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "Compare sia nel giorno sia nell'anno di nascita di Galileo Galilei."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 5485
+            },
+            {
+              "guess": "61895",
+              "observation": {
+                "attempt": 2,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "Compare sia nel giorno sia nell'anno di nascita di Galileo Galilei."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 1426
+            },
+            {
+              "guess": "29615",
+              "observation": {
+                "attempt": 3,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "Compare nel numero di giorni di febbraio in un anno bisestile."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 554
+            },
+            {
+              "guess": "59176",
+              "observation": {
+                "attempt": 4,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "È un quadrato perfetto."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 62
+            },
+            {
+              "guess": "17325",
+              "observation": {
+                "attempt": 5,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "Compare nel numero di giorni di febbraio in un anno bisestile."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 5
+            },
+            {
+              "guess": "18453",
+              "observation": {
+                "attempt": 6,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "È il cubo di 2."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 3
+            },
+            {
+              "guess": "90285",
+              "observation": {
+                "attempt": 7,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "È un quadrato perfetto."
+                },
+                "won": false,
+                "terminal": true
+              },
+              "candidates": 2
+            }
+          ]
+        },
+        {
+          "trial": 8,
+          "secret": "74852",
+          "residual": 1,
+          "history": [
+            {
+              "guess": "68175",
+              "observation": {
+                "attempt": 1,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "Compare nella successione di Fibonacci."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 8165
+            },
+            {
+              "guess": "70813",
+              "observation": {
+                "attempt": 2,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "Si può ottenere sommando due numeri primi distinti."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 834
+            },
+            {
+              "guess": "71540",
+              "observation": {
+                "attempt": 3,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "È un risultato dispari maggiore di 1 ottenibile con un dado a sei facce."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 81
+            },
+            {
+              "guess": "79458",
+              "observation": {
+                "attempt": 4,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "È un risultato dispari maggiore di 1 ottenibile con un dado a sei facce."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 26
+            },
+            {
+              "guess": "74958",
+              "observation": {
+                "attempt": 5,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "hit",
+                  "hint": "Compare nel numero totale di carte di un mazzo italiano tradizionale."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 6
+            },
+            {
+              "guess": "79203",
+              "observation": {
+                "attempt": 6,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "È un numero primo."
+                },
+                "won": false,
+                "terminal": false
+              },
+              "candidates": 2
+            },
+            {
+              "guess": "74358",
+              "observation": {
+                "attempt": 7,
+                "feedback": {
+                  "kind": "cryptic",
+                  "status": "blow",
+                  "hint": "Compare nella successione di Fibonacci."
+                },
+                "won": false,
+                "terminal": true
+              },
+              "candidates": 1
+            }
+          ]
+        }
+      ],
+      "seconds": 24.847943501999996,
+      "cpuSeconds": 24.550871,
+      "peakRssMB": 242.45703125,
+      "spaceBytes": 181440,
+      "scoredPairs": 45157160
+    }
+  ],
+  "baseCommit": "b8959e247b8a44217d470cc6bfd9c6d01be2b42a",
+  "seconds": 131.69067044399998,
+  "cpuSeconds": 132.596927,
+  "peakRssMB": 242.45703125
+}

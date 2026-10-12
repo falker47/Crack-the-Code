@@ -60,25 +60,55 @@ Poi apri `http://localhost:8000`.
 
 ## Verifica
 
-La CI controlla la sintassi JavaScript e la coerenza dei dati narrativi e della campagna:
+La CI controlla sintassi, dati narrativi e campagna, modello matematico ed evidenze sperimentali:
 
 ```bash
 node --check data.js
 node --check script.js
 node test/validate-data.mjs
+node --test
+node analysis/verify.mjs
 ```
+
+La CI esegue anche uno smoke test in Chrome reale (desktop e viewport mobile)
+usando soltanto Node.js e il browser già presente nel runner. In locale, se
+Chrome è disponibile, eseguire `node tools/browser-smoke.mjs`; `CHROME_BIN`
+permette di specificarne l'eseguibile. Un browser mancante produce un errore,
+non un test saltato silenziosamente.
+
+## Solver matematico e bilanciamento
+
+Il laboratorio offline in [`analysis/`](analysis/) mantiene separati motore,
+osservazioni pubbliche e solver. Esamina esattamente tutti i codici compatibili,
+compreso lo stato degli indizi criptici. La selezione della mossa è limitata da
+campioni espliciti: non è una strategia ottima dimostrata né una misura di abilità
+umana. Non viene caricato dalla pagina web e non aggiunge dipendenze al gioco.
+
+- [Report comparativo e raccomandazioni](docs/BALANCE_REPORT.md)
+- [Modello, limiti e comandi di riproduzione](analysis/README.md)
+- [Prove matematiche e informazione del primo turno](docs/MATHEMATICAL_NOTES.md)
+- [Risultati grezzi e riepiloghi](analysis/results/)
+
+Esempio rapido (100 partite per ciascuna delle 36 combinazioni livello/strategia):
+
+```bash
+node analysis/simulate.mjs --games 100 --seed esempio --out /tmp/ctc-esempio
+```
+
+Scegliere un prefisso nuovo per ogni esecuzione: il simulatore rifiuta di
+sovrascrivere risultati esistenti. Per i risultati pubblicati e i relativi limiti
+statistici vedere il report; zero sconfitte osservate non prova una garanzia.
 
 ## Struttura
 
-```
-├── index.html
-├── style.css
-├── script.js
-├── data.js
-├── crack-the-code.webp
-└── test/
-    └── validate-data.mjs
-```
+| Percorso | Contenuto |
+| --- | --- |
+| `index.html`, `style.css`, `script.js` | Interfaccia e motore del gioco nel browser |
+| `data.js` | Campagna, narrativa e catalogo degli indizi |
+| `analysis/` | Motore indipendente, solver, simulatori e risultati riproducibili |
+| `docs/` | Report di bilanciamento, prove matematiche e specifica tecnica |
+| `test/` | Validazione dati, regressioni del gioco e oracoli del modello |
+| `tools/browser-smoke.mjs` | Verifica dei flussi del gioco in Chrome reale |
 
 ## Implementazione
 

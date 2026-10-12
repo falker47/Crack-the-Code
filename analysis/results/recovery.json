@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "status": "verified",
+  "action": "Full 12000-game rerun from exact archived collection sources; original invalidated evidence preserved, replay promoted to length4.json/jsonl",
+  "originalTraceRows": 11979,
+  "replayedTraceRows": 12000,
+  "originalRecordsByteIdentical": true,
+  "statisticalSummariesIdentical": 12,
+  "sourceHashesIdentical": true,
+  "originalPartialTraceSha256": "6e91a5b2bec98a5eb9efb66113ef8d288efe9055bdb06b91b545ff01570d4915",
+  "replayedTraceSha256": "d498a4a39fc17ad42ff230545d8fdd499c950382eecdb3a97eb618317790d2dd",
+  "originalSeconds": 80.120784812,
+  "replaySeconds": 51.84928856,
+  "originalCpuSeconds": 80.691631,
+  "replayCpuSeconds": 52.42943,
+  "originalOutputPrefix": "analysis/results/length4-replay",
+  "publishedOutputPrefix": "analysis/results/length4",
+  "cause": "Current original JSONL inode was created after final manifest, preserving an older mtime. Origin of this replacement is not established; no claim of a proven solver/runner truncation defect.",
+  "verification": "After re-collection: compare all original bytes, all complete summaries, and source hashes; independent full trace and stratified seed replay audit required before publication."
+}

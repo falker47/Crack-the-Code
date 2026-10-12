@@ -11,6 +11,7 @@ const gameState = {
   codeLength: 4,
   difficulty: null, // "easy", "medium", "difficult"
   secretCode: "",
+  isActive: false,
   attempts: 0,
   startTime: null,
   difficultyMultiplier: 1,
@@ -24,23 +25,37 @@ const gameState = {
 
 // Mapping slider: 0 -> 4 digits, 1 -> 5 digits, 2 -> 7 digits
 const sliderMapping = { 0: 4, 1: 5, 2: 7 };
+let freePlaySettings = null;
 
 // ============================================
 // CAMPAIGN MODE
 // ============================================
 // campaignLevels, levelData, crypticMessages are defined in data.js
+let sessionCampaignProgress = 0;
 
 // Carica il progresso della campagna da localStorage
 function getCampaignProgress() {
-  const saved = localStorage.getItem("crackTheCode_campaignProgress");
-  return saved ? parseInt(saved, 10) : 0;
+  try {
+    const saved = Number(localStorage.getItem("crackTheCode_campaignProgress"));
+    if (Number.isInteger(saved) && saved >= 0 && saved <= campaignLevels.length) {
+      sessionCampaignProgress = Math.max(sessionCampaignProgress, saved);
+    }
+  } catch {
+    // Se lo storage non è disponibile, conserva i progressi della sessione.
+  }
+  return sessionCampaignProgress;
 }
 
 // Salva il progresso della campagna in localStorage
 function saveCampaignProgress(levelIndex) {
   const current = getCampaignProgress();
   if (levelIndex >= current) {
-    localStorage.setItem("crackTheCode_campaignProgress", levelIndex + 1);
+    sessionCampaignProgress = levelIndex + 1;
+    try {
+      localStorage.setItem("crackTheCode_campaignProgress", sessionCampaignProgress);
+    } catch {
+      // Un salvataggio fallito non deve interrompere la vittoria.
+    }
   }
 }
 
@@ -181,6 +196,11 @@ startLevelBtn.addEventListener("click", function () {
 
 // Apre la schermata Campagna
 campaignModeBtn.addEventListener("click", function () {
+  freePlaySettings = {
+    difficulty: gameState.difficulty,
+    codeLength: gameState.codeLength,
+    difficultyMultiplier: gameState.difficultyMultiplier,
+  };
   menuDiv.classList.add("hidden");
   campaignScreen.classList.remove("hidden");
   renderCampaignLevels();
@@ -188,6 +208,9 @@ campaignModeBtn.addEventListener("click", function () {
 
 // Torna al menu dalla campagna
 backFromCampaignBtn.addEventListener("click", function () {
+  if (freePlaySettings) Object.assign(gameState, freePlaySettings);
+  gameState.campaignMode = false;
+  gameState.currentCampaignLevel = null;
   campaignScreen.classList.add("hidden");
   menuDiv.classList.remove("hidden");
 });
@@ -290,6 +313,7 @@ function updateHealthBar() {
 // Avvia la sfida: resetta health bar, genera il digit segreto, crea gli input PIN
 function startGame() {
   gameState.secretCode = generateSecretCode(gameState.codeLength);
+  gameState.isActive = true;
   gameState.attempts = 0;
   gameState.guessedDigits.fill(false);
   gameState.crypticCache = {};
@@ -329,9 +353,6 @@ function startGame() {
   pinInputs.forEach((input, index) => {
     input.addEventListener("input", function () {
       if (!/^\d$/.test(this.value)) { this.value = ""; return; }
-      let allFilled = true;
-      pinInputs.forEach(inp => { if (inp.value === "") allFilled = false; });
-      if (allFilled) { pinInputs.forEach(inp => inp.blur()); }
       if (index < pinInputs.length - 1) { pinInputs[index + 1].focus(); }
     });
     input.addEventListener("keydown", function (e) {
@@ -488,6 +509,7 @@ function calculateScore(elapsedSeconds) {
 
 guessForm.addEventListener("submit", function (e) {
   e.preventDefault();
+  if (!gameState.isActive || gameState.attempts >= gameState.allowedAttempts) return;
   // Cattura il colore della health bar prima dell'aggiornamento
   const currentColor = getHealthColor();
   const pinInputs = document.querySelectorAll(".pin-input");
@@ -538,6 +560,7 @@ guessForm.addEventListener("submit", function (e) {
 });
 
 function showGameOver(finalText, outcomeColor, won, scoreOrSecret) {
+  gameState.isActive = false;
   // Salva il progresso della campagna se vittoria
   if (won && gameState.campaignMode && gameState.currentCampaignLevel !== null) {
     saveCampaignProgress(gameState.currentCampaignLevel);
@@ -614,6 +637,7 @@ function showEpilogo(won, scoreOrSecret) {
 
 quitGameBtn.addEventListener("click", function () {
   if (confirm("Abbandonare la partita?\n\nIl tentativo corrente andrà perso.")) {
+    gameState.isActive = false;
     gameState.attempts = 0;
     updateHealthBar();
     gameDiv.classList.add("hidden");
