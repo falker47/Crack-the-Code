@@ -55,6 +55,17 @@ test('engine observations contain no selected digit, secret or private state', (
   assert.ok(Object.isFrozen(o.feedback));
 });
 
+for (const [name, config] of [
+  ['length above seven', {length:8,secret:'01234567'}],
+  ['alphabet above ten', {length:4,alphabetSize:11,secret:'0123'}],
+  ['alphabet below the code length', {length:4,alphabetSize:3,secret:'0123'}],
+  ['noninteger alphabet', {length:4,alphabetSize:4.5,secret:'0123'}],
+]) {
+  test(`engine rejects ${name} with an explicit secret`, () => {
+    assert.throws(()=>createGame({mode:'easy',...config}),RangeError);
+  });
+}
+
 test('seven attempts: invalid inputs do not count, last-turn win, no eighth guess', () => {
   for (const win of [true,false]) {
     const game=createGame({length:4,mode:'easy',secret:'0123',rng:()=>0});

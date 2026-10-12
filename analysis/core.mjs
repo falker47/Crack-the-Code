@@ -5,7 +5,7 @@ export function validateCode(code,length,alphabetSize=10) {
   return typeof code==='string' && code.length===length && /^\d+$/.test(code) &&
     new Set(code).size===length && [...code].every(d=>Number(d)<alphabetSize);
 }
-function validateSpace(length,alphabetSize) {
+export function validateSpace(length,alphabetSize) {
   if(!Number.isInteger(length)||length<1||length>7||
     !Number.isInteger(alphabetSize)||alphabetSize<length||alphabetSize>10)
     throw new RangeError('Space limit: length 1..7, alphabetSize length..10');

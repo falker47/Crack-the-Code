@@ -100,8 +100,10 @@ Tempi, consumo di CPU e RSS dipendono dalla macchina e non sono bit-per-bit
 riproducibili; codice, indizi, mosse e statistiche di esito lo sono.
 
 `results/source-v1.json.gz` conserva testo e SHA-256 dei dieci sorgenti esatti
-della raccolta. Il wrapper finale aggiunge soltanto la protezione dalle collisioni
-con manifest/tracce compressi già esistenti; modello e politiche sono identici.
+della raccolta. Dopo la raccolta il wrapper aggiunge la protezione dalle collisioni
+con manifest/tracce compressi già esistenti e il motore applica i limiti dello
+spazio anche quando riceve un segreto esplicito. Il modello e le politiche sulle
+nove configurazioni pubblicate sono identici.
 Gli hash del manifest descrivono i sorgenti raccolti, mentre `baseCommit` indica
 il commit di partenza del checkout, prima dell'aggiunta del laboratorio.
 
@@ -121,6 +123,10 @@ timeout viene trasformato in una sconfitta e nessuna politica viene ridotta in c
 Il limite V8 `--max-old-space-size` riguarda l'heap e non tutti i buffer; il budget
 RSS include anche questi ultimi. Un'interruzione esterna brusca può lasciare
 `running`, che è ugualmente inadmissibile per il confronto finale.
+
+Il campo storico `peakRssMB` registra il massimo dei campioni RSS raccolti tra
+partite. Non misura il picco assoluto del processo rilevato dal sistema operativo;
+un picco transitorio durante una partita può quindi sfuggire al campionamento.
 
 Il seed del codice dipende da seed principale, lunghezza e indice partita: le
 politiche e le modalità a pari lunghezza affrontano gli stessi segreti. Gli indizi

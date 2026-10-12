@@ -1,10 +1,11 @@
-import { evaluate, generateCode, validateCode, validateMode } from './core.mjs';
+import { evaluate, generateCode, validateCode, validateMode, validateSpace } from './core.mjs';
 import { HINTS, HINT_IDS, MAX_ATTEMPTS } from './catalog.mjs';
 import { randomIndex } from './random.mjs';
 
 // Only this closure knows the actual secret. No inspect/snapshot/backdoor API.
 export function createGame({length,mode,secret,rng=Math.random,alphabetSize=10}) {
   validateMode(mode);
+  validateSpace(length,alphabetSize);
   secret??=generateCode(length,rng,alphabetSize);
   if(!validateCode(secret,length,alphabetSize))throw new Error('Invalid secret');
   let attempts=0,terminal=false;

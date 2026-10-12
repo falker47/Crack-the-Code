@@ -387,6 +387,15 @@ e il manifest sovrascritto. Due nuove regressioni hanno riprodotto il problema;
 il runner ora rifiuta collisioni su tutti e tre i suffissi e conserva la
 creazione esclusiva del file di traccia.
 
+La successiva revisione indipendente ha riprodotto un secondo difetto del
+laboratorio: `createGame({length:8, mode:'easy', secret:'01234567'})` accettava
+uno spazio oltre il limite dichiarato, mentre `CodeSpace` e la generazione
+casuale lo rifiutavano. La causa era la validazione dello spazio eseguita solo
+durante la generazione del segreto. Il motore ora riusa la stessa validazione
+anche con un segreto esplicito, con regressione dedicata per lunghezza e
+alfabeto. Le nove configurazioni, le probabilità e le tracce dello studio non
+cambiano; il replay ne verifica l'equivalenza.
+
 ### Coerenza degli indizi: cosa è verificato e cosa resta interpretazione
 
 Il modello non ha trovato feedback meccanicamente contraddittori rispetto al
@@ -415,15 +424,15 @@ regole attuali, non un bug corretto per aumentare le vittorie.
 
 ## 8. Risorse, riproduzione e validazione
 
-Ambiente: Node.js **v24.19.0**, Linux x64, Intel Xeon Platinum 8370C @ 2,80 GHz. Tutti i gruppi finali risultano `complete` e non hanno raggiunto i limiti dichiarati.
+Ambiente: Node.js **v24.19.0**, Linux x64, Intel Xeon Platinum 8370C @ 2,80 GHz. Tutti i gruppi finali risultano `complete`; nessun controllo del budget tra partite ha segnalato un superamento.
 
-| Lunghezza, 12.000 partite | Tempo trascorso | CPU | Picco RSS del processo |
+| Lunghezza, 12.000 partite | Tempo trascorso | CPU | Massimo RSS campionato tra partite |
 | --- | ---: | ---: | ---: |
 | 4 cifre | 51,85 s | 52,43 s | 182,00 MiB |
 | 5 cifre | 131,69 s | 132,60 s | 242,46 MiB |
 | 7 cifre | 837,10 s | 856,64 s | 273,18 MiB |
 
-Le esecuzioni finali totalizzano **1041,67 secondi CPU**; il massimo RSS osservato per processo è **273,18 MiB**. Il primo batch è stato eseguito con tre processi concorrenti, mentre il recupero completo a quattro cifre è stato eseguito successivamente: i tempi sono misure di raccolta, non un benchmark controllato fra lunghezze. Il pilot e la prima esecuzione invalidata a quattro cifre sono costi aggiuntivi; quest’ultima aveva impiegato 80,12 s wall / 80,69 s CPU.
+Le esecuzioni finali totalizzano **1041,67 secondi CPU**; il massimo RSS campionato per processo è **273,18 MiB**. Il campo storico `peakRssMB` conserva questo massimo dei campioni, non il picco assoluto del processo misurato dal sistema operativo: picchi transitori durante una partita possono non essere osservati. Il primo batch è stato eseguito con tre processi concorrenti, mentre il recupero completo a quattro cifre è stato eseguito successivamente: i tempi sono misure di raccolta, non un benchmark controllato fra lunghezze. Il pilot e la prima esecuzione invalidata a quattro cifre sono costi aggiuntivi; quest’ultima aveva impiegato 80,12 s wall / 80,69 s CPU.
 
 **Controllo indipendente delle evidenze:** 36.000 partite, 213.090 turni, 36 riepiloghi ricalcolati identici e 108 replay (trial 0, 499, 999 per ogni cella) identici anche nelle scelte interne del solver. Tutti i dieci digest nell’archivio sorgenti sono stati verificati. La compressione preserva esattamente i byte delle tracce; [artifacts.json](../analysis/results/artifacts.json) contiene conteggi e SHA-256.
 
@@ -447,9 +456,11 @@ contiene tutti i confronti appaiati e i riepiloghi delle 36 celle.
 dei dieci sorgenti esatti impiegati nella raccolta. `baseCommit` nei manifest
 identifica la baseline del checkout, non pretende che il laboratorio nuovo fosse
 già incluso in quel commit: i sorgenti eseguiti sono identificati dagli hash e
-dall'archivio. Dopo la raccolta è cambiato soltanto il controllo delle collisioni
-di output in `simulate.mjs`; il modello e le politiche sono immutati. Il replay
-verifica anche l'equivalenza delle tracce con il wrapper finale.
+dall'archivio. Dopo la raccolta sono stati aggiunti il controllo delle collisioni
+di output in `simulate.mjs` e la validazione uniforme dei limiti dello spazio in
+`createGame`, anche con segreto esplicito. Il modello e le politiche sulle nove
+configurazioni sono immutati. Il replay verifica anche l'equivalenza delle tracce
+con i sorgenti finali.
 
 Il confine osservabile, la distribuzione dei codici piccoli, tutte le modalità e
 le cache sono verificati da test indipendenti. I test di parità includono 1.080
@@ -457,7 +468,7 @@ generazioni con gli stessi consumi casuali del prodotto e 1.008 submit sulle nov
 configurazioni. L'oracolo del posterior enumera separatamente segreti e cache
 nei casi piccoli e confronta supporto, probabilità e risposte future.
 
-La suite locale finale ha superato **88/88 test**. Il comando
+La suite locale finale ha superato **92/92 test**. Il comando
 `node analysis/verify.mjs` controlla le tracce compresse, tutti i feedback pubblici,
 i 36 riepiloghi e i 108 replay senza modificare gli input; è incluso nella CI.
 Le regressioni del verificatore rifiutano anche manifest completi con righe
@@ -513,7 +524,7 @@ la narrativa o l'identità dei nove livelli in questa PR.
 - Il campione è finito, appaiato e generato da PRNG; gli intervalli non coprono tutti gli errori di modellazione o il comportamento umano.
 - Il filtraggio è esaustivo, ma le decisioni informative sono campionate, di un turno e senza ripetizioni di query. Il catalogo è noto al solver.
 - Residuo 1 dopo il settimo errore significa identificazione arrivata troppo tardi, non vittoria. Un numero elevato di candidati non esprime da solo l'incertezza se il posterior è non uniforme.
-- Tempi e RSS sono misure dell'ambiente e della concorrenza dichiarati, non requisiti prestazionali garantiti su altri dispositivi.
+- Tempi e RSS sono misure dell'ambiente e della concorrenza dichiarati, non requisiti prestazionali garantiti su altri dispositivi. L'RSS è campionato tra partite e non certifica l'assenza di picchi transitori oltre il budget.
 - Lo storage bloccato consente soltanto un fallback di sessione; la persistenza oltre la sessione non può essere garantita senza storage funzionante.
 - Lo smoke Chrome copre flussi mirati; non sostituisce verifiche di accessibilità, dispositivi fisici, Safari/Firefox o playtest editoriali.
 - Non sono stati cambiati `data.js`, la narrativa, i nomi/ordine dei livelli, HTML o CSS. Le sole modifiche al prodotto correggono difetti riprodotti di input e stato; il laboratorio resta offline.
