@@ -1,0 +1,3 @@
+# Keep generated experiment evidence available while focusing default PR diffs on code and reports.
+analysis/results/*.json linguist-generated=true
+analysis/results/*.gz linguist-generated=true

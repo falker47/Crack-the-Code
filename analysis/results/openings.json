@@ -1,0 +1,328 @@
+{
+  "schema": 1,
+  "method": "uniform-prior exact first-turn partitions; rational hint probabilities; IEEE-754 entropy",
+  "catalogSha256": "9b8e0a19e622553a9118b98d979c695566010a137f03eb564f05b96de9fcf242",
+  "hintCountsByDigit": [
+    9,
+    9,
+    8,
+    6,
+    7,
+    7,
+    6,
+    7,
+    6,
+    7
+  ],
+  "canonical": [
+    {
+      "guess": "0123",
+      "length": 4,
+      "alphabetSize": 10,
+      "totalCodes": 5040,
+      "priorEntropyBits": 12.29920801838728,
+      "selectionCounts": {
+        "total": 5040,
+        "hit": [
+          504,
+          448,
+          399,
+          356
+        ],
+        "blow": [
+          1197,
+          846,
+          570,
+          360
+        ],
+        "none": 360
+      },
+      "modes": {
+        "easy": {
+          "outputEntropyBits": 5.109147796066472,
+          "hintNoiseBits": 0,
+          "mutualInformationBits": 5.109147796066472,
+          "posteriorEntropyBits": 7.190060222320807,
+          "expectedCandidates": 206.50634920634937,
+          "maximumCandidates": 360,
+          "possibleOutcomes": 77
+        },
+        "medium": {
+          "outputEntropyBits": 2.7711521657550193,
+          "hintNoiseBits": 0,
+          "mutualInformationBits": 2.7711521657550193,
+          "posteriorEntropyBits": 9.52805585263226,
+          "expectedCandidates": 931.4075396825398,
+          "maximumCandidates": 1440,
+          "possibleOutcomes": 14
+        },
+        "difficult": {
+          "outputEntropyBits": 5.154713880326639,
+          "hintNoiseBits": 2.827100913657665,
+          "mutualInformationBits": 2.3276129666689744,
+          "posteriorEntropyBits": 9.971595051718305,
+          "expectedCandidates": 1246.8822696208115,
+          "maximumCandidates": 2973,
+          "possibleOutcomes": 44
+        }
+      }
+    },
+    {
+      "guess": "01234",
+      "length": 5,
+      "alphabetSize": 10,
+      "totalCodes": 30240,
+      "priorEntropyBits": 14.884170519108435,
+      "selectionCounts": {
+        "total": 30240,
+        "hit": [
+          3024,
+          2688,
+          2394,
+          2136,
+          1909
+        ],
+        "blow": [
+          8544,
+          5005,
+          2680,
+          1260,
+          480
+        ],
+        "none": 120
+      },
+      "modes": {
+        "easy": {
+          "outputEntropyBits": 6.6787387456277285,
+          "hintNoiseBits": 0,
+          "mutualInformationBits": 6.6787387456277285,
+          "posteriorEntropyBits": 8.205431773480708,
+          "expectedCandidates": 435.31058201058244,
+          "maximumCandidates": 780,
+          "possibleOutcomes": 238
+        },
+        "medium": {
+          "outputEntropyBits": 3.0549286238368487,
+          "hintNoiseBits": 0,
+          "mutualInformationBits": 3.0549286238368487,
+          "posteriorEntropyBits": 11.829241895271586,
+          "expectedCandidates": 4747.275529100529,
+          "maximumCandidates": 7800,
+          "possibleOutcomes": 20
+        },
+        "difficult": {
+          "outputEntropyBits": 5.258980736929297,
+          "hintNoiseBits": 3.0343934883936368,
+          "mutualInformationBits": 2.2245872485356606,
+          "posteriorEntropyBits": 12.659583270572774,
+          "expectedCandidates": 8111.8926672598045,
+          "maximumCandidates": 17489,
+          "possibleOutcomes": 50
+        }
+      }
+    },
+    {
+      "guess": "0123456",
+      "length": 7,
+      "alphabetSize": 10,
+      "totalCodes": 604800,
+      "priorEntropyBits": 19.2060986139958,
+      "selectionCounts": {
+        "total": 604800,
+        "hit": [
+          60480,
+          53760,
+          47880,
+          42720,
+          38180,
+          34176,
+          30637
+        ],
+        "blow": [
+          205056,
+          70677,
+          18444,
+          2790,
+          0,
+          0,
+          0
+        ],
+        "none": 0
+      },
+      "modes": {
+        "easy": {
+          "outputEntropyBits": 8.691533675729735,
+          "hintNoiseBits": 0,
+          "mutualInformationBits": 8.691533675729735,
+          "posteriorEntropyBits": 10.514564938266064,
+          "expectedCandidates": 3093.7316931217206,
+          "maximumCandidates": 7284,
+          "possibleOutcomes": 1801
+        },
+        "medium": {
+          "outputEntropyBits": 3.077499994985671,
+          "hintNoiseBits": 0,
+          "mutualInformationBits": 3.077499994985671,
+          "posteriorEntropyBits": 16.128598619010127,
+          "expectedCandidates": 91398.65456349206,
+          "maximumCandidates": 152964,
+          "possibleOutcomes": 25
+        },
+        "difficult": {
+          "outputEntropyBits": 5.19200395480443,
+          "hintNoiseBits": 3.0342594327798857,
+          "mutualInformationBits": 2.157744522024544,
+          "posteriorEntropyBits": 17.048354091971255,
+          "expectedCandidates": 164124.0889466018,
+          "maximumCandidates": 296967,
+          "possibleOutcomes": 49
+        }
+      }
+    }
+  ],
+  "searches": [
+    {
+      "length": 4,
+      "alphabetSize": 10,
+      "searched": 5040,
+      "totalGuesses": 5040,
+      "complete": true,
+      "order": "lexicographic",
+      "objective": "first-turn mutual information, including immediate victory",
+      "best": {
+        "guess": "6859",
+        "mutualInformationBits": 2.7626910943942016
+      },
+      "worst": {
+        "guess": "1258",
+        "mutualInformationBits": 2.196988951640956
+      }
+    },
+    {
+      "length": 5,
+      "alphabetSize": 10,
+      "searched": 30240,
+      "totalGuesses": 30240,
+      "complete": true,
+      "order": "lexicographic",
+      "objective": "first-turn mutual information, including immediate victory",
+      "best": {
+        "guess": "65894",
+        "mutualInformationBits": 2.6604653381049888
+      },
+      "worst": {
+        "guess": "12580",
+        "mutualInformationBits": 2.0838340697491993
+      }
+    },
+    {
+      "length": 7,
+      "alphabetSize": 10,
+      "searched": 604800,
+      "totalGuesses": 604800,
+      "complete": true,
+      "order": "lexicographic",
+      "objective": "first-turn mutual information, including immediate victory",
+      "best": {
+        "guess": "1673894",
+        "mutualInformationBits": 2.5093557431657443
+      },
+      "worst": {
+        "guess": "1258039",
+        "mutualInformationBits": 2.100796874127066
+      }
+    }
+  ],
+  "proofCounts": {
+    "constantHintFour": {
+      "length": 4,
+      "insideAlphabetSize": 6,
+      "outsideAlphabetSize": 4,
+      "totalCodes": 360,
+      "rows": [
+        {
+          "inside": 0,
+          "hit": 0,
+          "blow": 0,
+          "none": 360,
+          "win": 0
+        },
+        {
+          "inside": 1,
+          "hit": 60,
+          "blow": 180,
+          "none": 120,
+          "win": 0
+        },
+        {
+          "inside": 2,
+          "hit": 108,
+          "blow": 228,
+          "none": 24,
+          "win": 0
+        },
+        {
+          "inside": 3,
+          "hit": 147,
+          "blow": 213,
+          "none": 0,
+          "win": 0
+        },
+        {
+          "inside": 4,
+          "hit": 178,
+          "blow": 181,
+          "none": 0,
+          "win": 1
+        }
+      ]
+    },
+    "constantHintFive": {
+      "length": 5,
+      "insideAlphabetSize": 6,
+      "outsideAlphabetSize": 4,
+      "totalCodes": 720,
+      "rows": [
+        {
+          "inside": 1,
+          "hit": 120,
+          "blow": 480,
+          "none": 120,
+          "win": 0
+        },
+        {
+          "inside": 2,
+          "hit": 216,
+          "blow": 504,
+          "none": 0,
+          "win": 0
+        },
+        {
+          "inside": 3,
+          "hit": 294,
+          "blow": 426,
+          "none": 0,
+          "win": 0
+        },
+        {
+          "inside": 4,
+          "hit": 358,
+          "blow": 362,
+          "none": 0,
+          "win": 0
+        },
+        {
+          "inside": 5,
+          "hit": 410,
+          "blow": 309,
+          "none": 0,
+          "win": 1
+        }
+      ]
+    },
+    "ternaryFiveTurns": "121",
+    "ternarySixTurns": "364",
+    "fiveBranchesEightTurns": "97656",
+    "nineDigitAlphabetSevenPositions": 181440
+  }
+}

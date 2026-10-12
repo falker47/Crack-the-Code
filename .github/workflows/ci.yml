@@ -5,9 +5,16 @@ on:
     branches: [main]
   pull_request:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -16,3 +23,19 @@ jobs:
       - run: node --check data.js
       - run: node --check script.js
       - run: node test/validate-data.mjs
+      - run: node --test
+      - name: Verify committed experiment evidence and seeded replay
+        run: node analysis/verify.mjs
+
+  browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Verify Chrome availability
+        run: google-chrome --version
+      - name: Real browser gameplay smoke (no npm dependencies)
+        run: node tools/browser-smoke.mjs

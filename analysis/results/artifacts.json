@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "traces": [
+    {
+      "file": "analysis/results/length4.jsonl.gz",
+      "games": 12000,
+      "uncompressedBytes": 18102964,
+      "compressedBytes": 1409151,
+      "uncompressedSha256": "d498a4a39fc17ad42ff230545d8fdd499c950382eecdb3a97eb618317790d2dd",
+      "compressedSha256": "4a80fffd9a272fd784b9dfb4ce2e865a505ebd9e5cd29c266f91cb8a48fe3c6a"
+    },
+    {
+      "file": "analysis/results/length5.jsonl.gz",
+      "games": 12000,
+      "uncompressedBytes": 19498698,
+      "compressedBytes": 1670683,
+      "uncompressedSha256": "b01e242431a94cc2e3c329293310d2050d5427fbdfd1c1c8ba4533937b6d0e35",
+      "compressedSha256": "94ad62d7bbe6663a1e42dea5999ded9be9a463025d47df53030e55a887a978d4"
+    },
+    {
+      "file": "analysis/results/length7.jsonl.gz",
+      "games": 12000,
+      "uncompressedBytes": 21305819,
+      "compressedBytes": 2021549,
+      "uncompressedSha256": "9be958fd5bed4e5f7c11de20a6e418deb85d47221fb455028e10eae4ecbe412c",
+      "compressedSha256": "6fb53863ed186a09e555c17a91d623ab5c92a2ac60e6a7b5f1c031540b00dc63"
+    }
+  ],
+  "validation": {
+    "games": 36000,
+    "turns": 213090,
+    "cells": 36,
+    "summaryMatches": 36,
+    "replays": 108,
+    "replayTrialIds": [
+      0,
+      499,
+      999
+    ],
+    "sourceSnapshotHashes": 10,
+    "independentAudit": "All feedback histories, public schemas, bounds, complete summaries, deterministic work counters and sampled replay objects passed after recovery."
+  }
+}
